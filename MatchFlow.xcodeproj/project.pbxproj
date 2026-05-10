@@ -25,6 +25,8 @@
 		03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA732FB0937500158FCC /* ResumeViewModel.swift */; };
 		03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA752FB093DD00158FCC /* ResumeView.swift */; };
 		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
+		03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */; };
+		03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		03A4BA732FB0937500158FCC /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
 		03A4BA752FB093DD00158FCC /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
+		03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -197,6 +201,8 @@
 			children = (
 				03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */,
 				03A4BA712FB090A900158FCC /* JobsView.swift */,
+				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
+				03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */,
 			);
 			path = Jobs;
 			sourceTree = "<group>";
@@ -359,6 +365,7 @@
 				03A4BA722FB090A900158FCC /* JobsView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
+				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
 				03A4BA502FB07EE700158FCC /* Resume.swift in Sources */,
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,
@@ -367,6 +374,7 @@
 				03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */,
 				03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */,
 				03A4BA412FB07D8C00158FCC /* AuthViewModel.swift in Sources */,
+				03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */,
 				03A4BA4E2FB07EC200158FCC /* Job.swift in Sources */,
 				03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */,
 			);

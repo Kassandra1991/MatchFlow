@@ -37,7 +37,9 @@ struct JobsView: View {
                     }
                 } else {
                     List(viewModel.jobs) { job in
-                        JobRowView(job: job)
+                        NavigationLink(destination: JobDetailView(job: job)) {
+                            JobRowView(job: job)
+                        }
                     }
                 }
             }

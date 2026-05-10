@@ -16,6 +16,7 @@ struct Job: Identifiable, Codable {
     var rawText: String?
     var matchScore: Double?
     var status: JobStatus
+    var notes: String?
     var appliedAt: Date
     var createdAt: Date
 
@@ -28,6 +29,7 @@ struct Job: Identifiable, Codable {
         case rawText = "raw_text"
         case matchScore = "match_score"
         case status
+        case notes
         case appliedAt = "applied_at"
         case createdAt = "created_at"
     }
