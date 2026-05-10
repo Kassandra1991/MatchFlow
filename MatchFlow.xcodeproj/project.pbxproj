@@ -20,6 +20,8 @@
 		03A4BA562FB089AC00158FCC /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA552FB089AC00158FCC /* AIService.swift */; };
 		03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA572FB08AFB00158FCC /* Secrets.swift */; };
 		03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */; };
+		03A4BA722FB090A900158FCC /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA712FB090A900158FCC /* JobsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,8 @@
 		03A4BA572FB08AFB00158FCC /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MatchFlowShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlow.entitlements; sourceTree = "<group>"; };
+		03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
+		03A4BA712FB090A900158FCC /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -184,6 +188,8 @@
 		03A4BA472FB07E0200158FCC /* Jobs */ = {
 			isa = PBXGroup;
 			children = (
+				03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */,
+				03A4BA712FB090A900158FCC /* JobsView.swift */,
 			);
 			path = Jobs;
 			sourceTree = "<group>";
@@ -341,7 +347,9 @@
 			files = (
 				03A4BA542FB07F8D00158FCC /* ResumeService.swift in Sources */,
 				03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */,
+				03A4BA722FB090A900158FCC /* JobsView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
+				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
 				03A4BA502FB07EE700158FCC /* Resume.swift in Sources */,
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,

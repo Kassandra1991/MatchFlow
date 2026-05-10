@@ -64,4 +64,17 @@ class JobService {
             .eq("id", value: jobId.uuidString)
             .execute()
     }
+    
+    func checkPendingJob() -> (url: String?, text: String?) {
+        let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
+        let url = defaults?.string(forKey: "pendingJobURL")
+        let text = defaults?.string(forKey: "pendingJobText")
+        
+        // Очищаем после прочтения
+        defaults?.removeObject(forKey: "pendingJobURL")
+        defaults?.removeObject(forKey: "pendingJobText")
+        defaults?.synchronize()
+        
+        return (url, text)
+    }
 }

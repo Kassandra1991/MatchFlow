@@ -10,17 +10,18 @@ import SwiftUI
 @main
 struct MatchFlowApp: App {
     @StateObject private var auth = AuthViewModel()
-
+    
     var body: some Scene {
         WindowGroup {
             Group {
                 if auth.isAuthenticated {
-                    Text("Welcome!")
+                    JobsView()
+                        .environmentObject(auth)
                 } else {
                     AuthView()
+                        .environmentObject(auth)
                 }
             }
-            .environmentObject(auth)
             .task {
                 await auth.checkSession()
             }

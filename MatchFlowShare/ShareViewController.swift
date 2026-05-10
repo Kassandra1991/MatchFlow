@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Social
-import MobileCoreServices
 import UniformTypeIdentifiers
 
 class ShareViewController: UIViewController {
@@ -24,7 +22,6 @@ class ShareViewController: UIViewController {
             return
         }
         
-        // Пробуем получить URL
         for provider in itemProviders {
             if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
                 provider.loadItem(forTypeIdentifier: UTType.url.identifier) { [weak self] item, error in
@@ -35,7 +32,6 @@ class ShareViewController: UIViewController {
                 return
             }
             
-            // Если нет URL — берём текст
             if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
                 provider.loadItem(forTypeIdentifier: UTType.plainText.identifier) { [weak self] item, error in
                     if let text = item as? String {
@@ -45,14 +41,14 @@ class ShareViewController: UIViewController {
                 return
             }
         }
+        
+        close()
     }
     
     private func handleURL(_ url: URL) {
-        // Сохраняем в UserDefaults (shared container)
         let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
         defaults?.set(url.absoluteString, forKey: "pendingJobURL")
         defaults?.synchronize()
-        
         showConfirmation(message: "Job URL saved! Open MatchFlow to analyze.")
     }
     
@@ -60,7 +56,6 @@ class ShareViewController: UIViewController {
         let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
         defaults?.set(text, forKey: "pendingJobText")
         defaults?.synchronize()
-        
         showConfirmation(message: "Job saved! Open MatchFlow to analyze.")
     }
     
