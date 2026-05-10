@@ -15,10 +15,9 @@ struct JobDetailView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                
-                // MARK: - Header
+        List {
+            // MARK: - Header
+            Section {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(job.title ?? "Unknown Role")
                         .font(.title2)
@@ -28,147 +27,127 @@ struct JobDetailView: View {
                         .font(.headline)
                         .foregroundColor(.secondary)
                     
-                    HStack {
-                        StatusBadge(status: job.status)
-                        Spacer()
-                        if let score = job.matchScore {
-                            MatchScoreBadge(score: score)
-                        }
-                    }
-                    
                     if let url = job.url, let link = URL(string: url) {
                         Link("Open Job Posting", destination: link)
                             .font(.caption)
                     }
                 }
-                .padding()
-                .background(Color(.systemBackground))
-                .cornerRadius(12)
-                .shadow(color: .black.opacity(0.05), radius: 8)
-                
-                // MARK: - Status Picker
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Status")
-                        .font(.headline)
-                    Picker("Status", selection: $viewModel.selectedStatus) {
-                        ForEach(JobStatus.allCases, id: \.self) { status in
-                            Text(status.rawValue.capitalized).tag(status)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                }
-                .padding()
-                .background(Color(.systemBackground))
-                .cornerRadius(12)
-                .shadow(color: .black.opacity(0.05), radius: 8)
-                
-                // MARK: - AI Analysis
-                VStack(alignment: .leading, spacing: 12) {
+                .padding(.vertical, 4)
+            }
+            
+            // MARK: - AI Analysis
+            Section {
+                HStack {
                     Text("AI Analysis")
                         .font(.headline)
-                    
-                    if viewModel.isAnalyzing {
-                        HStack {
-                            ProgressView()
-                            Text("Analyzing...")
-                                .foregroundColor(.secondary)
-                        }
-                    } else if let analysis = viewModel.analysis {
-                        // Summary
-                        if let summary = analysis.summary {
-                            Text(summary)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        // Skills
-                        if let skills = analysis.skills, !skills.isEmpty {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Required Skills")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                FlowLayout(items: skills) { skill in
-                                    SkillTag(name: skill, color: .blue)
-                                }
-                            }
-                        }
-                        
-                        // Difficulty
-                        if let difficulty = analysis.difficulty {
-                            HStack {
-                                Text("Level:")
-                                    .font(.subheadline)
-                                Text(difficulty.capitalized)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                            }
-                        }
-                    } else {
-                        // No analysis yet
-                        VStack(spacing: 12) {
-                            Text("No analysis yet")
-                                .foregroundColor(.secondary)
-                            
-                            if job.rawText == nil || job.rawText == job.url {
-                                TextEditor(text: $viewModel.jobDescription)
-                                    .frame(minHeight: 120)
-                                    .overlay(
-                                        Group {
-                                            if viewModel.jobDescription.isEmpty {
-                                                Text("Paste job description here...")
-                                                    .foregroundColor(.secondary)
-                                                    .padding(8)
-                                            }
-                                        },
-                                        alignment: .topLeading
-                                    )
-                                    .cornerRadius(8)
-                                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
-                            }
-                            
-                            Button {
-                                Task { await viewModel.analyze(job: job) }
-                            } label: {
-                                Label("Analyze with AI", systemImage: "sparkles")
-                                    .frame(maxWidth: .infinity)
-                            }
-                            .buttonStyle(.borderedProminent)
-                            .disabled(viewModel.jobDescription.isEmpty && (job.rawText == nil || job.rawText == job.url))
-                        }
+                    Spacer()
+                    if let score = job.matchScore {
+                        MatchScoreBadge(score: score)
                     }
                 }
-                .padding()
-                .background(Color(.systemBackground))
-                .cornerRadius(12)
-                .shadow(color: .black.opacity(0.05), radius: 8)
                 
-                // MARK: - Notes
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Notes")
-                        .font(.headline)
-                    TextEditor(text: $viewModel.notes)
-                        .frame(minHeight: 100)
-                        .overlay(
-                            Group {
-                                if viewModel.notes.isEmpty {
-                                    Text("Add notes...")
-                                        .foregroundColor(.secondary)
-                                        .padding(8)
-                                }
-                            },
-                            alignment: .topLeading
-                        )
-                        .cornerRadius(8)
-                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
+                if viewModel.isAnalyzing {
+                    HStack {
+                        ProgressView()
+                        Text("Analyzing...")
+                            .foregroundColor(.secondary)
+                    }
+                } else if let analysis = viewModel.analysis {
+                    if let summary = analysis.summary {
+                        Text(summary)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    if !job.skills.isEmpty {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Required Skills")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                            FlowLayout(items: job.skills) { skill in
+                                SkillTag(name: skill, color: .blue)
+                            }
+                        }
+                    }
+                    
+                    if let difficulty = analysis.difficulty {
+                        HStack {
+                            Text("Level")
+                                .foregroundColor(.secondary)
+                            Spacer()
+                            Text(difficulty.capitalized)
+                                .fontWeight(.medium)
+                        }
+                    }
+                } else {
+                    VStack(spacing: 12) {
+                        Text("No analysis yet")
+                            .foregroundColor(.secondary)
+                        
+                        if job.rawText == nil || job.rawText == job.url {
+                            TextEditor(text: $viewModel.jobDescription)
+                                .frame(minHeight: 120)
+                                .overlay(
+                                    Group {
+                                        if viewModel.jobDescription.isEmpty {
+                                            Text("Paste job description here...")
+                                                .foregroundColor(.secondary)
+                                                .padding(8)
+                                        }
+                                    },
+                                    alignment: .topLeading
+                                )
+                        }
+                        
+                        Button {
+                            Task { await viewModel.analyze(job: job) }
+                        } label: {
+                            Label("Analyze with AI", systemImage: "sparkles")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
                 }
-                .padding()
-                .background(Color(.systemBackground))
-                .cornerRadius(12)
-                .shadow(color: .black.opacity(0.05), radius: 8)
             }
-            .padding()
+            
+            // MARK: - Status
+            Section {
+                HStack {
+                    Text("Status")
+                    Spacer()
+                    Picker("", selection: $viewModel.selectedStatus) {
+                        ForEach(JobStatus.allCases, id: \.self) { status in
+                            HStack(spacing: 6) {
+                                Circle()
+                                    .fill(statusColor(status))
+                                    .frame(width: 8, height: 8)
+                                Text(status.rawValue.capitalized)
+                            }
+                            .tag(status)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .tint(statusColor(viewModel.selectedStatus))
+                }
+            }
+            
+            // MARK: - Notes
+            Section("Notes") {
+                TextEditor(text: $viewModel.notes)
+                    .frame(minHeight: 100)
+                    .overlay(
+                        Group {
+                            if viewModel.notes.isEmpty {
+                                Text("Add notes...")
+                                    .foregroundColor(.secondary)
+                                    .padding(4)
+                            }
+                        },
+                        alignment: .topLeading
+                    )
+            }
         }
-        .background(Color(.systemGroupedBackground))
+        .listStyle(.insetGrouped)
         .navigationTitle("Job Detail")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -176,7 +155,6 @@ struct JobDetailView: View {
             viewModel.notes = job.notes ?? ""
             
             if let summary = job.summary {
-                // Есть сохранённый анализ — загружаем
                 viewModel.analysis = JobAnalysis(
                     title: job.title,
                     company: job.company,
@@ -185,12 +163,20 @@ struct JobDetailView: View {
                     difficulty: job.difficulty
                 )
             } else {
-                // Нет анализа — запускаем автоматически
                 Task { await viewModel.analyze(job: job) }
             }
         }
         .onChange(of: viewModel.selectedStatus) {
             Task { await viewModel.updateStatus(job: job, status: viewModel.selectedStatus) }
+        }
+    }
+    
+    private func statusColor(_ status: JobStatus) -> Color {
+        switch status {
+        case .applied: return .blue
+        case .interview: return .orange
+        case .rejected: return .red
+        case .offer: return .green
         }
     }
 }
