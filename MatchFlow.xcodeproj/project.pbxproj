@@ -19,7 +19,32 @@
 		03A4BA542FB07F8D00158FCC /* ResumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA532FB07F8D00158FCC /* ResumeService.swift */; };
 		03A4BA562FB089AC00158FCC /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA552FB089AC00158FCC /* AIService.swift */; };
 		03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA572FB08AFB00158FCC /* Secrets.swift */; };
+		03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03A4BA652FB08DBB00158FCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03A4B9FF2FAFF68900158FCC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03A4BA5C2FB08DBB00158FCC;
+			remoteInfo = MatchFlowShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		03A4BA6C2FB08DBB00158FCC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		03A4BA072FAFF68900158FCC /* MatchFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +59,30 @@
 		03A4BA532FB07F8D00158FCC /* ResumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeService.swift; sourceTree = "<group>"; };
 		03A4BA552FB089AC00158FCC /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
 		03A4BA572FB08AFB00158FCC /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MatchFlowShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlow.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		03A4BA682FB08DBB00158FCC /* Exceptions for "MatchFlowShare" folder in "MatchFlowShare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				03A4BA682FB08DBB00158FCC /* Exceptions for "MatchFlowShare" folder in "MatchFlowShare" target */,
+			);
+			path = MatchFlowShare;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03A4BA042FAFF68900158FCC /* Frameworks */ = {
@@ -45,6 +93,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03A4BA5A2FB08DBB00158FCC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -52,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				03A4BA3D2FB07D8C00158FCC /* MatchFlow */,
+				03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */,
 				03A4BA202FAFF87C00158FCC /* Frameworks */,
 				03A4BA082FAFF68900158FCC /* Products */,
 			);
@@ -61,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				03A4BA072FAFF68900158FCC /* MatchFlow.app */,
+				03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,6 +142,7 @@
 		03A4BA3D2FB07D8C00158FCC /* MatchFlow */ = {
 			isa = PBXGroup;
 			children = (
+				03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */,
 				03A4BA4C2FB07E5F00158FCC /* Shared */,
 				03A4BA4B2FB07E5600158FCC /* Services */,
 				03A4BA4A2FB07E4F00158FCC /* Models */,
@@ -180,10 +238,12 @@
 				03A4BA032FAFF68900158FCC /* Sources */,
 				03A4BA042FAFF68900158FCC /* Frameworks */,
 				03A4BA052FAFF68900158FCC /* Resources */,
+				03A4BA6C2FB08DBB00158FCC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				03A4BA662FB08DBB00158FCC /* PBXTargetDependency */,
 			);
 			name = MatchFlow;
 			packageProductDependencies = (
@@ -192,6 +252,28 @@
 			productName = MatchFlow;
 			productReference = 03A4BA072FAFF68900158FCC /* MatchFlow.app */;
 			productType = "com.apple.product-type.application";
+		};
+		03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03A4BA692FB08DBB00158FCC /* Build configuration list for PBXNativeTarget "MatchFlowShare" */;
+			buildPhases = (
+				03A4BA592FB08DBB00158FCC /* Sources */,
+				03A4BA5A2FB08DBB00158FCC /* Frameworks */,
+				03A4BA5B2FB08DBB00158FCC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */,
+			);
+			name = MatchFlowShare;
+			packageProductDependencies = (
+			);
+			productName = MatchFlowShare;
+			productReference = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -204,6 +286,9 @@
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					03A4BA062FAFF68900158FCC = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
+					03A4BA5C2FB08DBB00158FCC = {
 						CreatedOnToolsVersion = 26.4.1;
 					};
 				};
@@ -226,6 +311,7 @@
 			projectRoot = "";
 			targets = (
 				03A4BA062FAFF68900158FCC /* MatchFlow */,
+				03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */,
 			);
 		};
 /* End PBXProject section */
@@ -236,6 +322,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				03A4BA432FB07D8C00158FCC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03A4BA5B2FB08DBB00158FCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +352,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03A4BA592FB08DBB00158FCC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03A4BA662FB08DBB00158FCC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */;
+			targetProxy = 03A4BA652FB08DBB00158FCC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		03A4BA102FAFF68B00158FCC /* Debug */ = {
@@ -388,6 +496,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C5MJRPU929;
@@ -422,6 +531,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = C5MJRPU929;
@@ -451,6 +561,64 @@
 			};
 			name = Release;
 		};
+		03A4BA6A2FB08DBB00158FCC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MatchFlowShare/MatchFlowShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C5MJRPU929;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MatchFlowShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MatchFlowShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asichka.MatchFlow.MatchFlowShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		03A4BA6B2FB08DBB00158FCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MatchFlowShare/MatchFlowShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C5MJRPU929;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MatchFlowShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MatchFlowShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asichka.MatchFlow.MatchFlowShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -468,6 +636,15 @@
 			buildConfigurations = (
 				03A4BA132FAFF68B00158FCC /* Debug */,
 				03A4BA142FAFF68B00158FCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03A4BA692FB08DBB00158FCC /* Build configuration list for PBXNativeTarget "MatchFlowShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03A4BA6A2FB08DBB00158FCC /* Debug */,
+				03A4BA6B2FB08DBB00158FCC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
