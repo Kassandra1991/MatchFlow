@@ -22,6 +22,9 @@
 		03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */; };
 		03A4BA722FB090A900158FCC /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA712FB090A900158FCC /* JobsView.swift */; };
+		03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA732FB0937500158FCC /* ResumeViewModel.swift */; };
+		03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA752FB093DD00158FCC /* ResumeView.swift */; };
+		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +68,9 @@
 		03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlow.entitlements; sourceTree = "<group>"; };
 		03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
 		03A4BA712FB090A900158FCC /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
+		03A4BA732FB0937500158FCC /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
+		03A4BA752FB093DD00158FCC /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
+		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -139,6 +145,7 @@
 				03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */,
 				03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */,
 				03A4BA572FB08AFB00158FCC /* Secrets.swift */,
+				03A4BA772FB0951800158FCC /* MainTabView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -197,6 +204,8 @@
 		03A4BA482FB07E2500158FCC /* Resume */ = {
 			isa = PBXGroup;
 			children = (
+				03A4BA732FB0937500158FCC /* ResumeViewModel.swift */,
+				03A4BA752FB093DD00158FCC /* ResumeView.swift */,
 			);
 			path = Resume;
 			sourceTree = "<group>";
@@ -355,8 +364,11 @@
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,
 				03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */,
 				03A4BA402FB07D8C00158FCC /* AuthView.swift in Sources */,
+				03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */,
+				03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */,
 				03A4BA412FB07D8C00158FCC /* AuthViewModel.swift in Sources */,
 				03A4BA4E2FB07EC200158FCC /* Job.swift in Sources */,
+				03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

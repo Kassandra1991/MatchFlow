@@ -15,7 +15,7 @@ struct MatchFlowApp: App {
         WindowGroup {
             Group {
                 if auth.isAuthenticated {
-                    JobsView()
+                    MainTabView()
                         .environmentObject(auth)
                 } else {
                     AuthView()
