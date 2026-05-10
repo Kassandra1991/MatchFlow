@@ -58,6 +58,10 @@ class JobsViewModel: ObservableObject {
                 company: nil
             )
             jobs.insert(job, at: 0)
+            
+            // Считаем match score
+            try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
+            await fetchJobs(userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }

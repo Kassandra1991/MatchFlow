@@ -77,4 +77,26 @@ class JobService {
         
         return (url, text)
     }
+    
+    func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws {
+        // 1. Берём дефолтное резюме
+        guard let resume = try await ResumeService.shared.fetchDefaultResume(userId: userId) else { return }
+        
+        // 2. Получаем embedding резюме из Supabase
+        guard let resumeText = resume.rawText else { return }
+        let resumeEmbedding = try await AIService.shared.getEmbedding(for: resumeText)
+        
+        // 3. Получаем embedding вакансии
+        guard let jobText = job.rawText else { return }
+        let jobEmbedding = try await AIService.shared.getEmbedding(for: jobText)
+        
+        // 4. Считаем cosine similarity
+        let score = AIService.shared.calculateMatchScore(
+            resumeEmbedding: resumeEmbedding,
+            jobEmbedding: jobEmbedding
+        )
+        
+        // 5. Сохраняем
+        try await updateMatchScore(jobId: job.id, score: score)
+    }
 }
