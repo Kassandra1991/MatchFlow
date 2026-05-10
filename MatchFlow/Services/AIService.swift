@@ -50,7 +50,13 @@ class AIService {
           "skills": ["skill1", "skill2"],
           "difficulty": "junior/mid/senior"
         }
-        
+
+        Rules for skills:
+        - Maximum 20 skills
+        - Each skill max 3 words, prefer 1-2 words
+        - Use short forms: "iOS" not "iOS Development", "SwiftUI" not "SwiftUI Framework"
+        - Technical skills only, no soft skills
+
         Job description:
         \(description)
         """

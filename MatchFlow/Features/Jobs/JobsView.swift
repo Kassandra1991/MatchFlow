@@ -15,7 +15,7 @@ struct JobsView: View {
     @State private var showAddManually = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Group {
                 if viewModel.isLoading {
                     ProgressView()
@@ -97,14 +97,22 @@ struct JobRowView: View {
             if let score = job.matchScore {
                 HStack {
                     Image(systemName: "chart.bar.fill")
-                        .foregroundColor(.blue)
+                        .foregroundColor(matchColor(score))
                     Text("Match: \(Int(score * 100))%")
                         .font(.caption)
-                        .foregroundColor(.blue)
+                        .foregroundColor(matchColor(score))
                 }
             }
         }
         .padding(.vertical, 4)
+    }
+    
+    private func matchColor(_ score: Double) -> Color {
+        switch score {
+        case 0.55...: return .green
+        case 0.45..<0.55: return .orange
+        default: return .red
+        }
     }
 }
 

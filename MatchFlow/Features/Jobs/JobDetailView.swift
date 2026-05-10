@@ -187,8 +187,8 @@ struct MatchScoreBadge: View {
     
     var color: Color {
         switch score {
-        case 0.8...: return .green
-        case 0.6..<0.8: return .orange
+        case 0.55...: return .green
+        case 0.45..<0.55: return .orange
         default: return .red
         }
     }
@@ -213,6 +213,8 @@ struct SkillTag: View {
     var body: some View {
         Text(name)
             .font(.caption)
+            .lineLimit(1)
+            .truncationMode(.tail)
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
             .background(color.opacity(0.15))
@@ -227,7 +229,11 @@ struct FlowLayout: View {
     let content: (String) -> SkillTag
     
     var body: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], alignment: .leading) {
+        LazyVGrid(
+            columns: [GridItem(.adaptive(minimum: 60, maximum: 120))],
+            alignment: .leading,
+            spacing: 8
+        ) {
             ForEach(items, id: \.self) { item in
                 content(item)
             }
