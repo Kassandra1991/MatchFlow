@@ -60,6 +60,15 @@ struct JobsView: View {
                     await viewModel.addJobFromShare(userId: userId)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                Task {
+                    if let userId = try? await supabase.auth.session.user.id,
+                       let uuid = UUID(uuidString: userId.uuidString) {
+                        await viewModel.addJobFromShare(userId: uuid)
+                        await viewModel.fetchJobs(userId: uuid)
+                    }
+                }
+            }
         }
     }
     

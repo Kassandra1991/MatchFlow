@@ -99,4 +99,19 @@ class JobService {
         // 5. Сохраняем
         try await updateMatchScore(jobId: job.id, score: score)
     }
+    
+    func fetchJobText(from urlString: String) async throws -> String {
+        guard let url = URL(string: urlString) else { throw URLError(.badURL) }
+        
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let html = String(data: data, encoding: .utf8) ?? ""
+        
+        // Базовая очистка HTML тегов
+        let cleaned = html
+            .replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression)
+            .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        return String(cleaned.prefix(4000)) // Лимит для OpenAI
+    }
 }

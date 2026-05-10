@@ -29,19 +29,35 @@ class JobsViewModel: ObservableObject {
     
     func addJobFromShare(userId: UUID) async {
         let pending = jobService.checkPendingJob()
-        guard let text = pending.text ?? pending.url else { return }
+        print("🔍 pending url: \(pending.url ?? "nil")")
+        print("🔍 pending text: \(pending.text ?? "nil")")
+        guard let url = pending.url ?? pending.text else {
+            print("❌ nothing pending")
+            return
+        }
         
         isLoading = true
         do {
+            var rawText = url
+            if url.hasPrefix("http") {
+                print("🌐 fetching text from url...")
+                rawText = (try? await jobService.fetchJobText(from: url)) ?? url
+                print("📄 fetched text length: \(rawText.count)")
+            }
+            
             let job = try await jobService.addJob(
                 userId: userId,
-                url: pending.url,
-                rawText: text,
+                url: url.hasPrefix("http") ? url : nil,
+                rawText: rawText,
                 title: nil,
                 company: nil
             )
+            print("✅ job saved: \(job.id)")
             jobs.insert(job, at: 0)
+            try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
+            await fetchJobs(userId: userId)
         } catch {
+            print("❌ error: \(error)")
             errorMessage = error.localizedDescription
         }
         isLoading = false
