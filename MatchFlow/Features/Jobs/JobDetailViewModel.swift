@@ -29,7 +29,9 @@ class JobDetailViewModel: ObservableObject {
         isAnalyzing = true
         do {
             let text = jobDescription.isEmpty ? (job.rawText ?? "") : jobDescription
-            analysis = try await AIService.shared.analyzeJob(description: text)
+            let result = try await AIService.shared.analyzeJob(description: text)
+            analysis = result
+            try await JobService.shared.saveAnalysis(jobId: job.id, analysis: result)
         } catch {
             errorMessage = error.localizedDescription
         }

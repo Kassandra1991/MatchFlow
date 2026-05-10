@@ -174,9 +174,23 @@ struct JobDetailView: View {
         .onAppear {
             viewModel.selectedStatus = job.status
             viewModel.notes = job.notes ?? ""
+            
+            if let summary = job.summary {
+                // Есть сохранённый анализ — загружаем
+                viewModel.analysis = JobAnalysis(
+                    title: job.title,
+                    company: job.company,
+                    summary: summary,
+                    skills: job.skills,
+                    difficulty: job.difficulty
+                )
+            } else {
+                // Нет анализа — запускаем автоматически
+                Task { await viewModel.analyze(job: job) }
+            }
         }
-        .onChange(of: viewModel.selectedStatus) { newStatus in
-            Task { await viewModel.updateStatus(job: job, status: newStatus) }
+        .onChange(of: viewModel.selectedStatus) {
+            Task { await viewModel.updateStatus(job: job, status: viewModel.selectedStatus) }
         }
     }
 }

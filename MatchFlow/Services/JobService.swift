@@ -114,4 +114,22 @@ class JobService {
         
         return String(cleaned.prefix(4000)) // Лимит для OpenAI
     }
+    
+    func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String? = nil) async throws {
+        // Сохраняем skills как JSON строку
+        let skillsJSON = try? JSONEncoder().encode(analysis.skills)
+        let skillsString = skillsJSON.flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+        
+        try await supabase
+            .from("jobs")
+            .update([
+                "summary": analysis.summary ?? "",
+                "difficulty": analysis.difficulty ?? "",
+                "title": analysis.title ?? "",
+                "company": analysis.company ?? "",
+                "skills": skillsString
+            ])
+            .eq("id", value: jobId.uuidString)
+            .execute()
+    }
 }
