@@ -1,9 +1,24 @@
+# MatchFlow — Project Context
+
+## What is MatchFlow
+AI-powered career intelligence iOS app. Helps users track job applications, understand where they match, and see patterns in their job search.
 
 ## Current Status
-MVP Phase 1 — Backend + Core UI
+MVP Phase 1 — Complete. Core RAG pipeline working end-to-end.
+
+## What's Built
+- Auth (Supabase Auth + email)
+- Resume upload (PDF import → text extraction via PDFKit → OpenAI embedding → Supabase)
+- Multiple resumes per user with is_default flag
+- Job tracking (manual add + Share Extension from Safari/LinkedIn)
+- Share Extension captures URL/text → saves to shared UserDefaults → main app picks up on foreground
+- AI job analysis (title, company, summary, skills, difficulty via gpt-4o-mini)
+- Match scoring (cosine similarity between resume embedding and job embedding)
+- Job Detail View — native List style, AI analysis, status picker, notes
+- Status management (applied/interview/rejected/offer) with color coding
 
 ## Tech Stack
-- iOS: SwiftUI
+- iOS: SwiftUI, PDFKit
 - Backend: Supabase (PostgreSQL + pgvector)
 - AI: OpenAI API (text-embedding-3-small, gpt-4o-mini)
 - Auth: Supabase Auth
@@ -11,64 +26,69 @@ MVP Phase 1 — Backend + Core UI
 ## Architecture Pattern
 MVVM + Services
 - Views — UI only, no business logic
-- ViewModels — state, user actions
-- Services — Supabase and AI calls
-- Models — Codable structs matching DB schema
+- ViewModels — @MainActor, @Published state, user actions
+- Services — Supabase and AI calls, singletons
+- Models — Codable structs matching DB schema with CodingKeys
 
-## File Structure MatchFlow/
+## File Structure
+MatchFlow/
 ├── App/
-│   ├── MatchFlowApp.swift      # Entry point
-│   ├── MainTabView.swift       # Tab navigation
-│   └── Secrets.swift           # API keys (gitignored)
+│   ├── MatchFlowApp.swift          # Entry point
+│   ├── MainTabView.swift           # Tab navigation (Jobs, Resume)
+│   └── Secrets.swift               # API keys (gitignored)
 ├── Features/
 │   ├── Auth/
 │   │   ├── AuthViewModel.swift
 │   │   └── AuthView.swift
 │   ├── Jobs/
 │   │   ├── JobsViewModel.swift
-│   │   ├── JobsView.swift
-│   │   └── JobDetailView.swift (planned)
+│   │   ├── JobsView.swift          # List + AddJobView + JobRowView + StatusBadge
+│   │   ├── JobDetailView.swift     # Detail + AI analysis + status + notes
+│   │   └── JobDetailViewModel.swift
 │   └── Resume/
 │       ├── ResumeViewModel.swift
-│       └── ResumeView.swift
+│       └── ResumeView.swift        # List + AddResumeView + PDF import
 ├── Models/
-│   ├── Job.swift
+│   ├── Job.swift                   # includes skillsRaw→skills computed property
 │   ├── Resume.swift
 │   └── JobSkill.swift
 └── Services/
-├── AIService.swift         # OpenAI embeddings + analysis
-├── JobService.swift        # Jobs CRUD + embeddings
-└── ResumeService.swift     # Resume CRUD + embeddings
+├── AIService.swift             # OpenAI embeddings + analysis + cosine similarity
+├── JobService.swift            # Jobs CRUD + embeddings + match score + fetchJobText
+└── ResumeService.swift         # Resume CRUD + embeddings + default management
 MatchFlowShare/
-└── ShareViewController.swift  # Share Extension (Safari/LinkedIn)
+└── ShareViewController.swift      # Share Extension — saves URL/text to App Group UserDefaults
 
 ## Database Schema (Supabase)
-- users — auth via Supabase Auth
-- resumes — id, user_id, title, raw_text, embedding(1536), is_default
-- jobs — id, user_id, url, title, company, raw_text, embedding(1536), match_score, status, applied_at
-- job_skills — id, job_id, skill_name, is_missing, severity
+- users — id, email (auto-created via trigger on auth.users)
+- resumes — id, user_id, title, raw_text, embedding(1536), is_default, created_at
+- jobs — id, user_id, url, title, company, raw_text, embedding(1536), match_score, status, notes, summary, skills(text JSON), difficulty, applied_at, created_at
+- job_skills — id, job_id, skill_name, is_missing, severity (planned)
 
 ## RAG Flow
-1. User uploads resume → extract text → OpenAI embedding → save to resumes
-2. User shares job → extract text → OpenAI embedding → save to jobs
-3. Match score = cosine similarity (resume embedding vs job embedding)
-4. AI analyzes job description → extracts title, company, skills, difficulty
+1. User uploads resume → PDFKit extracts text → OpenAI embedding(1536) → save to resumes
+2. User shares/adds job → text extracted → OpenAI embedding → save to jobs
+3. Match score = cosine similarity (resume embedding vs job embedding) saved to jobs.match_score
+4. AI analyzes job → extracts title, company, summary, skills[], difficulty → saved to jobs
+
+## Known Limitations
+- LinkedIn app blocks HTML parsing → only URL saved, no auto text extraction
+- LinkedIn in Safari works via Share Extension (text selection → share)
+- skills saved as JSON string in text column (not array) due to Supabase SDK limitations
 
 ## App Group
 group.com.asichka.matchflow — shared container between app and Share Extension
+Keys: pendingJobURL, pendingJobText
 
 ## Secrets (gitignored)
 - Secrets.swift contains: openAIKey, supabaseURL, supabaseKey
-- Never commit Secrets.swift
+- SupabaseConfig.swift also gitignored
+- Never commit either file
 
-## Planned Features (Phase 2)
-- Job detail view with AI analysis
-- Skill gap detection
-- Multiple resumes per user
-- Insights dashboard
+## Next — Phase 2
+- Insights dashboard (match patterns, skill gaps across jobs)
+- Calendar heatmap (applications per day)
 - Contacts/referrals
-
-## Planned Features (Phase 3)
-- LinkedIn OAuth
-- Calendar heatmap
+- LinkedIn OAuth for profile import
 - Follow-up reminders
+- Clipboard detection for LinkedIn URLs
