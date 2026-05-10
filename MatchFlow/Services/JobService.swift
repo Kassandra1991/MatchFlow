@@ -12,20 +12,29 @@ class JobService {
     static let shared = JobService()
     
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job {
-        let job = try await supabase
+        // 1. Получаем embedding
+        let embedding = try await AIService.shared.getEmbedding(for: rawText)
+        let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
+        
+        // 2. Анализируем вакансию
+        let analysis = try await AIService.shared.analyzeJob(description: rawText)
+        
+        // 3. Сохраняем в Supabase
+        let job: Job = try await supabase
             .from("jobs")
             .insert([
                 "user_id": userId.uuidString,
                 "url": url ?? "",
                 "raw_text": rawText,
-                "title": title ?? "",
-                "company": company ?? "",
-                "status": "applied"
+                "title": analysis.title ?? title ?? "",
+                "company": analysis.company ?? company ?? "",
+                "status": "applied",
+                "embedding": embeddingString
             ])
             .select()
             .single()
             .execute()
-            .value as Job
+            .value
         return job
     }
     

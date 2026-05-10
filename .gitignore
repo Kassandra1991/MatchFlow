@@ -61,3 +61,5 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 MatchFlow/SupabaseConfig.swift
+MatchFlow/App/Secrets.swift
+MatchFlow/App/SupabaseConfig.swift

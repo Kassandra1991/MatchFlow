@@ -12,11 +12,17 @@ class ResumeService {
     static let shared = ResumeService()
     
     func saveResume(userId: UUID, rawText: String) async throws -> Resume {
+        // 1. Получаем embedding
+        let embedding = try await AIService.shared.getEmbedding(for: rawText)
+        let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
+        
+        // 2. Сохраняем в Supabase
         let resume: Resume = try await supabase
             .from("resumes")
             .insert([
                 "user_id": userId.uuidString,
-                "raw_text": rawText
+                "raw_text": rawText,
+                "embedding": embeddingString
             ])
             .select()
             .single()

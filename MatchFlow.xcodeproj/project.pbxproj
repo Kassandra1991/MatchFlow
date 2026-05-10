@@ -17,6 +17,8 @@
 		03A4BA502FB07EE700158FCC /* Resume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA4F2FB07EE700158FCC /* Resume.swift */; };
 		03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA512FB07F5F00158FCC /* JobService.swift */; };
 		03A4BA542FB07F8D00158FCC /* ResumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA532FB07F8D00158FCC /* ResumeService.swift */; };
+		03A4BA562FB089AC00158FCC /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA552FB089AC00158FCC /* AIService.swift */; };
+		03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA572FB08AFB00158FCC /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		03A4BA4F2FB07EE700158FCC /* Resume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resume.swift; sourceTree = "<group>"; };
 		03A4BA512FB07F5F00158FCC /* JobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobService.swift; sourceTree = "<group>"; };
 		03A4BA532FB07F8D00158FCC /* ResumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeService.swift; sourceTree = "<group>"; };
+		03A4BA552FB089AC00158FCC /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		03A4BA572FB08AFB00158FCC /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 			children = (
 				03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */,
 				03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */,
+				03A4BA572FB08AFB00158FCC /* Secrets.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			children = (
 				03A4BA512FB07F5F00158FCC /* JobService.swift */,
 				03A4BA532FB07F8D00158FCC /* ResumeService.swift */,
+				03A4BA552FB089AC00158FCC /* AIService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -241,6 +247,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				03A4BA542FB07F8D00158FCC /* ResumeService.swift in Sources */,
+				03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */,
+				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
 				03A4BA502FB07EE700158FCC /* Resume.swift in Sources */,
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,
