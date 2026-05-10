@@ -8,18 +8,29 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @StateObject private var tabSelection = TabSelectionViewModel()
+    
     var body: some View {
-        TabView {
+        TabView(selection: $tabSelection.selectedTab) {
+            DashboardView()
+                .tabItem {
+                    Label("Dashboard", systemImage: "chart.bar")
+                }
+                .tag(0)
+            
             JobsView()
                 .tabItem {
                     Label("Jobs", systemImage: "briefcase")
                 }
+                .tag(1)
             
             ResumeView()
                 .tabItem {
                     Label("Resume", systemImage: "doc.text")
                 }
+                .tag(2)
         }
+        .environmentObject(tabSelection)
     }
 }
 

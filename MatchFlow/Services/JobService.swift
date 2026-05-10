@@ -49,6 +49,17 @@ class JobService {
         return jobs
     }
     
+    func fetchJob(jobId: UUID) async throws -> Job {
+        let job: Job = try await supabase
+            .from("jobs")
+            .select()
+            .eq("id", value: jobId.uuidString)
+            .single()
+            .execute()
+            .value
+        return job
+    }
+    
     func updateStatus(jobId: UUID, status: JobStatus) async throws {
         try await supabase
             .from("jobs")

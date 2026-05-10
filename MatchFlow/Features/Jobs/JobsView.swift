@@ -12,38 +12,75 @@ import Auth
 struct JobsView: View {
     @StateObject private var viewModel = JobsViewModel()
     @EnvironmentObject private var auth: AuthViewModel
+    @EnvironmentObject private var tabSelection: TabSelectionViewModel
     @State private var showAddManually = false
+    
+    var filteredJobs: [Job] {
+        guard let filter = tabSelection.jobsFilter else { return viewModel.jobs }
+        return viewModel.jobs.filter { $0.status == filter }
+    }
     
     var body: some View {
         NavigationStack {
-            Group {
+            VStack(spacing: 0) {
+                // MARK: - Filter Bar
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        FilterChip(title: "All", count: viewModel.jobs.count, isSelected: tabSelection.jobsFilter == nil, color: .primary) {
+                            tabSelection.jobsFilter = nil
+                        }
+                        ForEach(JobStatus.allCases, id: \.self) { status in
+                            let count = viewModel.jobs.filter { $0.status == status }.count
+                            FilterChip(
+                                title: status.rawValue.capitalized,
+                                count: count,
+                                isSelected: tabSelection.jobsFilter == status,
+                                color: statusColor(status)
+                            ) {
+                                tabSelection.jobsFilter = status
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                }
+                .background(Color(.systemBackground))
+                
+                // MARK: - List
                 if viewModel.isLoading {
+                    Spacer()
                     ProgressView()
-                } else if viewModel.jobs.isEmpty {
+                    Spacer()
+                } else if filteredJobs.isEmpty {
+                    Spacer()
                     VStack(spacing: 16) {
                         Image(systemName: "briefcase")
                             .font(.system(size: 48))
                             .foregroundColor(.secondary)
-                        Text("No jobs yet")
+                        Text(tabSelection.jobsFilter == nil ? "No jobs yet" : "No \(tabSelection.jobsFilter!.rawValue) jobs")
                             .font(.headline)
-                        Text("Share a job from Safari or LinkedIn\nor add manually")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                        Button("Add Manually") {
-                            showAddManually = true
+                        if tabSelection.jobsFilter == nil {
+                            Text("Share a job from Safari or LinkedIn\nor add manually")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                            Button("Add Manually") {
+                                showAddManually = true
+                            }
+                            .buttonStyle(.borderedProminent)
                         }
-                        .buttonStyle(.borderedProminent)
                     }
+                    Spacer()
                 } else {
-                    List(viewModel.jobs) { job in
+                    List(filteredJobs) { job in
                         NavigationLink(destination: JobDetailView(job: job)) {
                             JobRowView(job: job)
                         }
                     }
+                    .listStyle(.insetGrouped)
                 }
             }
-            .navigationTitle("Applications")
+            .navigationTitle("Jobs (\(viewModel.jobs.count))")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -77,6 +114,42 @@ struct JobsView: View {
     private func getCurrentUserId() async -> UUID? {
         guard let session = try? await supabase.auth.session else { return nil }
         return UUID(uuidString: session.user.id.uuidString)
+    }
+    
+    private func statusColor(_ status: JobStatus) -> Color {
+        switch status {
+        case .applied: return .blue
+        case .interview: return .orange
+        case .rejected: return .red
+        case .offer: return .green
+        }
+    }
+}
+
+// MARK: - Filter Chip
+struct FilterChip: View {
+    let title: String
+    let count: Int
+    let isSelected: Bool
+    let color: Color
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 4) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(isSelected ? .semibold : .regular)
+                Text("\(count)")
+                    .font(.caption)
+                    .fontWeight(isSelected ? .semibold : .regular)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(isSelected ? color.opacity(0.15) : Color(.systemGray6))
+            .foregroundColor(isSelected ? color : .secondary)
+            .clipShape(Capsule())
+        }
     }
 }
 
@@ -165,7 +238,7 @@ struct AddJobView: View {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
+                    Button("Add") {
                         Task {
                             if let userId = try? await supabase.auth.session.user.id,
                                let uuid = UUID(uuidString: userId.uuidString) {
@@ -188,4 +261,5 @@ struct AddJobView: View {
 #Preview {
     JobsView()
         .environmentObject(AuthViewModel())
+        .environmentObject(TabSelectionViewModel())
 }

@@ -10,7 +10,7 @@ import Auth
 import Supabase
 
 struct JobDetailView: View {
-    let job: Job
+    @State var job: Job
     @StateObject private var viewModel = JobDetailViewModel()
     @Environment(\.dismiss) private var dismiss
     
@@ -168,6 +168,11 @@ struct JobDetailView: View {
         }
         .onChange(of: viewModel.selectedStatus) {
             Task { await viewModel.updateStatus(job: job, status: viewModel.selectedStatus) }
+        }
+        .onChange(of: viewModel.updatedJob) {
+            if let updated = viewModel.updatedJob {
+                job = updated
+            }
         }
     }
     

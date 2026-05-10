@@ -16,6 +16,7 @@ class JobDetailViewModel: ObservableObject {
     @Published var analysis: JobAnalysis? = nil
     @Published var isAnalyzing = false
     @Published var errorMessage = ""
+    @Published var updatedJob: Job? = nil
     
     func updateStatus(job: Job, status: JobStatus) async {
         do {
@@ -32,6 +33,8 @@ class JobDetailViewModel: ObservableObject {
             let result = try await AIService.shared.analyzeJob(description: text)
             analysis = result
             try await JobService.shared.saveAnalysis(jobId: job.id, analysis: result)
+            // Перезагружаем job из базы
+            updatedJob = try await JobService.shared.fetchJob(jobId: job.id)
         } catch {
             errorMessage = error.localizedDescription
         }

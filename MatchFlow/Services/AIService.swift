@@ -52,7 +52,7 @@ class AIService {
         }
 
         Rules for skills:
-        - Maximum 20 skills
+        - Maximum 10 skills
         - Each skill max 3 words, prefer 1-2 words
         - Use short forms: "iOS" not "iOS Development", "SwiftUI" not "SwiftUI Framework"
         - Technical skills only, no soft skills
