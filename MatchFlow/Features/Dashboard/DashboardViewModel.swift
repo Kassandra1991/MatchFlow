@@ -12,7 +12,8 @@ import Combine
 class DashboardViewModel: ObservableObject {
     @Published var allJobs: [Job] = []
     @Published var isLoading = false
-    @Published var expandedStatuses: Set<JobStatus> = [.applied, .interview]
+    @Published var isLoadingInsights = false
+    @Published var insights: JobInsights? = nil
     
     var totalJobs: Int { allJobs.count }
     
@@ -41,5 +42,22 @@ class DashboardViewModel: ObservableObject {
             print("❌ Dashboard load error: \(error)")
         }
         isLoading = false
+        
+        // Генерируем инсайты после загрузки
+        await generateInsights()
+    }
+    
+    func generateInsights() async {
+        guard !allJobs.isEmpty else { return }
+        isLoadingInsights = true
+        do {
+            let raw = try await AIService.shared.generateInsights(jobs: allJobs)
+            if let data = raw.data(using: .utf8) {
+                insights = try JSONDecoder().decode(JobInsights.self, from: data)
+            }
+        } catch {
+            print("❌ Insights error: \(error)")
+        }
+        isLoadingInsights = false
     }
 }

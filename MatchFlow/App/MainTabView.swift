@@ -14,7 +14,7 @@ struct MainTabView: View {
         TabView(selection: $tabSelection.selectedTab) {
             DashboardView()
                 .tabItem {
-                    Label("Dashboard", systemImage: "chart.bar")
+                    Label("Insights", systemImage: "sparkles")
                 }
                 .tag(0)
             

@@ -16,17 +16,7 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             List {
-                // MARK: - This Week
-                Section {
-                    HStack {
-                        Image(systemName: "calendar")
-                            .foregroundColor(.blue)
-                        Text("\(viewModel.jobsThisWeek) jobs added this week")
-                            .font(.subheadline)
-                    }
-                }
-                
-                // MARK: - Status Grid
+                // MARK: - Status + Insights
                 Section {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                         ForEach(JobStatus.allCases, id: \.self) { status in
@@ -40,8 +30,34 @@ struct DashboardView: View {
                         }
                     }
                     .padding(.vertical, 4)
+                    
+                    if viewModel.isLoadingInsights {
+                        HStack(spacing: 12) {
+                            ProgressView()
+                            Text("Analyzing ...")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        .padding(.vertical, 4)
+                    } else if let insights = viewModel.insights {
+                        if let summary = insights.summary {
+                            Text(summary)
+                                .font(.subheadline)
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 4)
+                        }
+                    } else if !viewModel.allJobs.isEmpty {
+                        Button {
+                            Task { await viewModel.generateInsights() }
+                        } label: {
+                            Label("Generate Insights", systemImage: "sparkles")
+                        }
+                    } else {
+                        Text("Add jobs to get AI insights")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
                 }
-                
                 // MARK: - Top Matches
                 if !viewModel.topMatches.isEmpty {
                     Section("Top Matches") {
@@ -54,7 +70,7 @@ struct DashboardView: View {
                 }
             }
             .listStyle(.insetGrouped)
-            .navigationTitle("Dashboard")
+            .navigationTitle("Insights")
             .task {
                 if let session = try? await supabase.auth.session,
                    let uuid = UUID(uuidString: session.user.id.uuidString) {
