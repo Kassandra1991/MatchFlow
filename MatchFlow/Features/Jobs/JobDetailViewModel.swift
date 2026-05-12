@@ -17,6 +17,43 @@ class JobDetailViewModel: ObservableObject {
     @Published var isAnalyzing = false
     @Published var errorMessage = ""
     @Published var updatedJob: Job? = nil
+    @Published var coverLetter: String? = nil
+    @Published var isGeneratingCoverLetter = false
+    @Published var showCoverLetter = false
+
+    func generateCoverLetter(job: Job, userId: UUID) async {
+        isGeneratingCoverLetter = true
+        do {
+            // Берём дефолтное резюме
+            guard let resume = try await ResumeService.shared.fetchDefaultResume(userId: userId),
+                  let resumeText = resume.rawText else {
+                errorMessage = "Please upload a resume first"
+                isGeneratingCoverLetter = false
+                return
+            }
+            
+            // Берём профиль
+            guard let profile = try await ProfileService.shared.fetchProfile(userId: userId) else {
+                errorMessage = "Please complete your profile first"
+                isGeneratingCoverLetter = false
+                return
+            }
+            
+            let jobText = job.rawText ?? job.url ?? ""
+            let letter = try await AIService.shared.generateCoverLetter(
+                resume: resumeText,
+                jobDescription: jobText,
+                profile: profile
+            )
+            
+            coverLetter = letter
+            try await JobService.shared.saveCoverLetter(jobId: job.id, coverLetter: letter)
+            showCoverLetter = true
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isGeneratingCoverLetter = false
+    }
     
     func updateStatus(job: Job, status: JobStatus) async {
         do {
@@ -39,5 +76,14 @@ class JobDetailViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
         isAnalyzing = false
+    }
+    
+    func loadJob(jobId: UUID) async {
+        do {
+            let fresh = try await JobService.shared.fetchJob(jobId: jobId)
+            updatedJob = fresh
+        } catch {
+            print("❌ load job error: \(error)")
+        }
     }
 }

@@ -33,6 +33,25 @@ struct JobDetailView: View {
                     }
                 }
                 .padding(.vertical, 4)
+                
+                HStack {
+                    Text("Status")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Picker("", selection: $viewModel.selectedStatus) {
+                        ForEach(JobStatus.allCases, id: \.self) { status in
+                            HStack(spacing: 6) {
+                                Circle()
+                                    .fill(statusColor(status))
+                                    .frame(width: 8, height: 8)
+                                Text(status.rawValue.capitalized)
+                            }
+                            .tag(status)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .tint(statusColor(viewModel.selectedStatus))
+                }
             }
             
             // MARK: - AI Analysis
@@ -110,25 +129,41 @@ struct JobDetailView: View {
                 }
             }
             
-            // MARK: - Status
+            // MARK: - Cover Letter
             Section {
-                HStack {
-                    Text("Status")
-                    Spacer()
-                    Picker("", selection: $viewModel.selectedStatus) {
-                        ForEach(JobStatus.allCases, id: \.self) { status in
-                            HStack(spacing: 6) {
-                                Circle()
-                                    .fill(statusColor(status))
-                                    .frame(width: 8, height: 8)
-                                Text(status.rawValue.capitalized)
-                            }
-                            .tag(status)
+                Button {
+                    viewModel.showCoverLetter = true
+                } label: {
+                    HStack {
+                        Image(systemName: "sparkles")
+                            .foregroundColor(.blue)
+                        Text("Cover Letter")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        if viewModel.isGeneratingCoverLetter {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                        } else {
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
                         }
                     }
-                    .pickerStyle(.menu)
-                    .tint(statusColor(viewModel.selectedStatus))
                 }
+                .disabled(viewModel.isGeneratingCoverLetter || (job.coverLetter == nil && viewModel.coverLetter == nil))
+            }
+            .sheet(isPresented: $viewModel.showCoverLetter) {
+                CoverLetterView(
+                    coverLetter: viewModel.coverLetter ?? job.coverLetter ?? "",
+                    onRegenerate: {
+                        Task {
+                            if let session = try? await supabase.auth.session,
+                               let uuid = UUID(uuidString: session.user.id.uuidString) {
+                                await viewModel.generateCoverLetter(job: job, userId: uuid)
+                            }
+                        }
+                    }
+                )
             }
             
             // MARK: - Notes
@@ -150,20 +185,35 @@ struct JobDetailView: View {
         .listStyle(.insetGrouped)
         .navigationTitle("Job Detail")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
         .onAppear {
             viewModel.selectedStatus = job.status
             viewModel.notes = job.notes ?? ""
             
-            if let summary = job.summary {
-                viewModel.analysis = JobAnalysis(
-                    title: job.title,
-                    company: job.company,
-                    summary: summary,
-                    skills: job.skills,
-                    difficulty: job.difficulty
-                )
-            } else {
-                Task { await viewModel.analyze(job: job) }
+            Task {
+                // Загружаем свежие данные
+                await viewModel.loadJob(jobId: job.id)
+                
+                // Анализ только если нет summary
+                if job.summary == nil {
+                    await viewModel.analyze(job: job)
+                } else {
+                    viewModel.analysis = JobAnalysis(
+                        title: job.title,
+                        company: job.company,
+                        summary: job.summary,
+                        skills: job.skills,
+                        difficulty: job.difficulty
+                    )
+                }
+                
+                // Cover letter только если нет
+                if job.coverLetter == nil {
+                    if let session = try? await supabase.auth.session,
+                       let uuid = UUID(uuidString: session.user.id.uuidString) {
+                        await viewModel.generateCoverLetter(job: job, userId: uuid)
+                    }
+                }
             }
         }
         .onChange(of: viewModel.selectedStatus) {
@@ -174,7 +224,9 @@ struct JobDetailView: View {
                 job = updated
             }
         }
+        
     }
+    
     
     private func statusColor(_ status: JobStatus) -> Color {
         switch status {

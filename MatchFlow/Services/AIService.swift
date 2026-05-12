@@ -151,6 +151,58 @@ class AIService {
         let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
         return response.choices.first?.message.content ?? "{}"
     }
+    
+    func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String {
+        let tone = profile.coverLetterTone ?? "friendly"
+        let important = profile.importantInCompany ?? ""
+        let workStyle = profile.workStyle ?? ""
+        let goals = profile.careerGoals ?? ""
+        let name = profile.fullName ?? ""
+        let headline = profile.headline ?? ""
+        
+        let prompt = """
+        Write a cover letter for this job application.
+        
+        Candidate:
+        - Name: \(name)
+        - Role: \(headline)
+        - What's important in a company: \(important)
+        - Work style: \(workStyle)
+        - Career goals: \(goals)
+        
+        Tone: \(tone)
+        
+        Resume summary:
+        \(String(resume.prefix(2000)))
+        
+        Job description:
+        \(String(jobDescription.prefix(2000)))
+        
+        Instructions:
+        - 1-2 paragraphs
+        - Match candidate values with company culture from job description
+        - Be specific about why this role fits their goals
+        - Tone must be \(tone)
+        - No generic phrases like "I am writing to apply"
+        - End with a clear call to action
+        - Return plain text only, no markdown
+        """
+        
+        var request = URLRequest(url: URL(string: completionURL)!)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Any] = [
+            "model": completionModel,
+            "messages": [["role": "user", "content": prompt]]
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
+        return response.choices.first?.message.content ?? ""
+    }
 }
 
 // MARK: - Response Models

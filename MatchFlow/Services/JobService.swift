@@ -143,4 +143,12 @@ class JobService {
             .eq("id", value: jobId.uuidString)
             .execute()
     }
+    
+    func saveCoverLetter(jobId: UUID, coverLetter: String) async throws {
+        try await supabase
+            .from("jobs")
+            .update(["cover_letter": coverLetter])
+            .eq("id", value: jobId.uuidString)
+            .execute()
+    }
 }

@@ -16,6 +16,7 @@ struct Job: Identifiable, Codable, Equatable {
     var rawText: String?
     var matchScore: Double?
     var status: JobStatus
+    var coverLetter: String?
     var notes: String?
     var summary: String?
     var skillsRaw: String?
@@ -41,6 +42,7 @@ struct Job: Identifiable, Codable, Equatable {
         case rawText = "raw_text"
         case matchScore = "match_score"
         case status
+        case coverLetter = "cover_letter"
         case notes
         case summary
         case skillsRaw = "skills"
