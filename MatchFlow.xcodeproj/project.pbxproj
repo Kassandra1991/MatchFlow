@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0305E1E02FB31D17004E9832 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0305E1DF2FB31D17004E9832 /* UserProfile.swift */; };
+		0305E1E22FB31D6D004E9832 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0305E1E12FB31D6D004E9832 /* ProfileService.swift */; };
+		0305E1E42FB31DCD004E9832 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */; };
 		03A4BA222FAFF87C00158FCC /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03A4BA212FAFF87C00158FCC /* Supabase */; };
 		03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */; };
 		03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */; };
@@ -57,6 +60,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0305E1DF2FB31D17004E9832 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		0305E1E12FB31D6D004E9832 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		03A4BA072FAFF68900158FCC /* MatchFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFlowApp.swift; sourceTree = "<group>"; };
 		03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
@@ -221,6 +227,7 @@
 			children = (
 				03A4BA732FB0937500158FCC /* ResumeViewModel.swift */,
 				03A4BA752FB093DD00158FCC /* ResumeView.swift */,
+				0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */,
 			);
 			path = Resume;
 			sourceTree = "<group>";
@@ -237,6 +244,7 @@
 			children = (
 				03A4BA4D2FB07EC200158FCC /* Job.swift */,
 				03A4BA4F2FB07EE700158FCC /* Resume.swift */,
+				0305E1DF2FB31D17004E9832 /* UserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 				03A4BA512FB07F5F00158FCC /* JobService.swift */,
 				03A4BA532FB07F8D00158FCC /* ResumeService.swift */,
 				03A4BA552FB089AC00158FCC /* AIService.swift */,
+				0305E1E12FB31D6D004E9832 /* ProfileService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -371,6 +380,7 @@
 			files = (
 				03A4BA542FB07F8D00158FCC /* ResumeService.swift in Sources */,
 				03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */,
+				0305E1E02FB31D17004E9832 /* UserProfile.swift in Sources */,
 				03A4BA722FB090A900158FCC /* JobsView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */,
@@ -383,12 +393,14 @@
 				03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */,
 				03A4BA402FB07D8C00158FCC /* AuthView.swift in Sources */,
 				03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */,
+				0305E1E42FB31DCD004E9832 /* ProfileViewModel.swift in Sources */,
 				03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */,
 				03A4BA412FB07D8C00158FCC /* AuthViewModel.swift in Sources */,
 				03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */,
 				03A4BA902FB1019E00158FCC /* DashboardView.swift in Sources */,
 				03A4BA4E2FB07EC200158FCC /* Job.swift in Sources */,
 				03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */,
+				0305E1E22FB31D6D004E9832 /* ProfileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

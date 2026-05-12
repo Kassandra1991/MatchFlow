@@ -26,7 +26,7 @@ struct MainTabView: View {
             
             ResumeView()
                 .tabItem {
-                    Label("Resume", systemImage: "doc.text")
+                    Label("Profile", systemImage: "person.crop.circle")
                 }
                 .tag(2)
         }

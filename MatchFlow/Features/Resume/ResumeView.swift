@@ -1,85 +1,258 @@
-//
-//  ResumeView.swift
-//  MatchFlow
-//
-//  Created by Aleksandra Asichka on 10/05/2026.
-//
-
 import SwiftUI
 import UniformTypeIdentifiers
-import Auth
 import Supabase
+import Auth
 import PDFKit
 
 struct ResumeView: View {
-    @StateObject private var viewModel = ResumeViewModel()
+    @StateObject private var resumeViewModel = ResumeViewModel()
+    @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showAddResume = false
     @State private var userId: UUID?
     
     var body: some View {
-        NavigationView {
-            Group {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else if viewModel.resumes.isEmpty {
-                    VStack(spacing: 16) {
-                        Image(systemName: "doc.text")
-                            .font(.system(size: 48))
-                            .foregroundColor(.secondary)
-                        Text("No resumes yet")
-                            .font(.headline)
-                        Text("Upload your resume to get AI match scores")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                        Button("Upload Resume") {
-                            showAddResume = true
+        NavigationStack {
+            List {
+                // MARK: - Profile Section
+                Section {
+                    if profileViewModel.isLoading {
+                        ProgressView()
+                    } else if profileViewModel.isEditing {
+                        ProfileEditView(viewModel: profileViewModel, userId: userId)
+                    } else if let profile = profileViewModel.profile {
+                        ProfileReadView(profile: profile) {
+                            profileViewModel.startEditing()
                         }
-                        .buttonStyle(.borderedProminent)
+                    } else {
+                        Button {
+                            profileViewModel.isEditing = true
+                        } label: {
+                            Label("Complete your profile", systemImage: "person.crop.circle.badge.plus")
+                        }
                     }
-                } else {
-                    List {
-                        ForEach(viewModel.resumes) { resume in
+                } header: {
+                    Text("About me")
+                }
+                
+                // MARK: - Resumes Section
+                Section {
+                    if resumeViewModel.isLoading {
+                        ProgressView()
+                    } else if resumeViewModel.resumes.isEmpty {
+                        VStack(spacing: 12) {
+                            Image(systemName: "doc.text")
+                                .font(.system(size: 36))
+                                .foregroundColor(.secondary)
+                            Text("No resumes yet")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Button("Upload Resume") {
+                                showAddResume = true
+                            }
+                            .buttonStyle(.borderedProminent)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                    } else {
+                        ForEach(resumeViewModel.resumes) { resume in
                             ResumeRowView(resume: resume) {
                                 if let userId {
-                                    Task { await viewModel.setDefault(resume: resume, userId: userId) }
+                                    Task { await resumeViewModel.setDefault(resume: resume, userId: userId) }
                                 }
                             } onDelete: {
-                                Task { await viewModel.deleteResume(resume: resume) }
+                                Task { await resumeViewModel.deleteResume(resume: resume) }
                             }
                         }
                     }
-                }
-            }
-            .navigationTitle("Resumes")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showAddResume = true
-                    } label: {
-                        Image(systemName: "plus")
+                } header: {
+                    HStack {
+                        Text("My Resumes")
+                        Spacer()
+                        Button {
+                            showAddResume = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
                 }
             }
+            .listStyle(.insetGrouped)
+            .navigationTitle("Profile")
             .sheet(isPresented: $showAddResume) {
-                AddResumeView(viewModel: viewModel, userId: userId)
+                AddResumeView(viewModel: resumeViewModel, userId: userId)
             }
             .task {
                 if let session = try? await supabase.auth.session,
                    let uuid = UUID(uuidString: session.user.id.uuidString) {
                     userId = uuid
-                    await viewModel.fetchResumes(userId: uuid)
+                    await profileViewModel.fetchProfile(userId: uuid)
+                    await resumeViewModel.fetchResumes(userId: uuid)
                 }
             }
         }
     }
 }
 
+// MARK: - Profile Read View
+struct ProfileReadView: View {
+    let profile: UserProfile
+    let onEdit: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(profile.fullName ?? "Add your name")
+                        .font(.headline)
+                    if let headline = profile.headline, !headline.isEmpty {
+                        Text(headline)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Spacer()
+                Button("Edit", action: onEdit)
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+            }
+            
+            if let important = profile.importantInCompany, !important.isEmpty {
+                ProfileRow(icon: "building.2", label: "Important in company", value: important)
+            }
+            if let workStyle = profile.workStyle, !workStyle.isEmpty {
+                ProfileRow(icon: "laptopcomputer", label: "Work style", value: workStyle)
+            }
+            if let goals = profile.careerGoals, !goals.isEmpty {
+                ProfileRow(icon: "target", label: "Career goals", value: goals)
+            }
+            if let tone = profile.coverLetterTone, !tone.isEmpty {
+                ProfileRow(icon: "text.bubble", label: "Cover letter tone", value: tone.capitalized)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+// MARK: - Profile Row
+struct ProfileRow: View {
+    let icon: String
+    let label: String
+    let value: String
+    
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: icon)
+                .foregroundColor(.secondary)
+                .font(.subheadline)
+                .frame(width: 20)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(label)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(value)
+                    .font(.subheadline)
+            }
+        }
+    }
+}
+
+// MARK: - Profile Edit View
+struct ProfileEditView: View {
+    @ObservedObject var viewModel: ProfileViewModel
+    let userId: UUID?
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            TextField("Full name", text: $viewModel.fullName)
+                .textFieldStyle(.roundedBorder)
+            
+            TextField("Headline (e.g. iOS Developer)", text: $viewModel.headline)
+                .textFieldStyle(.roundedBorder)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("What's important to you in a company?")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextEditor(text: $viewModel.importantInCompany)
+                    .frame(minHeight: 80)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Work style preferences")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextField("e.g. remote, small team, async", text: $viewModel.workStyle)
+                    .textFieldStyle(.roundedBorder)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Career goals")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                TextEditor(text: $viewModel.careerGoals)
+                    .frame(minHeight: 80)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Cover letter tone")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Picker("", selection: $viewModel.coverLetterTone) {
+                    ForEach(CoverLetterTone.allCases, id: \.rawValue) { tone in
+                        Text(tone.label).tag(tone.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+            
+            if !viewModel.errorMessage.isEmpty {
+                Text(viewModel.errorMessage)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
+            
+            HStack {
+                if profileViewModel_hasProfile {
+                    Button("Cancel") {
+                        viewModel.isEditing = false
+                    }
+                    .foregroundColor(.secondary)
+                }
+                Spacer()
+                Button {
+                    Task {
+                        if let userId {
+                            await viewModel.saveProfile(userId: userId)
+                        }
+                    }
+                } label: {
+                    if viewModel.isSaving {
+                        ProgressView()
+                    } else {
+                        Text("Save")
+                            .fontWeight(.semibold)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(viewModel.fullName.isEmpty || viewModel.isSaving)
+            }
+        }
+        .padding(.vertical, 4)
+    }
+    
+    private var profileViewModel_hasProfile: Bool {
+        viewModel.profile != nil
+    }
+}
+
+// MARK: - Resume Row View
 struct ResumeRowView: View {
     let resume: Resume
     let onSetDefault: () -> Void
     let onDelete: () -> Void
-    
+
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
@@ -115,6 +288,7 @@ struct ResumeRowView: View {
     }
 }
 
+// MARK: - Add Resume View
 struct AddResumeView: View {
     @ObservedObject var viewModel: ResumeViewModel
     let userId: UUID?
@@ -123,27 +297,27 @@ struct AddResumeView: View {
     @State private var rawText = ""
     @State private var isDefault = true
     @State private var showFilePicker = false
-    
+
     var body: some View {
         NavigationView {
             Form {
                 Section("Resume Title") {
                     TextField("e.g. iOS Developer CV", text: $title)
                 }
-                
+
                 Section("Content") {
                     Button {
                         showFilePicker = true
                     } label: {
                         Label("Import from PDF", systemImage: "doc.fill")
                     }
-                    
+
                     if !rawText.isEmpty {
                         Text("✓ Text extracted (\(rawText.count) chars)")
                             .font(.caption)
                             .foregroundColor(.green)
                     }
-                    
+
                     TextEditor(text: $rawText)
                         .frame(minHeight: 150)
                         .overlay(
@@ -157,11 +331,11 @@ struct AddResumeView: View {
                             alignment: .topLeading
                         )
                 }
-                
+
                 Section {
                     Toggle("Set as Default", isOn: $isDefault)
                 }
-                
+
                 if !viewModel.errorMessage.isEmpty {
                     Section {
                         Text(viewModel.errorMessage)
@@ -195,7 +369,7 @@ struct AddResumeView: View {
             }
             .fileImporter(
                 isPresented: $showFilePicker,
-                allowedContentTypes: [UTType.pdf],
+                allowedContentTypes: [.pdf],
                 allowsMultipleSelection: false
             ) { result in
                 if let url = try? result.get().first {
@@ -204,11 +378,10 @@ struct AddResumeView: View {
             }
         }
     }
-    
+
     private func extractText(from url: URL) {
         guard url.startAccessingSecurityScopedResource() else { return }
         defer { url.stopAccessingSecurityScopedResource() }
-        
         if let pdf = PDFDocument(url: url) {
             var text = ""
             for i in 0..<pdf.pageCount {
