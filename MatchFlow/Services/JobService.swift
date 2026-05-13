@@ -77,7 +77,7 @@ class JobService {
     }
     
     func checkPendingJob() -> (url: String?, text: String?) {
-        let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
+        let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         let url = defaults?.string(forKey: "pendingJobURL")
         let text = defaults?.string(forKey: "pendingJobText")
         

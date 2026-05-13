@@ -46,14 +46,14 @@ class ShareViewController: UIViewController {
     }
     
     private func handleURL(_ url: URL) {
-        let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
+        let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         defaults?.set(url.absoluteString, forKey: "pendingJobURL")
         defaults?.synchronize()
         showConfirmation(message: "Job URL saved! Open MatchFlow to analyze.")
     }
     
     private func handleText(_ text: String) {
-        let defaults = UserDefaults(suiteName: "group.com.asichka.matchflow")
+        let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         defaults?.set(text, forKey: "pendingJobText")
         defaults?.synchronize()
         showConfirmation(message: "Job saved! Open MatchFlow to analyze.")
