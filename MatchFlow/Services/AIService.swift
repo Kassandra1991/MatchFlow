@@ -7,7 +7,17 @@
 
 import Foundation
 
-class AIService {
+import Foundation
+
+protocol AIServiceProtocol {
+    func getEmbedding(for text: String) async throws -> [Float]
+    func analyzeJob(description: String) async throws -> JobAnalysis
+    func calculateMatchScore(resumeEmbedding: [Float], jobEmbedding: [Float]) -> Double
+    func generateInsights(jobs: [Job]) async throws -> String
+    func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String
+}
+
+class AIService: AIServiceProtocol {
     static let shared = AIService()
     
     private let apiKey = Secrets.openAIKey

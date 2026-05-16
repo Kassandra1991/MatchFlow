@@ -63,3 +63,4 @@ fastlane/test_output
 MatchFlow/SupabaseConfig.swift
 MatchFlow/App/Secrets.swift
 MatchFlow/App/SupabaseConfig.swift
+.DS_Store

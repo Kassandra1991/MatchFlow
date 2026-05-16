@@ -8,7 +8,22 @@
 import Foundation
 import Supabase
 
-class JobService {
+import Foundation
+
+protocol JobServiceProtocol {
+    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job
+    func fetchJobs(userId: UUID) async throws -> [Job]
+    func fetchJob(jobId: UUID) async throws -> Job
+    func updateStatus(jobId: UUID, status: JobStatus) async throws
+    func updateMatchScore(jobId: UUID, score: Double) async throws
+    func checkPendingJob() -> (url: String?, text: String?)
+    func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws
+    func fetchJobText(from urlString: String) async throws -> String
+    func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws
+    func saveCoverLetter(jobId: UUID, coverLetter: String) async throws
+}
+
+class JobService: JobServiceProtocol {
     static let shared = JobService()
     
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job {

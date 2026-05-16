@@ -1,7 +1,12 @@
 import Foundation
 import Supabase
 
-class ProfileService {
+protocol ProfileServiceProtocol {
+    func fetchProfile(userId: UUID) async throws -> UserProfile?
+    func saveProfile(profile: UserProfile) async throws
+}
+
+class ProfileService: ProfileServiceProtocol {
     static let shared = ProfileService()
     
     func fetchProfile(userId: UUID) async throws -> UserProfile? {

@@ -8,7 +8,15 @@
 import Foundation
 import Supabase
 
-class ResumeService {
+protocol ResumeServiceProtocol {
+    func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool) async throws -> Resume
+    func fetchResumes(userId: UUID) async throws -> [Resume]
+    func fetchDefaultResume(userId: UUID) async throws -> Resume?
+    func setDefault(resumeId: UUID, userId: UUID) async throws
+    func deleteResume(resumeId: UUID) async throws
+}
+
+class ResumeService: ResumeServiceProtocol {
     static let shared = ResumeService()
     
     func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool = true) async throws -> Resume {
