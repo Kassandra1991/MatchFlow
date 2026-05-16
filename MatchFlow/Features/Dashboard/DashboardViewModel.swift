@@ -37,7 +37,7 @@ class DashboardViewModel: ObservableObject {
     func load(userId: UUID) async {
         isLoading = true
         do {
-            allJobs = try await JobService.shared.fetchJobs(userId: userId)
+            allJobs = try await JobService().fetchJobs(userId: userId)
         } catch {
             print("❌ Dashboard load error: \(error)")
         }
@@ -51,7 +51,7 @@ class DashboardViewModel: ObservableObject {
         guard !allJobs.isEmpty else { return }
         isLoadingInsights = true
         do {
-            let raw = try await AIService.shared.generateInsights(jobs: allJobs)
+            let raw = try await AIService().generateInsights(jobs: allJobs)
             if let data = raw.data(using: .utf8) {
                 insights = try JSONDecoder().decode(JobInsights.self, from: data)
             }

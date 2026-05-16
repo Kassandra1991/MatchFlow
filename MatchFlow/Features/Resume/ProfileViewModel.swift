@@ -18,7 +18,7 @@ class ProfileViewModel: ObservableObject {
     @Published var careerGoals = ""
     @Published var coverLetterTone = "friendly"
     
-    private let profileService = ProfileService.shared
+    private let profileService = ProfileService()
     
     func fetchProfile(userId: UUID) async {
         isLoading = true

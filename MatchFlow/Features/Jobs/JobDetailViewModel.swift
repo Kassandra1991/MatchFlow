@@ -21,33 +21,48 @@ class JobDetailViewModel: ObservableObject {
     @Published var isGeneratingCoverLetter = false
     @Published var showCoverLetter = false
 
+    private let jobService: JobServiceProtocol
+    private let resumeService: ResumeServiceProtocol
+    private let profileService: ProfileServiceProtocol
+    private let aiService: AIServiceProtocol
+
+    init(
+        jobService: JobServiceProtocol = JobService(),
+        resumeService: ResumeServiceProtocol = ResumeService(),
+        profileService: ProfileServiceProtocol = ProfileService(),
+        aiService: AIServiceProtocol = AIService()
+    ) {
+        self.jobService = jobService
+        self.resumeService = resumeService
+        self.profileService = profileService
+        self.aiService = aiService
+    }
+
     func generateCoverLetter(job: Job, userId: UUID) async {
         isGeneratingCoverLetter = true
         do {
-            // Берём дефолтное резюме
-            guard let resume = try await ResumeService.shared.fetchDefaultResume(userId: userId),
+            guard let resume = try await resumeService.fetchDefaultResume(userId: userId),
                   let resumeText = resume.rawText else {
                 errorMessage = "Please upload a resume first"
                 isGeneratingCoverLetter = false
                 return
             }
             
-            // Берём профиль
-            guard let profile = try await ProfileService.shared.fetchProfile(userId: userId) else {
+            guard let profile = try await profileService.fetchProfile(userId: userId) else {
                 errorMessage = "Please complete your profile first"
                 isGeneratingCoverLetter = false
                 return
             }
             
             let jobText = job.rawText ?? job.url ?? ""
-            let letter = try await AIService.shared.generateCoverLetter(
+            let letter = try await aiService.generateCoverLetter(
                 resume: resumeText,
                 jobDescription: jobText,
                 profile: profile
             )
             
             coverLetter = letter
-            try await JobService.shared.saveCoverLetter(jobId: job.id, coverLetter: letter)
+            try await jobService.saveCoverLetter(jobId: job.id, coverLetter: letter)
             showCoverLetter = true
         } catch {
             errorMessage = error.localizedDescription
@@ -57,7 +72,7 @@ class JobDetailViewModel: ObservableObject {
     
     func updateStatus(job: Job, status: JobStatus) async {
         do {
-            try await JobService.shared.updateStatus(jobId: job.id, status: status)
+            try await jobService.updateStatus(jobId: job.id, status: status)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -67,11 +82,10 @@ class JobDetailViewModel: ObservableObject {
         isAnalyzing = true
         do {
             let text = jobDescription.isEmpty ? (job.rawText ?? "") : jobDescription
-            let result = try await AIService.shared.analyzeJob(description: text)
+            let result = try await aiService.analyzeJob(description: text)
             analysis = result
-            try await JobService.shared.saveAnalysis(jobId: job.id, analysis: result)
-            // Перезагружаем job из базы
-            updatedJob = try await JobService.shared.fetchJob(jobId: job.id)
+            try await jobService.saveAnalysis(jobId: job.id, analysis: result, rawText: nil)
+            updatedJob = try await jobService.fetchJob(jobId: job.id)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -80,7 +94,7 @@ class JobDetailViewModel: ObservableObject {
     
     func loadJob(jobId: UUID) async {
         do {
-            let fresh = try await JobService.shared.fetchJob(jobId: jobId)
+            let fresh = try await jobService.fetchJob(jobId: jobId)
             updatedJob = fresh
         } catch {
             print("❌ load job error: \(error)")

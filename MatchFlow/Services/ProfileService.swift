@@ -6,8 +6,7 @@ protocol ProfileServiceProtocol {
     func saveProfile(profile: UserProfile) async throws
 }
 
-class ProfileService: ProfileServiceProtocol {
-    static let shared = ProfileService()
+struct ProfileService: ProfileServiceProtocol {
     
     func fetchProfile(userId: UUID) async throws -> UserProfile? {
         let profiles: [UserProfile] = try await supabase

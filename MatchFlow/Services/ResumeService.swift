@@ -16,8 +16,7 @@ protocol ResumeServiceProtocol {
     func deleteResume(resumeId: UUID) async throws
 }
 
-class ResumeService: ResumeServiceProtocol {
-    static let shared = ResumeService()
+struct ResumeService: ResumeServiceProtocol {
     
     func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool = true) async throws -> Resume {
         // 1. Если isDefault — сбрасываем предыдущий дефолт
@@ -30,7 +29,7 @@ class ResumeService: ResumeServiceProtocol {
         }
         
         // 2. Получаем embedding
-        let embedding = try await AIService.shared.getEmbedding(for: rawText)
+        let embedding = try await AIService().getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
         
         // 3. Сохраняем в Supabase

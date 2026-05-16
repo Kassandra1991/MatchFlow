@@ -15,7 +15,7 @@ class ResumeViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var successMessage = ""
     
-    private let resumeService = ResumeService.shared
+    private let resumeService = ResumeService()
     
     func fetchResumes(userId: UUID) async {
         isLoading = true

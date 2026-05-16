@@ -8,7 +8,6 @@
 import Foundation
 import Supabase
 
-import Foundation
 
 protocol JobServiceProtocol {
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job
@@ -23,18 +22,14 @@ protocol JobServiceProtocol {
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws
 }
 
-class JobService: JobServiceProtocol {
-    static let shared = JobService()
+struct JobService: JobServiceProtocol {
     
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job {
-        // 1. Получаем embedding
-        let embedding = try await AIService.shared.getEmbedding(for: rawText)
+        let embedding = try await AIService().getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
         
-        // 2. Анализируем вакансию
-        let analysis = try await AIService.shared.analyzeJob(description: rawText)
+        let analysis = try await AIService().analyzeJob(description: rawText)
         
-        // 3. Сохраняем в Supabase
         let job: Job = try await supabase
             .from("jobs")
             .insert([
@@ -95,54 +90,37 @@ class JobService: JobServiceProtocol {
         let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         let url = defaults?.string(forKey: "pendingJobURL")
         let text = defaults?.string(forKey: "pendingJobText")
-        
-        // Очищаем после прочтения
         defaults?.removeObject(forKey: "pendingJobURL")
         defaults?.removeObject(forKey: "pendingJobText")
         defaults?.synchronize()
-        
         return (url, text)
     }
     
     func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws {
-        // 1. Берём дефолтное резюме
-        guard let resume = try await ResumeService.shared.fetchDefaultResume(userId: userId) else { return }
-        
-        // 2. Получаем embedding резюме из Supabase
+        guard let resume = try await ResumeService().fetchDefaultResume(userId: userId) else { return }
         guard let resumeText = resume.rawText else { return }
-        let resumeEmbedding = try await AIService.shared.getEmbedding(for: resumeText)
-        
-        // 3. Получаем embedding вакансии
+        let resumeEmbedding = try await AIService().getEmbedding(for: resumeText)
         guard let jobText = job.rawText else { return }
-        let jobEmbedding = try await AIService.shared.getEmbedding(for: jobText)
-        
-        // 4. Считаем cosine similarity
-        let score = AIService.shared.calculateMatchScore(
+        let jobEmbedding = try await AIService().getEmbedding(for: jobText)
+        let score = AIService().calculateMatchScore(
             resumeEmbedding: resumeEmbedding,
             jobEmbedding: jobEmbedding
         )
-        
-        // 5. Сохраняем
         try await updateMatchScore(jobId: job.id, score: score)
     }
     
     func fetchJobText(from urlString: String) async throws -> String {
         guard let url = URL(string: urlString) else { throw URLError(.badURL) }
-        
         let (data, _) = try await URLSession.shared.data(from: url)
         let html = String(data: data, encoding: .utf8) ?? ""
-        
-        // Базовая очистка HTML тегов
         let cleaned = html
             .replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression)
             .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        return String(cleaned.prefix(4000)) // Лимит для OpenAI
+        return String(cleaned.prefix(4000))
     }
     
-    func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String? = nil) async throws {
-        // Сохраняем skills как JSON строку
+    func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws {
         let skillsJSON = try? JSONEncoder().encode(analysis.skills)
         let skillsString = skillsJSON.flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
         

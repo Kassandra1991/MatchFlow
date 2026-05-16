@@ -15,7 +15,11 @@ class JobsViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var showAddJob = false
     
-    private let jobService = JobService.shared
+    private let jobService: JobServiceProtocol
+    
+    init(jobService: JobServiceProtocol = JobService()) {
+        self.jobService = jobService
+    }
     
     func fetchJobs(userId: UUID) async {
         isLoading = true
@@ -74,8 +78,6 @@ class JobsViewModel: ObservableObject {
                 company: nil
             )
             jobs.insert(job, at: 0)
-            
-            // Считаем match score
             try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
             await fetchJobs(userId: userId)
         } catch {

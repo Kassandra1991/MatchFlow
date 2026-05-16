@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 protocol AIServiceProtocol {
     func getEmbedding(for text: String) async throws -> [Float]
     func analyzeJob(description: String) async throws -> JobAnalysis
@@ -17,8 +15,7 @@ protocol AIServiceProtocol {
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String
 }
 
-class AIService: AIServiceProtocol {
-    static let shared = AIService()
+struct AIService: AIServiceProtocol {
     
     private let apiKey = Secrets.openAIKey
     private let embeddingURL = "https://api.openai.com/v1/embeddings"
