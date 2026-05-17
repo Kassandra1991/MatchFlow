@@ -41,6 +41,7 @@
 		03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1582FB9319F000D36C9 /* Job+Mock.swift */; };
 		03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */; };
 		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
+		03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		03BEA1582FB9319F000D36C9 /* Job+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Job+Mock.swift"; sourceTree = "<group>"; };
 		03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
+		03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +329,7 @@
 		03BEA1512FB912A9000D36C9 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */,
 				03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */,
 			);
 			path = ViewModels;
@@ -535,6 +538,7 @@
 			files = (
 				03BEA1552FB912A9000D36C9 /* JobMatchTests.swift in Sources */,
 				03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */,
+				03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */,
 				03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */,
 				03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */,
 				03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */,
