@@ -34,6 +34,13 @@
 		03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */; };
 		03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */; };
 		03A4BA902FB1019E00158FCC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8F2FB1019E00158FCC /* DashboardView.swift */; };
+		03BEA14B2FB9129F000D36C9 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03BEA1462FB9129F000D36C9 /* MainInterface.storyboard */; };
+		03BEA14C2FB9129F000D36C9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1482FB9129F000D36C9 /* ShareViewController.swift */; };
+		03BEA1552FB912A9000D36C9 /* JobMatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */; };
+		03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1562FB9310C000D36C9 /* MockJobService.swift */; };
+		03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1582FB9319F000D36C9 /* Job+Mock.swift */; };
+		03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */; };
+		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +50,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 03A4BA5C2FB08DBB00158FCC;
 			remoteInfo = MatchFlowShare;
+		};
+		03BEA1392FB91253000D36C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03A4B9FF2FAFF68900158FCC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03A4BA062FAFF68900158FCC;
+			remoteInfo = MatchFlow;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -89,28 +103,17 @@
 		03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8F2FB1019E00158FCC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		03BEA1352FB91253000D36C9 /* JobMatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JobMatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03BEA1442FB9129F000D36C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03BEA1452FB9129F000D36C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		03BEA1472FB9129F000D36C9 /* MatchFlowShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlowShare.entitlements; sourceTree = "<group>"; };
+		03BEA1482FB9129F000D36C9 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchTests.swift; sourceTree = "<group>"; };
+		03BEA1562FB9310C000D36C9 /* MockJobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJobService.swift; sourceTree = "<group>"; };
+		03BEA1582FB9319F000D36C9 /* Job+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Job+Mock.swift"; sourceTree = "<group>"; };
+		03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
+		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		03A4BA682FB08DBB00158FCC /* Exceptions for "MatchFlowShare" folder in "MatchFlowShare" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				03A4BA682FB08DBB00158FCC /* Exceptions for "MatchFlowShare" folder in "MatchFlowShare" target */,
-			);
-			path = MatchFlowShare;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03A4BA042FAFF68900158FCC /* Frameworks */ = {
@@ -128,6 +131,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03BEA1322FB91253000D36C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -135,7 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				03A4BA3D2FB07D8C00158FCC /* MatchFlow */,
-				03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */,
+				03BEA1492FB9129F000D36C9 /* MatchFlowShare */,
+				03BEA1542FB912A9000D36C9 /* JobMatchTests */,
 				03A4BA202FAFF87C00158FCC /* Frameworks */,
 				03A4BA082FAFF68900158FCC /* Products */,
 			);
@@ -146,6 +157,7 @@
 			children = (
 				03A4BA072FAFF68900158FCC /* MatchFlow.app */,
 				03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */,
+				03BEA1352FB91253000D36C9 /* JobMatchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +282,77 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		03BEA1492FB9129F000D36C9 /* MatchFlowShare */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA1442FB9129F000D36C9 /* Info.plist */,
+				03BEA1462FB9129F000D36C9 /* MainInterface.storyboard */,
+				03BEA1472FB9129F000D36C9 /* MatchFlowShare.entitlements */,
+				03BEA1482FB9129F000D36C9 /* ShareViewController.swift */,
+			);
+			path = MatchFlowShare;
+			sourceTree = "<group>";
+		};
+		03BEA14D2FB912A9000D36C9 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA1582FB9319F000D36C9 /* Job+Mock.swift */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		03BEA14E2FB912A9000D36C9 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA1562FB9310C000D36C9 /* MockJobService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		03BEA14F2FB912A9000D36C9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		03BEA1502FB912A9000D36C9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		03BEA1512FB912A9000D36C9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		03BEA1522FB912A9000D36C9 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA14F2FB912A9000D36C9 /* Models */,
+				03BEA1502FB912A9000D36C9 /* Services */,
+				03BEA1512FB912A9000D36C9 /* ViewModels */,
+			);
+			path = Unit;
+			sourceTree = "<group>";
+		};
+		03BEA1542FB912A9000D36C9 /* JobMatchTests */ = {
+			isa = PBXGroup;
+			children = (
+				03BEA14D2FB912A9000D36C9 /* Fixtures */,
+				03BEA14E2FB912A9000D36C9 /* Mocks */,
+				03BEA1522FB912A9000D36C9 /* Unit */,
+				03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */,
+			);
+			path = JobMatchTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,15 +390,32 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				03A4BA5E2FB08DBB00158FCC /* MatchFlowShare */,
-			);
 			name = MatchFlowShare;
 			packageProductDependencies = (
 			);
 			productName = MatchFlowShare;
 			productReference = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		03BEA1342FB91253000D36C9 /* JobMatchTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03BEA13D2FB91254000D36C9 /* Build configuration list for PBXNativeTarget "JobMatchTests" */;
+			buildPhases = (
+				03BEA1312FB91253000D36C9 /* Sources */,
+				03BEA1322FB91253000D36C9 /* Frameworks */,
+				03BEA1332FB91253000D36C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03BEA13A2FB91253000D36C9 /* PBXTargetDependency */,
+			);
+			name = JobMatchTests;
+			packageProductDependencies = (
+			);
+			productName = JobMatchTests;
+			productReference = 03BEA1352FB91253000D36C9 /* JobMatchTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -324,7 +424,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2640;
+				LastSwiftUpdateCheck = 2650;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					03A4BA062FAFF68900158FCC = {
@@ -332,6 +432,10 @@
 					};
 					03A4BA5C2FB08DBB00158FCC = {
 						CreatedOnToolsVersion = 26.4.1;
+					};
+					03BEA1342FB91253000D36C9 = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = 03A4BA062FAFF68900158FCC;
 					};
 				};
 			};
@@ -354,6 +458,7 @@
 			targets = (
 				03A4BA062FAFF68900158FCC /* MatchFlow */,
 				03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */,
+				03BEA1342FB91253000D36C9 /* JobMatchTests */,
 			);
 		};
 /* End PBXProject section */
@@ -368,6 +473,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		03A4BA5B2FB08DBB00158FCC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03BEA14B2FB9129F000D36C9 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03BEA1332FB91253000D36C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -412,6 +525,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03BEA14C2FB9129F000D36C9 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03BEA1312FB91253000D36C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03BEA1552FB912A9000D36C9 /* JobMatchTests.swift in Sources */,
+				03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */,
+				03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */,
+				03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */,
+				03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,7 +549,23 @@
 			target = 03A4BA5C2FB08DBB00158FCC /* MatchFlowShare */;
 			targetProxy = 03A4BA652FB08DBB00158FCC /* PBXContainerItemProxy */;
 		};
+		03BEA13A2FB91253000D36C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03A4BA062FAFF68900158FCC /* MatchFlow */;
+			targetProxy = 03BEA1392FB91253000D36C9 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		03BEA1462FB9129F000D36C9 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03BEA1452FB9129F000D36C9 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		03A4BA102FAFF68B00158FCC /* Debug */ = {
@@ -675,6 +817,50 @@
 			};
 			name = Release;
 		};
+		03BEA13B2FB91254000D36C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2A73GS858T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asichka.JobMatchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatchFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MatchFlow";
+			};
+			name = Debug;
+		};
+		03BEA13C2FB91254000D36C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2A73GS858T;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asichka.JobMatchTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MatchFlow.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MatchFlow";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -701,6 +887,15 @@
 			buildConfigurations = (
 				03A4BA6A2FB08DBB00158FCC /* Debug */,
 				03A4BA6B2FB08DBB00158FCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03BEA13D2FB91254000D36C9 /* Build configuration list for PBXNativeTarget "JobMatchTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03BEA13B2FB91254000D36C9 /* Debug */,
+				03BEA13C2FB91254000D36C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
