@@ -23,11 +23,15 @@ jobs:
           -scheme MatchFlow \
           -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
           -enableCodeCoverage YES \
-          -resultBundlePath TestResults.xcresult \
-          | xcpretty
+          -resultBundlePath TestResults.xcresult
     
-    - name: Upload to Codecov
+    - name: Convert coverage report
+      run: |
+        xcrun xccov view --report --json TestResults.xcresult > coverage.json
+    
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        files: coverage.json
         fail_ci_if_error: false
