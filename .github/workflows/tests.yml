@@ -13,15 +13,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: List Xcode versions
-      run: ls /Applications/ | grep Xcode
+    - name: Install iOS Simulator
+      run: |
+        xcodebuild -downloadPlatform iOS
     
     - name: Build and Test
       run: |
         xcodebuild test \
           -project MatchFlow.xcodeproj \
           -scheme MatchFlow \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.4' \
           -enableCodeCoverage YES \
           -resultBundlePath TestResults.xcresult
     
