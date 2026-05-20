@@ -63,7 +63,6 @@ class JobDetailViewModel: ObservableObject {
             
             coverLetter = letter
             try await jobService.saveCoverLetter(jobId: job.id, coverLetter: letter)
-            showCoverLetter = true
         } catch {
             errorMessage = error.localizedDescription
         }

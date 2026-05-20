@@ -53,6 +53,7 @@ struct Job: Identifiable, Codable, Equatable {
 }
 
 enum JobStatus: String, Codable, CaseIterable {
+    case exploring = "exploring"
     case applied = "applied"
     case interview = "interview"
     case rejected = "rejected"

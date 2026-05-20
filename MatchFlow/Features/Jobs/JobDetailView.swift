@@ -207,11 +207,13 @@ struct JobDetailView: View {
                     )
                 }
                 
-                // Cover letter только если нет
+                // Генерируем cover letter в фоне но не показываем автоматически
                 if job.coverLetter == nil {
-                    if let session = try? await supabase.auth.session,
-                       let uuid = UUID(uuidString: session.user.id.uuidString) {
-                        await viewModel.generateCoverLetter(job: job, userId: uuid)
+                    Task {
+                        if let session = try? await supabase.auth.session,
+                           let uuid = UUID(uuidString: session.user.id.uuidString) {
+                            await viewModel.generateCoverLetter(job: job, userId: uuid)
+                        }
                     }
                 }
             }
@@ -230,6 +232,7 @@ struct JobDetailView: View {
     
     private func statusColor(_ status: JobStatus) -> Color {
         switch status {
+        case .exploring: return .gray
         case .applied: return .blue
         case .interview: return .orange
         case .rejected: return .red

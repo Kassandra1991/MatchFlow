@@ -38,7 +38,7 @@ struct JobService: JobServiceProtocol {
                 "raw_text": rawText,
                 "title": analysis.title ?? title ?? "",
                 "company": analysis.company ?? company ?? "",
-                "status": "applied",
+                "status": "exploring",
                 "embedding": embeddingString
             ])
             .select()
