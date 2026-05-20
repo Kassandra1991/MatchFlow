@@ -72,9 +72,16 @@ struct JobsView: View {
                     }
                     Spacer()
                 } else {
-                    List(filteredJobs) { job in
-                        NavigationLink(destination: JobDetailView(job: job)) {
-                            JobRowView(job: job)
+                    List {
+                        ForEach(filteredJobs) { job in
+                            NavigationLink(destination: JobDetailView(job: job)) {
+                                JobRowView(job: job)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            Task {
+                                await viewModel.deleteJobs(at: indexSet, from: filteredJobs)
+                            }
                         }
                     }
                     .listStyle(.insetGrouped)

@@ -186,7 +186,8 @@ struct AIService: AIServiceProtocol {
         \(String(jobDescription.prefix(2000)))
         
         Instructions:
-        - 1-2 paragraphs
+        - Maximum 750 characters total
+        - 1-2 short paragraphs
         - Match candidate values with company culture from job description
         - Be specific about why this role fits their goals
         - Tone must be \(tone)

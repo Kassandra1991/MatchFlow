@@ -96,4 +96,16 @@ class JobsViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
+    
+    func deleteJobs(at indexSet: IndexSet, from filteredJobs: [Job]) async {
+        for index in indexSet {
+            let job = filteredJobs[index]
+            do {
+                try await JobService().deleteJob(jobId: job.id)
+                jobs.removeAll { $0.id == job.id }
+            } catch {
+                errorMessage = error.localizedDescription
+            }
+        }
+    }
 }
