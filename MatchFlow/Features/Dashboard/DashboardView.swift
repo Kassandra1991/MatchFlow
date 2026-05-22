@@ -16,21 +16,30 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             List {
-                // MARK: - Status + Insights
+                // MARK: - Status Grid
                 Section {
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                        ForEach(JobStatus.allCases, id: \.self) { status in
-                            StatusCard(
-                                status: status,
-                                count: viewModel.jobs(for: status).count
-                            ) {
-                                tabSelection.selectedTab = 1
-                                tabSelection.jobsFilter = status
+                    if viewModel.isLoading {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                                .padding(.vertical, 20)
+                            Spacer()
+                        }
+                    } else {
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+                            ForEach(JobStatus.allCases, id: \.self) { status in
+                                StatusCard(
+                                    status: status,
+                                    count: viewModel.jobs(for: status).count
+                                ) {
+                                    tabSelection.selectedTab = 1
+                                    tabSelection.jobsFilter = status
+                                }
                             }
                         }
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
-                    
+                
                     if viewModel.isLoadingInsights {
                         HStack(spacing: 12) {
                             ProgressView()

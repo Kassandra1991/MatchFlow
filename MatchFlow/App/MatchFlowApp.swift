@@ -19,7 +19,22 @@ struct MatchFlowApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if auth.isAuthenticated {
+                if auth.isCheckingSession {
+                    ZStack {
+                        Color(.systemBackground)
+                        VStack(spacing: 16) {
+                            Image(systemName: "briefcase.fill")
+                                .font(.system(size: 60))
+                                .foregroundColor(.blue)
+                            Text("JobMatch")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                            ProgressView()
+                                .padding(.top, 8)
+                        }
+                    }
+                    .ignoresSafeArea()
+                } else if auth.isAuthenticated {
                     MainTabView()
                         .environmentObject(auth)
                 } else {

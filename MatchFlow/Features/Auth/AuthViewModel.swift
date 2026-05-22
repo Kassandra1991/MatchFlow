@@ -14,6 +14,7 @@ class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
     @Published var isLoading = false
     @Published var errorMessage = ""
+    @Published var isCheckingSession = true
 
     func signUp(email: String, password: String) async {
         isLoading = true
@@ -48,11 +49,14 @@ class AuthViewModel: ObservableObject {
     }
 
     func checkSession() async {
+        isCheckingSession = true
         do {
             _ = try await supabase.auth.session
             isAuthenticated = true
         } catch {
             isAuthenticated = false
         }
+        try? await Task.sleep(nanoseconds: 800_000_000) // 0.8 секунды
+        isCheckingSession = false
     }
 }
