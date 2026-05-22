@@ -56,22 +56,25 @@ struct ResumeView: View {
                     } else {
                         ForEach(resumeViewModel.resumes) { resume in
                             ResumeRowView(resume: resume) {
-                                if let userId {
-                                    Task { await resumeViewModel.setDefault(resume: resume, userId: userId) }
-                                }
-                            } onDelete: {
                                 Task { await resumeViewModel.deleteResume(resume: resume) }
                             }
                         }
                     }
                 } header: {
                     HStack {
-                        Text("My Resumes")
+                        Text("My Resume")
                         Spacer()
-                        Button {
-                            showAddResume = true
-                        } label: {
-                            Image(systemName: "plus")
+                        if resumeViewModel.resumes.isEmpty {
+                            Button {
+                                showAddResume = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        } else {
+                            Button("Replace") {
+                                showAddResume = true
+                            }
+                            .font(.caption)
                         }
                     }
                 }
@@ -250,34 +253,19 @@ struct ProfileEditView: View {
 // MARK: - Resume Row View
 struct ResumeRowView: View {
     let resume: Resume
-    let onSetDefault: () -> Void
     let onDelete: () -> Void
 
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(resume.title)
-                        .font(.headline)
-                    if resume.isDefault {
-                        Text("Default")
-                            .font(.caption)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 2)
-                            .background(Color.blue.opacity(0.15))
-                            .foregroundColor(.blue)
-                            .clipShape(Capsule())
-                    }
-                }
-                Text(resume.createdAt.formatted(date: .abbreviated, time: .omitted))
+                Text(resume.title)
+                    .font(.headline)
+                Text("Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
             Spacer()
             Menu {
-                if !resume.isDefault {
-                    Button("Set as Default", action: onSetDefault)
-                }
                 Button("Delete", role: .destructive, action: onDelete)
             } label: {
                 Image(systemName: "ellipsis")
@@ -295,7 +283,6 @@ struct AddResumeView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var title = ""
     @State private var rawText = ""
-    @State private var isDefault = true
     @State private var showFilePicker = false
 
     var body: some View {
@@ -332,10 +319,6 @@ struct AddResumeView: View {
                         )
                 }
 
-                Section {
-                    Toggle("Set as Default", isOn: $isDefault)
-                }
-
                 if !viewModel.errorMessage.isEmpty {
                     Section {
                         Text(viewModel.errorMessage)
@@ -358,9 +341,8 @@ struct AddResumeView: View {
                                     userId: userId,
                                     title: title.isEmpty ? "My Resume" : title,
                                     rawText: rawText,
-                                    isDefault: isDefault
+                                    isDefault: true  // всегда true для MVP
                                 )
-                                dismiss()
                             }
                         }
                     }
