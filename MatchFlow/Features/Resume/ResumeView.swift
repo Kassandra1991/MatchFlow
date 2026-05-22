@@ -71,7 +71,7 @@ struct ResumeView: View {
                                 Image(systemName: "plus")
                             }
                         } else {
-                            Button("Replace") {
+                            Button("Update") {
                                 showAddResume = true
                             }
                             .font(.caption)
@@ -127,9 +127,6 @@ struct ProfileReadView: View {
             }
             if let goals = profile.careerGoals, !goals.isEmpty {
                 ProfileRow(icon: "target", label: "Career goals", value: goals)
-            }
-            if let tone = profile.coverLetterTone, !tone.isEmpty {
-                ProfileRow(icon: "text.bubble", label: "Cover letter tone", value: tone.capitalized)
             }
         }
         .padding(.vertical, 4)
@@ -196,18 +193,6 @@ struct ProfileEditView: View {
                 TextEditor(text: $viewModel.careerGoals)
                     .frame(minHeight: 80)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Cover letter tone")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Picker("", selection: $viewModel.coverLetterTone) {
-                    ForEach(CoverLetterTone.allCases, id: \.rawValue) { tone in
-                        Text(tone.label).tag(tone.rawValue)
-                    }
-                }
-                .pickerStyle(.segmented)
             }
             
             if !viewModel.errorMessage.isEmpty {
