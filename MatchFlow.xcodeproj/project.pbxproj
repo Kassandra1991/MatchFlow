@@ -11,6 +11,9 @@
 		0305E1E22FB31D6D004E9832 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0305E1E12FB31D6D004E9832 /* ProfileService.swift */; };
 		0305E1E42FB31DCD004E9832 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */; };
 		037F36242FB3DC0100545ACD /* CoverLetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037F36232FB3DC0100545ACD /* CoverLetterView.swift */; };
+		039DEAA12FC105E8001AEF26 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 039DEAA02FC105E8001AEF26 /* FirebaseCore */; };
+		039DEAA32FC10667001AEF26 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039DEAA22FC10663001AEF26 /* AnalyticsService.swift */; };
+		039DEAA52FC10705001AEF26 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 039DEAA42FC10705001AEF26 /* FirebaseAnalytics */; };
 		03A4BA222FAFF87C00158FCC /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03A4BA212FAFF87C00158FCC /* Supabase */; };
 		03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */; };
 		03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */; };
@@ -42,6 +45,7 @@
 		03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */; };
 		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
 		03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */; };
+		03BEA1612FBEF695000D36C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,7 @@
 		0305E1E12FB31D6D004E9832 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		037F36232FB3DC0100545ACD /* CoverLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterView.swift; sourceTree = "<group>"; };
+		039DEAA22FC10663001AEF26 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		03A4BA072FAFF68900158FCC /* MatchFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFlowApp.swift; sourceTree = "<group>"; };
 		03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
@@ -115,6 +120,7 @@
 		03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
 		03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModelTests.swift; sourceTree = "<group>"; };
+		03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,7 +128,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039DEAA12FC105E8001AEF26 /* FirebaseCore in Frameworks */,
 				03A4BA222FAFF87C00158FCC /* Supabase in Frameworks */,
+				039DEAA52FC10705001AEF26 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +200,7 @@
 				03A4BA4A2FB07E4F00158FCC /* Models */,
 				03A4BA382FB07D8C00158FCC /* App */,
 				03A4BA392FB07D8C00158FCC /* Assets.xcassets */,
+				03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */,
 				03A4BA442FB07DBC00158FCC /* Features */,
 			);
 			path = MatchFlow;
@@ -269,6 +278,7 @@
 		03A4BA4B2FB07E5600158FCC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				039DEAA22FC10663001AEF26 /* AnalyticsService.swift */,
 				03A4BA512FB07F5F00158FCC /* JobService.swift */,
 				03A4BA532FB07F8D00158FCC /* ResumeService.swift */,
 				03A4BA552FB089AC00158FCC /* AIService.swift */,
@@ -376,6 +386,8 @@
 			name = MatchFlow;
 			packageProductDependencies = (
 				03A4BA212FAFF87C00158FCC /* Supabase */,
+				039DEAA02FC105E8001AEF26 /* FirebaseCore */,
+				039DEAA42FC10705001AEF26 /* FirebaseAnalytics */,
 			);
 			productName = MatchFlow;
 			productReference = 03A4BA072FAFF68900158FCC /* MatchFlow.app */;
@@ -453,6 +465,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				03A4BA152FAFF72D00158FCC /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				03BEA1622FBEF7EE000D36C9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 03A4BA082FAFF68900158FCC /* Products */;
@@ -472,6 +485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03A4BA432FB07D8C00158FCC /* Assets.xcassets in Resources */,
+				03BEA1612FBEF695000D36C9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +522,7 @@
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
 				037F36242FB3DC0100545ACD /* CoverLetterView.swift in Sources */,
+				039DEAA32FC10667001AEF26 /* AnalyticsService.swift in Sources */,
 				03A4BA502FB07EE700158FCC /* Resume.swift in Sources */,
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,
 				03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */,
@@ -915,9 +930,27 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		03BEA1622FBEF7EE000D36C9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.13.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		039DEAA02FC105E8001AEF26 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03BEA1622FBEF7EE000D36C9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		039DEAA42FC10705001AEF26 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03BEA1622FBEF7EE000D36C9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		03A4BA212FAFF87C00158FCC /* Supabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 03A4BA152FAFF72D00158FCC /* XCRemoteSwiftPackageReference "supabase-swift" */;

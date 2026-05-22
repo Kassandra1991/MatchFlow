@@ -17,18 +17,21 @@ struct MainTabView: View {
                     Label("Insights", systemImage: "sparkles")
                 }
                 .tag(0)
+                .onAppear { AnalyticsService.log(.tabOpened(name: "insights")) }
             
             JobsView()
                 .tabItem {
                     Label("Jobs", systemImage: "briefcase")
                 }
                 .tag(1)
+                .onAppear { AnalyticsService.log(.tabOpened(name: "jobs")) }
             
             ResumeView()
                 .tabItem {
                     Label("Profile", systemImage: "person.crop.circle")
                 }
                 .tag(2)
+                .onAppear { AnalyticsService.log(.tabOpened(name: "profile")) }
         }
         .environmentObject(tabSelection)
     }

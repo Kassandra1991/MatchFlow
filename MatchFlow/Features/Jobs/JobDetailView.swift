@@ -133,6 +133,7 @@ struct JobDetailView: View {
             Section {
                 Button {
                     viewModel.showCoverLetter = true
+                    AnalyticsService.log(.coverLetterOpened)
                 } label: {
                     HStack {
                         Image(systemName: "sparkles")

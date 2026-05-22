@@ -58,6 +58,7 @@ class JobsViewModel: ObservableObject {
             )
             print("✅ job saved: \(job.id)")
             jobs.insert(job, at: 0)
+            AnalyticsService.log(.jobAdded(source: "share_extension"))
             try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
             await fetchJobs(userId: userId)
         } catch {
@@ -78,6 +79,7 @@ class JobsViewModel: ObservableObject {
                 company: nil
             )
             jobs.insert(job, at: 0)
+            AnalyticsService.log(.jobAdded(source: "manual"))
             try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
             await fetchJobs(userId: userId)
         } catch {
@@ -103,6 +105,7 @@ class JobsViewModel: ObservableObject {
             do {
                 try await JobService().deleteJob(jobId: job.id)
                 jobs.removeAll { $0.id == job.id }
+                AnalyticsService.log(.jobDeleted)
             } catch {
                 errorMessage = error.localizedDescription
             }

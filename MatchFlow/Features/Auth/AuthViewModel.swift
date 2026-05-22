@@ -24,6 +24,7 @@ class AuthViewModel: ObservableObject {
                 password: password
             )
             isAuthenticated = true
+            AnalyticsService.log(.signUp)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -39,6 +40,7 @@ class AuthViewModel: ObservableObject {
                 password: password
             )
             isAuthenticated = true
+            AnalyticsService.log(.signIn)
         } catch {
             errorMessage = error.localizedDescription
         }

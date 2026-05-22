@@ -35,6 +35,7 @@ struct CoverLetterView: View {
                     Button {
                         UIPasteboard.general.string = coverLetter
                         copied = true
+                        AnalyticsService.log(.coverLetterCopied)
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             copied = false
                         }

@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct MatchFlowApp: App {
     @StateObject private var auth = AuthViewModel()
+    
+    init() {
+        FirebaseApp.configure()
+    }
     
     var body: some Scene {
         WindowGroup {
@@ -28,3 +33,5 @@ struct MatchFlowApp: App {
         }
     }
 }
+
+
