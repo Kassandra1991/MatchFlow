@@ -5,6 +5,7 @@ import Auth
 import PDFKit
 
 struct ResumeView: View {
+    @EnvironmentObject private var auth: AuthViewModel
     @StateObject private var resumeViewModel = ResumeViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showAddResume = false
@@ -81,6 +82,14 @@ struct ResumeView: View {
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Profile")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Sign Out") {
+                        Task { await signOut() }
+                    }
+                    .foregroundColor(.red)
+                }
+            }
             .sheet(isPresented: $showAddResume) {
                 AddResumeView(viewModel: resumeViewModel, userId: userId)
             }
@@ -93,6 +102,11 @@ struct ResumeView: View {
                 }
             }
         }
+    }
+    
+    private func signOut() async {
+        try? await supabase.auth.signOut()
+        await auth.checkSession()
     }
 }
 
