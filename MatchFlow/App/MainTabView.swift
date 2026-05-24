@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @StateObject private var tabSelection = TabSelectionViewModel()
+    @EnvironmentObject private var tabSelection: TabSelectionViewModel
     
     var body: some View {
         TabView(selection: $tabSelection.selectedTab) {

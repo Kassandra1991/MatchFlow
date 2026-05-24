@@ -16,7 +16,7 @@ struct AuthView: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            Text("MatchFlow")
+            Text("JobMatch")
                 .font(.largeTitle)
                 .fontWeight(.bold)
 

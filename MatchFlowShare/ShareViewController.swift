@@ -49,19 +49,32 @@ class ShareViewController: UIViewController {
         let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         defaults?.set(url.absoluteString, forKey: "pendingJobURL")
         defaults?.synchronize()
-        showConfirmation(message: "Job URL saved! Open MatchFlow to analyze.")
+        openMainApp()
     }
-    
+
     private func handleText(_ text: String) {
         let defaults = UserDefaults(suiteName: "group.com.asichka.jobmatch")
         defaults?.set(text, forKey: "pendingJobText")
         defaults?.synchronize()
-        showConfirmation(message: "Job saved! Open MatchFlow to analyze.")
+        openMainApp()
+    }
+
+    private func openMainApp() {
+        let url = URL(string: "jobmatch://exploring")!
+        var responder: UIResponder? = self
+        while responder != nil {
+            if let application = responder as? UIApplication {
+                application.open(url)
+                break
+            }
+            responder = responder?.next
+        }
+        extensionContext?.completeRequest(returningItems: nil)
     }
     
     private func showConfirmation(message: String) {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "MatchFlow", message: message, preferredStyle: .alert)
+            let alert = UIAlertController(title: "JobMatch", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
                 self?.close()
             })

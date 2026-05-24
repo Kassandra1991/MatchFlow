@@ -11,6 +11,7 @@ import FirebaseCore
 @main
 struct MatchFlowApp: App {
     @StateObject private var auth = AuthViewModel()
+    @StateObject private var tabSelection = TabSelectionViewModel()
     
     init() {
         FirebaseApp.configure()
@@ -37,6 +38,7 @@ struct MatchFlowApp: App {
                 } else if auth.isAuthenticated {
                     MainTabView()
                         .environmentObject(auth)
+                        .environmentObject(tabSelection)
                 } else {
                     AuthView()
                         .environmentObject(auth)
@@ -45,8 +47,12 @@ struct MatchFlowApp: App {
             .task {
                 await auth.checkSession()
             }
+            .onOpenURL { url in
+                if url.scheme == "jobmatch" {
+                    tabSelection.selectedTab = 1
+                    tabSelection.jobsFilter = .exploring
+                }
+            }
         }
     }
 }
-
-

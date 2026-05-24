@@ -85,6 +85,7 @@
 		0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		037F36232FB3DC0100545ACD /* CoverLetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverLetterView.swift; sourceTree = "<group>"; };
 		039DEAA22FC10663001AEF26 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		039DEAA62FC2F668001AEF26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		03A4BA072FAFF68900158FCC /* MatchFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFlowApp.swift; sourceTree = "<group>"; };
 		03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
@@ -194,6 +195,7 @@
 		03A4BA3D2FB07D8C00158FCC /* MatchFlow */ = {
 			isa = PBXGroup;
 			children = (
+				039DEAA62FC2F668001AEF26 /* Info.plist */,
 				03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */,
 				03A4BA4C2FB07E5F00158FCC /* Shared */,
 				03A4BA4B2FB07E5600158FCC /* Services */,
@@ -715,10 +717,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MatchFlow/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = JobMatch;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -750,10 +753,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MatchFlow/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = JobMatch;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -787,7 +791,7 @@
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MatchFlowShare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MatchFlowShare;
+				INFOPLIST_KEY_CFBundleDisplayName = JobMatch;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -816,7 +820,7 @@
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MatchFlowShare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = MatchFlowShare;
+				INFOPLIST_KEY_CFBundleDisplayName = JobMatch;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
