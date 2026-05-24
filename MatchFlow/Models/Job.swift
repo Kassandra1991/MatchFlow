@@ -13,6 +13,7 @@ struct Job: Identifiable, Codable, Equatable {
     var url: String?
     var title: String?
     var company: String?
+    var companyLogoUrl: String?
     var rawText: String?
     var matchScore: Double?
     var status: JobStatus
@@ -39,6 +40,7 @@ struct Job: Identifiable, Codable, Equatable {
         case url
         case title
         case company
+        case companyLogoUrl = "company_logo_url"
         case rawText = "raw_text"
         case matchScore = "match_score"
         case status

@@ -33,36 +33,37 @@ class JobsViewModel: ObservableObject {
     
     func addJobFromShare(userId: UUID) async {
         let pending = jobService.checkPendingJob()
-        print("🔍 pending url: \(pending.url ?? "nil")")
-        print("🔍 pending text: \(pending.text ?? "nil")")
-        guard let url = pending.url ?? pending.text else {
-            print("❌ nothing pending")
-            return
-        }
+        guard let url = pending.url ?? pending.text else { return }
         
         isLoading = true
         do {
             var rawText = url
-            if url.hasPrefix("http") {
-                print("🌐 fetching text from url...")
+            var title: String? = nil
+            var company: String? = nil
+            var companyLogoUrl: String? = nil
+
+            if url.contains("linkedin.com/jobs/view") {
+                let jobData = try await AIService().fetchJobFromURL(url)
+                rawText = jobData.description ?? url
+                title = jobData.title
+                company = jobData.company
+                companyLogoUrl = jobData.companyLogo
+            } else if url.hasPrefix("http") {
                 rawText = (try? await jobService.fetchJobText(from: url)) ?? url
-                print("📄 fetched text length: \(rawText.count)")
             }
-            
+
             let job = try await jobService.addJob(
                 userId: userId,
                 url: url.hasPrefix("http") ? url : nil,
                 rawText: rawText,
-                title: nil,
-                company: nil
+                title: title,
+                company: company,
+                companyLogoUrl: companyLogoUrl
             )
-            print("✅ job saved: \(job.id)")
             jobs.insert(job, at: 0)
-            AnalyticsService.log(.jobAdded(source: "share_extension"))
             try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
             await fetchJobs(userId: userId)
         } catch {
-            print("❌ error: \(error)")
             errorMessage = error.localizedDescription
         }
         isLoading = false
@@ -76,7 +77,8 @@ class JobsViewModel: ObservableObject {
                 url: url.isEmpty ? nil : url,
                 rawText: rawText,
                 title: nil,
-                company: nil
+                company: nil,
+                companyLogoUrl: nil
             )
             jobs.insert(job, at: 0)
             AnalyticsService.log(.jobAdded(source: "manual"))

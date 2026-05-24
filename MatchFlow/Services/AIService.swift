@@ -211,6 +211,36 @@ struct AIService: AIServiceProtocol {
         let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
         return response.choices.first?.message.content ?? ""
     }
+    
+    func fetchJobFromURL(_ url: String) async throws -> (title: String?, company: String?, location: String?, description: String?, companyLogo: String?) {
+        let functionURL = "\(Secrets.supabaseURL)/functions/v1/fetch-job"
+        
+        var request = URLRequest(url: URL(string: functionURL)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(Secrets.supabaseKey, forHTTPHeaderField: "apikey")
+        
+        let body = ["url": url]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        struct JobResponse: Codable {
+            let title: String?
+            let company: String?
+            let location: String?
+            let description: String?
+            let companyLogo: String?
+            
+            enum CodingKeys: String, CodingKey {
+                case title, company, location, description
+                case companyLogo = "companyLogo"
+            }
+        }
+        
+        let response = try JSONDecoder().decode(JobResponse.self, from: data)
+        return (response.title, response.company, response.location, response.description, response.companyLogo)
+    }
 }
 
 // MARK: - Response Models

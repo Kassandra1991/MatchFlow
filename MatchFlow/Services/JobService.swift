@@ -10,7 +10,7 @@ import Supabase
 
 
 protocol JobServiceProtocol {
-    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job
+    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String?) async throws -> Job
     func fetchJobs(userId: UUID) async throws -> [Job]
     func fetchJob(jobId: UUID) async throws -> Job
     func updateStatus(jobId: UUID, status: JobStatus) async throws
@@ -25,7 +25,7 @@ protocol JobServiceProtocol {
 
 struct JobService: JobServiceProtocol {
     
-    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job {
+    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String? = nil) async throws -> Job {
         let embedding = try await AIService().getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
         
@@ -39,6 +39,7 @@ struct JobService: JobServiceProtocol {
                 "raw_text": rawText,
                 "title": analysis.title ?? title ?? "",
                 "company": analysis.company ?? company ?? "",
+                "company_logo_url": companyLogoUrl ?? "",
                 "status": "exploring",
                 "embedding": embeddingString
             ])
