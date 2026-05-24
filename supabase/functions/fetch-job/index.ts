@@ -12,20 +12,18 @@ export default {
     }
 
     const { url } = await req.json();
-    
+
     if (!url) {
       return Response.json({ error: "URL is required" }, { status: 400 });
     }
 
-    // Извлекаем job ID из URL
     const jobIdMatch = url.match(/\/jobs\/view\/(\d+)/);
     if (!jobIdMatch) {
       return Response.json({ error: "Invalid LinkedIn job URL" }, { status: 400 });
     }
-    
+
     const jobId = jobIdMatch[1];
 
-    // LinkedIn публичный API для вакансий
     const response = await fetch(
       `https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/${jobId}`,
       {
@@ -38,21 +36,20 @@ export default {
     );
 
     if (!response.ok) {
-      return Response.json({ 
-        error: "Failed to fetch job", 
-        status: response.status 
-      }, { status: 500 });
+      return Response.json({ error: "Failed to fetch job", status: response.status }, { status: 500 });
     }
 
     const html = await response.text();
-    
-    // Парсим HTML
+
     const title = html.match(/<h2[^>]*class="[^"]*top-card-layout__title[^"]*"[^>]*>([^<]+)<\/h2>/)?.[1]?.trim();
     const company = html.match(/<a[^>]*class="[^"]*topcard__org-name-link[^"]*"[^>]*>([^<]+)<\/a>/)?.[1]?.trim();
-    const companyLogo = html.match(/<img[^>]*class="[^"]*artdeco-entity-image[^"]*"[^>]*src="([^"]+)"/)?.[1];
     const location = html.match(/<span[^>]*class="[^"]*topcard__flavor--bullet[^"]*"[^>]*>([^<]+)<\/span>/)?.[1]?.trim();
-    
-    // Описание
+
+    const companyLogo = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/)?.[1]
+      ?? html.match(/<img[^>]*data-delayed-url="([^"]+)"/)?.[1]
+      ?? html.match(/<img[^>]*class="[^"]*artdeco-entity-image[^"]*"[^>]*src="([^"]+)"/)?.[1]
+      ?? null;
+	const companyLogoDecoded = companyLogo?.replace(/&amp;/g, '&') ?? null;
     const descMatch = html.match(/<div[^>]*class="[^"]*description__text[^"]*"[^>]*>([\s\S]*?)<\/div>/);
     const description = descMatch?.[1]
       ?.replace(/<[^>]+>/g, ' ')
@@ -62,7 +59,7 @@ export default {
     return Response.json({
       title: title ?? null,
       company: company ?? null,
-      companyLogo: companyLogo ?? null,
+	companyLogo: companyLogoDecoded,
       location: location ?? null,
       description: description ?? null,
     }, {

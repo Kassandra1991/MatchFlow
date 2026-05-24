@@ -165,23 +165,46 @@ struct JobRowView: View {
     let job: Job
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(job.title ?? "Unknown Role")
-                    .font(.headline)
-                Spacer()
-                StatusBadge(status: job.status)
+        HStack(spacing: 12) {
+            if let logoUrl = job.companyLogoUrl, let url = URL(string: logoUrl) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } placeholder: {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(.systemGray5))
+                }
+                .frame(width: 44, height: 44)
+                .cornerRadius(8)
+            } else {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color(.systemGray5))
+                    .frame(width: 44, height: 44)
+                    .overlay(
+                        Image(systemName: "briefcase")
+                            .foregroundColor(.secondary)
+                    )
             }
-            Text(job.company ?? "Unknown Company")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            if let score = job.matchScore {
+            
+            VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Image(systemName: "chart.bar.fill")
-                        .foregroundColor(matchColor(score))
-                    Text("Match: \(Int(score * 100))%")
-                        .font(.caption)
-                        .foregroundColor(matchColor(score))
+                    Text(job.title ?? "Unknown Role")
+                        .font(.headline)
+                    Spacer()
+                    StatusBadge(status: job.status)
+                }
+                Text(job.company ?? "Unknown Company")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                if let score = job.matchScore {
+                    HStack {
+                        Image(systemName: "chart.bar.fill")
+                            .foregroundColor(matchColor(score))
+                        Text("Match: \(Int(score * 100))%")
+                            .font(.caption)
+                            .foregroundColor(matchColor(score))
+                    }
                 }
             }
         }
