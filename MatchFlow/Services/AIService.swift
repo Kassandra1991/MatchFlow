@@ -57,13 +57,13 @@ struct AIService: AIServiceProtocol {
           "skills": ["skill1", "skill2"],
           "difficulty": "junior/mid/senior"
         }
-
+        
         Rules for skills:
         - Maximum 10 skills
         - Each skill max 3 words, prefer 1-2 words
         - Use short forms: "iOS" not "iOS Development", "SwiftUI" not "SwiftUI Framework"
         - Technical skills only, no soft skills
-
+        
         Job description:
         \(description)
         """
@@ -94,14 +94,18 @@ struct AIService: AIServiceProtocol {
     func generateInsights(jobs: [Job]) async throws -> String {
         guard !jobs.isEmpty else { return "Add more jobs to get insights." }
         
-        // Готовим данные для анализа
-        let totalJobs = jobs.count
-        let avgScore = jobs.compactMap { $0.matchScore }.reduce(0, +) / Double(max(jobs.compactMap { $0.matchScore }.count, 1))
+        // Разделяем exploring и активные
+        let exploringJobs = jobs.filter { $0.status == .exploring }
+        let activeJobs = jobs.filter { $0.status != .exploring }
         
-        let statusCounts = Dictionary(grouping: jobs, by: { $0.status })
+        let totalJobs = jobs.count
+        let totalActive = activeJobs.count
+        let avgScore = activeJobs.compactMap { $0.matchScore }.reduce(0, +) / Double(max(activeJobs.compactMap { $0.matchScore }.count, 1))
+        
+        let statusCounts = Dictionary(grouping: activeJobs, by: { $0.status })
             .mapValues { $0.count }
         
-        let allSkills = jobs.flatMap { $0.skills }
+        let allSkills = activeJobs.flatMap { $0.skills }
         let skillFrequency = Dictionary(grouping: allSkills, by: { $0 })
             .mapValues { $0.count }
             .sorted { $0.value > $1.value }
@@ -109,18 +113,18 @@ struct AIService: AIServiceProtocol {
             .map { "\($0.key) (\($0.value))" }
             .joined(separator: ", ")
         
-        let topMatches = jobs
+        let topMatches = activeJobs
             .filter { $0.matchScore != nil }
             .sorted { ($0.matchScore ?? 0) > ($1.matchScore ?? 0) }
             .prefix(3)
             .map { "\($0.title ?? "Unknown") at \($0.company ?? "Unknown") — \(Int(($0.matchScore ?? 0) * 100))%" }
             .joined(separator: "; ")
         
-        let interviewJobs = jobs.filter { $0.status == .interview }
+        let interviewJobs = activeJobs.filter { $0.status == .interview }
             .map { "\($0.title ?? "Unknown") at \($0.company ?? "Unknown") — \(Int(($0.matchScore ?? 0) * 100))% match" }
             .joined(separator: "; ")
         
-        let rejectedJobs = jobs.filter { $0.status == .rejected }
+        let rejectedJobs = activeJobs.filter { $0.status == .rejected }
             .map { "\($0.title ?? "Unknown") — \(Int(($0.matchScore ?? 0) * 100))% match" }
             .joined(separator: "; ")
         
@@ -128,13 +132,13 @@ struct AIService: AIServiceProtocol {
         You are a career coach analyzing job search data. Be concise and actionable.
 
         Data:
-        - Total applications: \(totalJobs)
-        - Average match score: \(Int(avgScore * 100))%
+        - Total jobs saved: \(totalJobs) (\(exploringJobs.count) exploring, \(totalActive) applied/in-progress)
+        - Average match score (applied jobs): \(Int(avgScore * 100))%
         - Applied: \(statusCounts[.applied] ?? 0), Interviews: \(statusCounts[.interview] ?? 0), Rejected: \(statusCounts[.rejected] ?? 0), Offers: \(statusCounts[.offer] ?? 0)
-        - Top matching roles: \(topMatches.isEmpty ? "none yet" : topMatches)
+        - Top matching roles (applied): \(topMatches.isEmpty ? "none yet" : topMatches)
         - Interviews received: \(interviewJobs.isEmpty ? "none yet" : interviewJobs)
         - Rejections: \(rejectedJobs.isEmpty ? "none yet" : rejectedJobs)
-        - Most required skills across all jobs: \(skillFrequency.isEmpty ? "none yet" : skillFrequency)
+        - Most required skills across applied jobs: \(skillFrequency.isEmpty ? "none yet" : skillFrequency)
 
         Return JSON only:
         {

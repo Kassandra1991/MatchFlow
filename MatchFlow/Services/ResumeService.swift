@@ -69,7 +69,21 @@ struct ResumeService: ResumeServiceProtocol {
             .limit(1)
             .execute()
             .value
-        return resumes.first
+        
+        if let resume = resumes.first {
+            return resume
+        }
+        
+        let allResumes: [Resume] = try await supabase
+            .from("resumes")
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .order("created_at", ascending: false)
+            .limit(1)
+            .execute()
+            .value
+        
+        return allResumes.first
     }
     
     func setDefault(resumeId: UUID, userId: UUID) async throws {
