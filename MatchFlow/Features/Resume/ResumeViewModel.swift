@@ -37,7 +37,7 @@ class ResumeViewModel: ObservableObject {
                 rawText: rawText,
                 isDefault: isDefault
             )
-            resumes.insert(resume, at: 0)
+            resumes = [resume]
             successMessage = "Resume saved!"
         } catch {
             errorMessage = error.localizedDescription

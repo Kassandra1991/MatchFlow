@@ -19,16 +19,14 @@ protocol ResumeServiceProtocol {
 struct ResumeService: ResumeServiceProtocol {
     
     func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool = true) async throws -> Resume {
-        // 1. Если isDefault — сбрасываем предыдущий дефолт
-        if isDefault {
-            try await supabase
-                .from("resumes")
-                .update(["is_default": false])
-                .eq("user_id", value: userId.uuidString)
-                .execute()
-        }
+        // Удаляем старое резюме если есть
+        try await supabase
+            .from("resumes")
+            .delete()
+            .eq("user_id", value: userId.uuidString)
+            .execute()
         
-        // 2. Получаем embedding
+
         let embedding = try await AIService().getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
         

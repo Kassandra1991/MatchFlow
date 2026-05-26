@@ -40,20 +40,14 @@ struct ResumeView: View {
                     if resumeViewModel.isLoading {
                         ProgressView()
                     } else if resumeViewModel.resumes.isEmpty {
-                        VStack(spacing: 12) {
-                            Image(systemName: "doc.text")
-                                .font(.system(size: 36))
-                                .foregroundColor(.secondary)
-                            Text("No resumes yet")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            Button("Upload Resume") {
-                                showAddResume = true
-                            }
-                            .buttonStyle(.borderedProminent)
+                        Button {
+                            showAddResume = true
+                        } label: {
+                            Label("Upload Resume", systemImage: "doc.badge.plus")
+                                .frame(maxWidth: .infinity)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
+                        .buttonStyle(.borderedProminent)
+                        .padding(.vertical, 4)
                     } else {
                         ForEach(resumeViewModel.resumes) { resume in
                             ResumeRowView(resume: resume) {
@@ -65,13 +59,7 @@ struct ResumeView: View {
                     HStack {
                         Text("My Resume")
                         Spacer()
-                        if resumeViewModel.resumes.isEmpty {
-                            Button {
-                                showAddResume = true
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                        } else {
+                        if !resumeViewModel.resumes.isEmpty {
                             Button("Update") {
                                 showAddResume = true
                             }
@@ -255,23 +243,19 @@ struct ResumeRowView: View {
     let onDelete: () -> Void
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(resume.title)
-                    .font(.headline)
-                Text("Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            Spacer()
-            Menu {
-                Button("Delete", role: .destructive, action: onDelete)
-            } label: {
-                Image(systemName: "ellipsis")
-                    .foregroundColor(.secondary)
-            }
+        VStack(alignment: .leading, spacing: 4) {
+            Text(resume.title)
+                .font(.headline)
+            Text("Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
         .padding(.vertical, 4)
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive, action: onDelete) {
+                Label("Delete", systemImage: "trash")
+            }
+        }
     }
 }
 
@@ -338,14 +322,17 @@ struct AddResumeView: View {
                             if let userId {
                                 await viewModel.saveResume(
                                     userId: userId,
-                                    title: title.isEmpty ? "My Resume" : title,
+                                    title: title,
                                     rawText: rawText,
-                                    isDefault: true  // всегда true для MVP
+                                    isDefault: true
                                 )
+                                if viewModel.errorMessage.isEmpty {
+                                    dismiss()
+                                }
                             }
                         }
                     }
-                    .disabled(rawText.isEmpty || viewModel.isLoading)
+                    .disabled(rawText.isEmpty || title.isEmpty || viewModel.isLoading)
                 }
             }
             .fileImporter(

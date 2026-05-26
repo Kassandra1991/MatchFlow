@@ -20,7 +20,7 @@ struct AIService: AIServiceProtocol {
     private let apiKey = Secrets.openAIKey
     private let embeddingURL = "https://api.openai.com/v1/embeddings"
     private let completionURL = "https://api.openai.com/v1/chat/completions"
-    private let embeddingModel = "text-embedding-3-small"
+    private let embeddingModel = "text-embedding-3-large"
     private let completionModel = "gpt-4o-mini"
     
     // MARK: - Embeddings
