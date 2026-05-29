@@ -248,8 +248,8 @@ struct MatchScoreBadge: View {
     
     var color: Color {
         switch score {
-        case 0.55...: return .green
-        case 0.45..<0.55: return .orange
+        case 0.82...: return .green
+        case 0.68..<0.82: return .orange
         default: return .red
         }
     }

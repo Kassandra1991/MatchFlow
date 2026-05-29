@@ -54,7 +54,7 @@ class JobDetailViewModel: ObservableObject {
                 return
             }
             
-            let jobText = job.rawText ?? job.url ?? ""
+            let jobText = try await aiService.ensureEnglishJobText(job.rawText ?? job.url ?? "")
             let letter = try await aiService.generateCoverLetter(
                 resume: resumeText,
                 jobDescription: jobText,
@@ -81,7 +81,8 @@ class JobDetailViewModel: ObservableObject {
         isAnalyzing = true
         do {
             let text = jobDescription.isEmpty ? (job.rawText ?? "") : jobDescription
-            let result = try await aiService.analyzeJob(description: text)
+            let englishText = try await aiService.ensureEnglishJobText(text)
+            let result = try await aiService.analyzeJob(description: englishText)
             analysis = result
             try await jobService.saveAnalysis(jobId: job.id, analysis: result, rawText: nil)
             updatedJob = try await jobService.fetchJob(jobId: job.id)

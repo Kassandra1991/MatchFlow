@@ -137,7 +137,7 @@ struct TopMatchRow: View {
     
     var color: Color {
         guard let score = job.matchScore else { return .secondary }
-        return score >= 0.55 ? .green : score >= 0.45 ? .orange : .red
+        return score >= 0.82 ? .green : score >= 0.68 ? .orange : .red
     }
     
     var body: some View {

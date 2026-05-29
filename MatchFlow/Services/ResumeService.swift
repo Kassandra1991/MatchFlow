@@ -29,17 +29,25 @@ struct ResumeService: ResumeServiceProtocol {
 
         let embedding = try await AIService().getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
-        
-        // 3. Сохраняем в Supabase
+
+        let profile = try await AIService().extractResumeProfile(from: rawText)
+        let skillsString = (try? JSONEncoder().encode(profile.skills))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+
+        let payload = ResumeInsertPayload(
+            user_id: userId.uuidString,
+            title: title,
+            raw_text: rawText,
+            skills: skillsString,
+            embedding: embeddingString,
+            is_default: isDefault,
+            years_experience: profile.yearsExperience,
+            seniority: profile.seniority
+        )
+
         let resume: Resume = try await supabase
             .from("resumes")
-            .insert([
-                "user_id": userId.uuidString,
-                "title": title,
-                "raw_text": rawText,
-                "embedding": embeddingString,
-                "is_default": isDefault ? "true" : "false"
-            ])
+            .insert(payload)
             .select()
             .single()
             .execute()
@@ -107,4 +115,15 @@ struct ResumeService: ResumeServiceProtocol {
             .eq("id", value: resumeId.uuidString)
             .execute()
     }
+}
+
+private struct ResumeInsertPayload: Encodable {
+    let user_id: String
+    let title: String
+    let raw_text: String
+    let skills: String
+    let embedding: String
+    let is_default: Bool
+    let years_experience: Int?
+    let seniority: String?
 }

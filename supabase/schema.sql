@@ -14,6 +14,9 @@ create table resumes (
   user_id uuid references users(id),
   title text default 'My Resume',
   raw_text text,
+  skills text,
+  years_experience int,
+  seniority text,
   embedding vector(3072),
   is_default boolean default true,
   created_at timestamp default now()

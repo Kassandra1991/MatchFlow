@@ -26,20 +26,29 @@ protocol JobServiceProtocol {
 struct JobService: JobServiceProtocol {
     
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String? = nil) async throws -> Job {
-        let embedding = try await AIService().getEmbedding(for: rawText)
+        let aiService = AIService()
+        let englishText = try await aiService.ensureEnglishJobText(rawText)
+
+        let embedding = try await aiService.getEmbedding(for: englishText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
         
-        let analysis = try await AIService().analyzeJob(description: rawText)
-        
+        let analysis = try await aiService.analyzeJob(description: englishText)
+
+        let skillsJSON = (try? JSONEncoder().encode(analysis.skills))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+
         let job: Job = try await supabase
             .from("jobs")
             .insert([
                 "user_id": userId.uuidString,
                 "url": url ?? "",
-                "raw_text": rawText,
+                "raw_text": englishText,
                 "title": analysis.title ?? title ?? "",
                 "company": analysis.company ?? company ?? "",
                 "company_logo_url": companyLogoUrl ?? "",
+                "summary": analysis.summary ?? "",
+                "difficulty": analysis.difficulty ?? "",
+                "skills": skillsJSON,
                 "status": "exploring",
                 "embedding": embeddingString
             ])
@@ -101,14 +110,42 @@ struct JobService: JobServiceProtocol {
     func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws {
         guard let resume = try await ResumeService().fetchDefaultResume(userId: userId) else { return }
         guard let resumeText = resume.rawText else { return }
-        let resumeEmbedding = try await AIService().getEmbedding(for: resumeText)
         guard let jobText = job.rawText else { return }
-        let jobEmbedding = try await AIService().getEmbedding(for: jobText)
-        let score = AIService().calculateMatchScore(
+
+        let aiService = AIService()
+
+        let resumeEmbedding = try await aiService.getEmbedding(for: resumeText)
+        let jobTextEnglish = try await aiService.ensureEnglishJobText(jobText)
+        let jobEmbedding = try await aiService.getEmbedding(for: jobTextEnglish)
+        let embeddingScore = aiService.calculateMatchScore(
             resumeEmbedding: resumeEmbedding,
             jobEmbedding: jobEmbedding
         )
-        try await updateMatchScore(jobId: job.id, score: score)
+
+        let seniorityFit = aiService.calculateSeniorityFit(
+            resumeSeniority: resume.seniority,
+            resumeYears: resume.yearsExperience,
+            jobDifficulty: job.difficulty
+        )
+
+        let skillOverlap: Double
+        if job.skills.isEmpty || resume.skills.isEmpty {
+            skillOverlap = 0
+        } else {
+            skillOverlap = aiService.calculateSkillOverlap(
+                resumeSkills: resume.skills,
+                jobSkills: job.skills
+            )
+        }
+
+        let finalScore = aiService.calculateHybridScore(
+            embeddingScore: embeddingScore,
+            skillOverlap: skillOverlap,
+            seniorityFit: seniorityFit,
+            hasJobSkills: !job.skills.isEmpty
+        )
+
+        try await updateMatchScore(jobId: job.id, score: finalScore)
     }
     
     func fetchJobText(from urlString: String) async throws -> String {
