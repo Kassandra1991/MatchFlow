@@ -7,7 +7,7 @@
 - **Smart Job Tracking** — add jobs via Share Extension from Safari/LinkedIn or manually
 - **AI Match Scoring** — semantic similarity between your resume and job descriptions using RAG
 - **AI Job Analysis** — automatic extraction of title, company, required skills, seniority level
-- **Resume Management** — upload multiple PDF resumes, set default for matching
+- **Resume Management** — upload a PDF resume — uploading a new one replaces the previous
 - **Dashboard** — overview of applications by status, weekly activity, top matches
 - **Status Tracking** — applied / interview / rejected / offer with color coding
 
@@ -23,7 +23,7 @@
 - RESTful API via Supabase Swift SDK
 
 **AI**
-- OpenAI API (text-embedding-3-small, gpt-4o-mini)
+- OpenAI API (text-embedding-3-large, gpt-4o-mini)
 - RAG pipeline — vector embeddings + cosine similarity
 - Semantic job-resume matching
 
@@ -40,8 +40,8 @@ MatchFlow/
 MatchFlowShare/             # Share Extension
 
 ## RAG Pipeline
-Resume PDF → PDFKit text extraction → OpenAI embedding (1536d) → pgvector
-Job Description → OpenAI embedding (1536d) → pgvector
+Resume PDF → PDFKit text extraction → OpenAI embedding (3072d) → pgvector
+Job Description → OpenAI embedding (3072d) → pgvector
 Match Score = cosine_similarity(resume_embedding, job_embedding)
 
 ## Setup

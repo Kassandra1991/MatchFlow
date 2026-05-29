@@ -14,7 +14,7 @@ create table resumes (
   user_id uuid references users(id),
   title text default 'My Resume',
   raw_text text,
-  embedding vector(1536),
+  embedding vector(3072),
   is_default boolean default true,
   created_at timestamp default now()
 );
@@ -27,7 +27,7 @@ create table jobs (
   title text,
   company text,
   raw_text text,
-  embedding vector(1536),
+  embedding vector(3072),
   match_score float,
   status text default 'applied',
   notes text,
@@ -78,7 +78,7 @@ create trigger on_auth_user_created
 
 -- Match function
 create or replace function match_jobs(
-  query_embedding vector(1536),
+  query_embedding vector(3072),
   match_threshold float default 0.5,
   match_count int default 10
 )

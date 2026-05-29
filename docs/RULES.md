@@ -15,7 +15,7 @@
 - Never use service_role key in client code
 
 ## AI / OpenAI
-- Model for embeddings: text-embedding-3-small (1536 dimensions)
+- Model for embeddings: text-embedding-3-large (3072 dimensions)
 - Model for analysis: gpt-4o-mini (cheap, fast)
 - Always request JSON response format for structured outputs
 - Cache embeddings — never re-embed same text twice

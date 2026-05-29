@@ -9,7 +9,7 @@ MVP Phase 1 — Complete. Core RAG pipeline working end-to-end.
 ## What's Built
 - Auth (Supabase Auth + email)
 - Resume upload (PDF import → text extraction via PDFKit → OpenAI embedding → Supabase)
-- Multiple resumes per user with is_default flag
+- Single resume per user (uploading a new one replaces the previous)
 - Job tracking (manual add + Share Extension from Safari/LinkedIn)
 - Share Extension captures URL/text → saves to shared UserDefaults → main app picks up on foreground
 - AI job analysis (title, company, summary, skills, difficulty via gpt-4o-mini)
@@ -20,7 +20,7 @@ MVP Phase 1 — Complete. Core RAG pipeline working end-to-end.
 ## Tech Stack
 - iOS: SwiftUI, PDFKit
 - Backend: Supabase (PostgreSQL + pgvector)
-- AI: OpenAI API (text-embedding-3-small, gpt-4o-mini)
+- AI: OpenAI API (text-embedding-3-large, gpt-4o-mini)
 - Auth: Supabase Auth
 
 ## Architecture Pattern
@@ -55,19 +55,19 @@ MatchFlow/
 └── Services/
 ├── AIService.swift             # OpenAI embeddings + analysis + cosine similarity
 ├── JobService.swift            # Jobs CRUD + embeddings + match score + fetchJobText
-└── ResumeService.swift         # Resume CRUD + embeddings + default management
+└── ResumeService.swift         # Resume CRUD + embeddings (single resume per user)
 MatchFlowShare/
 └── ShareViewController.swift      # Share Extension — saves URL/text to App Group UserDefaults
 
 ## Database Schema (Supabase)
 - users — id, email (auto-created via trigger on auth.users)
-- resumes — id, user_id, title, raw_text, embedding(1536), is_default, created_at
-- jobs — id, user_id, url, title, company, raw_text, embedding(1536), match_score, status, notes, summary, skills(text JSON), difficulty, applied_at, created_at
+- resumes — id, user_id, title, raw_text, embedding(3072), is_default, created_at
+- jobs — id, user_id, url, title, company, raw_text, embedding(3072), match_score, status, notes, summary, skills(text JSON), difficulty, applied_at, created_at
 - job_skills — id, job_id, skill_name, is_missing, severity (planned)
 
 ## RAG Flow
-1. User uploads resume → PDFKit extracts text → OpenAI embedding(1536) → save to resumes
-2. User shares/adds job → text extracted → OpenAI embedding → save to jobs
+1. User uploads resume → PDFKit extracts text → OpenAI embedding(3072) → save to resumes
+2. User shares/adds job → text extracted → OpenAI embedding(3072) → save to jobs
 3. Match score = cosine similarity (resume embedding vs job embedding) saved to jobs.match_score
 4. AI analyzes job → extracts title, company, summary, skills[], difficulty → saved to jobs
 
