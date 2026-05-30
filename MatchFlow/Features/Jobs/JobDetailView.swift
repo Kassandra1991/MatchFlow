@@ -54,6 +54,12 @@ struct JobDetailView: View {
                 }
             }
             
+            if let breakdown = MatchBreakdown.from(job: job) {
+                Section("Match Breakdown") {
+                    MatchBreakdownView(breakdown: breakdown)
+                }
+            }
+
             // MARK: - AI Analysis
             Section {
                 HStack {
@@ -245,24 +251,26 @@ struct JobDetailView: View {
 // MARK: - Match Score Badge
 struct MatchScoreBadge: View {
     let score: Double
-    
-    var color: Color {
-        switch score {
-        case 0.82...: return .green
-        case 0.68..<0.82: return .orange
-        default: return .red
-        }
-    }
-    
+
+    private var tier: MatchScoreTier { MatchScoreTier(score: score) }
+    private var percent: Int { Int(score * 100) }
+
     var body: some View {
-        Text("\(Int(score * 100))% Match")
-            .font(.subheadline)
-            .fontWeight(.bold)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(color.opacity(0.15))
-            .foregroundColor(color)
-            .clipShape(Capsule())
+        VStack(spacing: 2) {
+            Text(tier.primaryLabel(percent: percent))
+                .font(.subheadline)
+                .fontWeight(.bold)
+            if let secondary = tier.secondaryLabel(percent: percent) {
+                Text(secondary)
+                    .font(.caption2)
+                    .fontWeight(.medium)
+            }
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(tier.backgroundColor)
+        .foregroundColor(tier.foregroundColor)
+        .clipShape(Capsule())
     }
 }
 

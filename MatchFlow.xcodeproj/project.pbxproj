@@ -46,6 +46,9 @@
 		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
 		03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */; };
 		03BEA1612FBEF695000D36C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */; };
+		03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */; };
+		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
+		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +125,9 @@
 		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
 		03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyle.swift; sourceTree = "<group>"; };
+		03MBD0022FC2000200545ACD /* MatchBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdown.swift; sourceTree = "<group>"; };
+		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,6 +251,8 @@
 				03A4BA712FB090A900158FCC /* JobsView.swift */,
 				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
 				03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */,
+				03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */,
+				03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */,
 				037F36232FB3DC0100545ACD /* CoverLetterView.swift */,
 			);
 			path = Jobs;
@@ -271,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				03A4BA4D2FB07EC200158FCC /* Job.swift */,
+				03MBD0022FC2000200545ACD /* MatchBreakdown.swift */,
 				03A4BA4F2FB07EE700158FCC /* Resume.swift */,
 				0305E1DF2FB31D17004E9832 /* UserProfile.swift */,
 			);
@@ -522,6 +531,9 @@
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
 				03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */,
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
+				03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */,
+				03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */,
+				03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
 				037F36242FB3DC0100545ACD /* CoverLetterView.swift in Sources */,
 				039DEAA32FC10667001AEF26 /* AnalyticsService.swift in Sources */,
@@ -717,7 +729,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -754,7 +766,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

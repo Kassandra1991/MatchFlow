@@ -135,11 +135,6 @@ struct StatusCard: View {
 struct TopMatchRow: View {
     let job: Job
     
-    var color: Color {
-        guard let score = job.matchScore else { return .secondary }
-        return score >= 0.82 ? .green : score >= 0.68 ? .orange : .red
-    }
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
@@ -158,10 +153,23 @@ struct TopMatchRow: View {
             }
             Spacer()
             if let score = job.matchScore {
-                Text("\(Int(score * 100))%")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(color)
+                let tier = MatchScoreTier(score: score)
+                let percent = Int(score * 100)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(tier == .excellent ? "Excellent" : "\(percent)%")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(tier.foregroundColor)
+                    if tier == .excellent {
+                        Text("\(percent)%")
+                            .font(.caption2)
+                            .foregroundColor(tier.foregroundColor)
+                    }
+                }
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(tier.backgroundColor)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
             }
         }
     }

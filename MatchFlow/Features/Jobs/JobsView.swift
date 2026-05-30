@@ -198,25 +198,30 @@ struct JobRowView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 if let score = job.matchScore {
-                    HStack {
+                    let tier = MatchScoreTier(score: score)
+                    HStack(spacing: 6) {
                         Image(systemName: "chart.bar.fill")
-                            .foregroundColor(matchColor(score))
-                        Text("Match: \(Int(score * 100))%")
+                            .foregroundColor(tier.foregroundColor)
+                        Text(matchRowLabel(score: score, tier: tier))
                             .font(.caption)
-                            .foregroundColor(matchColor(score))
+                            .foregroundColor(tier.foregroundColor)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
+                            .background(tier.backgroundColor)
+                            .clipShape(Capsule())
                     }
                 }
             }
         }
         .padding(.vertical, 4)
     }
-    
-    private func matchColor(_ score: Double) -> Color {
-        switch score {
-        case 0.82...: return .green
-        case 0.68..<0.82: return .orange
-        default: return .red
+
+    private func matchRowLabel(score: Double, tier: MatchScoreTier) -> String {
+        let percent = Int(score * 100)
+        if tier == .excellent {
+            return "Excellent match · \(percent)%"
         }
+        return "Match: \(percent)%"
     }
 }
 

@@ -15,6 +15,7 @@ protocol JobServiceProtocol {
     func fetchJob(jobId: UUID) async throws -> Job
     func updateStatus(jobId: UUID, status: JobStatus) async throws
     func updateMatchScore(jobId: UUID, score: Double) async throws
+    func updateMatchResults(jobId: UUID, breakdown: MatchBreakdown) async throws
     func checkPendingJob() -> (url: String?, text: String?)
     func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws
     func fetchJobText(from urlString: String) async throws -> String
@@ -90,9 +91,26 @@ struct JobService: JobServiceProtocol {
     }
     
     func updateMatchScore(jobId: UUID, score: Double) async throws {
+        try await updateMatchResults(
+            jobId: jobId,
+            breakdown: MatchBreakdown(
+                overallScore: score,
+                experienceScore: 0,
+                skillsCoverage: 0,
+                levelFit: 0
+            )
+        )
+    }
+
+    func updateMatchResults(jobId: UUID, breakdown: MatchBreakdown) async throws {
         try await supabase
             .from("jobs")
-            .update(["match_score": score])
+            .update([
+                "match_score": breakdown.overallScore,
+                "experience_score": breakdown.experienceScore,
+                "skills_coverage": breakdown.skillsCoverage,
+                "level_fit": breakdown.levelFit
+            ])
             .eq("id", value: jobId.uuidString)
             .execute()
     }
@@ -128,24 +146,24 @@ struct JobService: JobServiceProtocol {
             jobDifficulty: job.difficulty
         )
 
-        let skillOverlap: Double
-        if job.skills.isEmpty || resume.skills.isEmpty {
-            skillOverlap = 0
-        } else {
-            skillOverlap = aiService.calculateSkillOverlap(
-                resumeSkills: resume.skills,
-                jobSkills: job.skills
-            )
-        }
+        let hasJobSkills = !job.skills.isEmpty
+        let matched = hasJobSkills && !resume.skills.isEmpty
+            ? aiService.matchedJobSkills(resumeSkills: resume.skills, jobSkills: job.skills)
+            : []
+        let skillOverlap: Double = hasJobSkills && !resume.skills.isEmpty
+            ? Double(matched.count) / Double(job.skills.count)
+            : 0
 
-        let finalScore = aiService.calculateHybridScore(
+        let breakdown = aiService.buildMatchBreakdown(
             embeddingScore: embeddingScore,
             skillOverlap: skillOverlap,
             seniorityFit: seniorityFit,
-            hasJobSkills: !job.skills.isEmpty
+            hasJobSkills: hasJobSkills,
+            matchedSkillsCount: matched.count,
+            totalJobSkillsCount: job.skills.count
         )
 
-        try await updateMatchScore(jobId: job.id, score: finalScore)
+        try await updateMatchResults(jobId: job.id, breakdown: breakdown)
     }
     
     func fetchJobText(from urlString: String) async throws -> String {

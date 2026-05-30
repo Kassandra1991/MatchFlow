@@ -15,8 +15,17 @@ protocol AIServiceProtocol {
     func extractResumeProfile(from text: String) async throws -> ResumeProfile
     func calculateMatchScore(resumeEmbedding: [Float], jobEmbedding: [Float]) -> Double
     func calculateSkillOverlap(resumeSkills: [String], jobSkills: [String]) -> Double
+    func matchedJobSkills(resumeSkills: [String], jobSkills: [String]) -> [String]
     func calculateSeniorityFit(resumeSeniority: String?, resumeYears: Int?, jobDifficulty: String?) -> Double
     func calculateHybridScore(embeddingScore: Double, skillOverlap: Double, seniorityFit: Double, hasJobSkills: Bool) -> Double
+    func buildMatchBreakdown(
+        embeddingScore: Double,
+        skillOverlap: Double,
+        seniorityFit: Double,
+        hasJobSkills: Bool,
+        matchedSkillsCount: Int,
+        totalJobSkillsCount: Int
+    ) -> MatchBreakdown
     func generateInsights(jobs: [Job]) async throws -> String
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String
 }
@@ -218,15 +227,54 @@ struct AIService: AIServiceProtocol {
         "api", "sql", "rest", "git", "agile", "ci/cd"
     ]
 
+    private static let skillSynonymGroups: [[String]] = [
+        ["ux", "user experience", "ux/ui", "ux/ui design"],
+        ["ai", "ai tools", "ai design tools", "automation in design"],
+        ["design systems", "design system", "design tokens"],
+        ["information architecture", "ia"],
+        ["prototyping", "prototype", "protopie"],
+        ["product design", "visual design", "ux/ui design"],
+        ["user research", "user-centred design", "user-centered design", "testing"],
+        ["b2b saas", "saas"],
+        ["cross-functional teams", "cross functional"],
+        ["creative software", "design tools"],
+        ["lean experiments", "lean", "experiments"],
+        ["entrepreneurial spirit", "entrepreneurial"],
+        ["swift", "swiftui", "ios"],
+        ["figma", "design tools"]
+    ]
+
+    private func normalizedSkill(_ skill: String) -> String {
+        skill.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func synonymKeys(for skill: String) -> Set<String> {
+        let norm = normalizedSkill(skill)
+        var keys: Set<String> = [norm]
+        for group in Self.skillSynonymGroups {
+            let hit = group.contains { token in
+                norm == token || norm.contains(token) || token.contains(norm)
+            }
+            if hit {
+                keys.formUnion(group)
+            }
+        }
+        return keys
+    }
+
     private func skillsMatch(_ a: String, _ b: String) -> Bool {
-        let al = a.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
-        let bl = b.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        let al = normalizedSkill(a)
+        let bl = normalizedSkill(b)
         guard !al.isEmpty, !bl.isEmpty else { return false }
         if al == bl { return true }
 
         let aGeneric = Self.genericSkillTokens.contains(al)
         let bGeneric = Self.genericSkillTokens.contains(bl)
         if aGeneric || bGeneric { return false }
+
+        let aKeys = synonymKeys(for: a)
+        let bKeys = synonymKeys(for: b)
+        if !aKeys.isDisjoint(with: bKeys) { return true }
 
         let minSubstringLength = 3
         if al.count >= minSubstringLength, bl.count >= minSubstringLength {
@@ -235,18 +283,47 @@ struct AIService: AIServiceProtocol {
         return false
     }
 
+    func matchedJobSkills(resumeSkills: [String], jobSkills: [String]) -> [String] {
+        jobSkills.filter { jobSkill in
+            resumeSkills.contains { skillsMatch($0, jobSkill) }
+        }
+    }
+
     func calculateSkillOverlap(resumeSkills: [String], jobSkills: [String]) -> Double {
         guard !jobSkills.isEmpty else { return 0 }
-        let matched = jobSkills.filter { jobSkill in
-            resumeSkills.contains { skillsMatch($0, jobSkill) }
-        }.count
+        let matched = matchedJobSkills(resumeSkills: resumeSkills, jobSkills: jobSkills).count
         return Double(matched) / Double(jobSkills.count)
+    }
+
+    func buildMatchBreakdown(
+        embeddingScore: Double,
+        skillOverlap: Double,
+        seniorityFit: Double,
+        hasJobSkills: Bool,
+        matchedSkillsCount: Int,
+        totalJobSkillsCount: Int
+    ) -> MatchBreakdown {
+        let overall = calculateHybridScore(
+            embeddingScore: embeddingScore,
+            skillOverlap: skillOverlap,
+            seniorityFit: seniorityFit,
+            hasJobSkills: hasJobSkills
+        )
+        let experienceDisplay = max(0, min(1, embeddingScore))
+        return MatchBreakdown(
+            overallScore: overall,
+            experienceScore: experienceDisplay,
+            skillsCoverage: skillOverlap,
+            levelFit: seniorityFit,
+            matchedSkillsCount: matchedSkillsCount,
+            totalJobSkillsCount: totalJobSkillsCount
+        )
     }
 
     func calculateSeniorityFit(resumeSeniority: String?, resumeYears: Int?, jobDifficulty: String?) -> Double {
         guard let job = jobDifficulty?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), !job.isEmpty,
               let res = resumeSeniority?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines), !res.isEmpty
-        else { return 1.0 }
+        else { return 0.5 }
 
         let matrix: [String: [String: Double]] = [
             "junior": ["junior": 1.0, "mid": 0.95, "senior": 0.85],
@@ -260,22 +337,47 @@ struct AIService: AIServiceProtocol {
         return fit
     }
 
+    private static let skillOverlapSeniorityThreshold = 0.25
+    private static let skillOverlapLowCapThreshold = 0.15
+    private static let lowOverlapBaseCap = 0.32
+
     func calculateHybridScore(
         embeddingScore: Double,
         skillOverlap: Double,
         seniorityFit: Double,
         hasJobSkills: Bool
     ) -> Double {
-        var base = 0.65 * embeddingScore + 0.20 * skillOverlap + 0.15 * seniorityFit
-        if hasJobSkills && skillOverlap < 0.30 && embeddingScore < 0.55 {
-            base *= 0.75
+        let effectiveSeniority: Double
+        var base: Double
+
+        if hasJobSkills {
+            if skillOverlap < Self.skillOverlapSeniorityThreshold {
+                effectiveSeniority = 0
+            } else {
+                effectiveSeniority = 0.15 * seniorityFit
+            }
+            base = 0.40 * embeddingScore + 0.45 * skillOverlap + effectiveSeniority
+        } else {
+            base = 0.70 * embeddingScore + 0.10 * seniorityFit
         }
-        return calibrate(base)
+
+        if hasJobSkills && skillOverlap < Self.skillOverlapSeniorityThreshold && embeddingScore < 0.55 {
+            base *= 0.70
+        }
+
+        if hasJobSkills && skillOverlap < Self.skillOverlapLowCapThreshold {
+            base = min(base, Self.lowOverlapBaseCap)
+        }
+
+        let lowSkillOverlap = hasJobSkills && skillOverlap < Self.skillOverlapSeniorityThreshold
+        return calibrate(base, lowSkillOverlap: lowSkillOverlap)
     }
 
-    private func calibrate(_ base: Double) -> Double {
+    private func calibrate(_ base: Double, lowSkillOverlap: Bool) -> Double {
         let display: Double
-        if base < 0.52 {
+        if lowSkillOverlap {
+            display = base * 0.85
+        } else if base < 0.52 {
             display = 0.35 + base * 0.65
         } else {
             display = 0.35 + base * 0.90

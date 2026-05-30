@@ -25,7 +25,7 @@ class MockJobService: JobServiceProtocol {
         return jobs
     }
     
-    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?) async throws -> Job {
+    func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String?) async throws -> Job {
         addJobCalled = true
         if shouldThrow { throw TestError.mock }
         let job = Job.mock(title: title, company: company, rawText: rawText)
@@ -45,11 +45,17 @@ class MockJobService: JobServiceProtocol {
     }
     
     func updateMatchScore(jobId: UUID, score: Double) async throws {}
+    func updateMatchResults(jobId: UUID, breakdown: MatchBreakdown) async throws {}
     func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws {}
     func fetchJobText(from urlString: String) async throws -> String { "" }
     func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws {}
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws {}
     func checkPendingJob() -> (url: String?, text: String?) { (nil, nil) }
+
+    func deleteJob(jobId: UUID) async throws {
+        if shouldThrow { throw TestError.mock }
+        jobs.removeAll { $0.id == jobId }
+    }
 }
 
 enum TestError: Error {

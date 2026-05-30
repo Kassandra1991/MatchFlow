@@ -102,6 +102,20 @@ struct AIServiceTests {
         #expect(overlap == 0.0)
     }
 
+    @Test("Skill overlap design job matches design resume synonyms")
+    func skillOverlapDesignRole() {
+        let jobSkills = [
+            "AI", "product design", "UX", "AI design tools",
+            "information architecture", "design systems", "prototyping", "user experience"
+        ]
+        let resumeSkills = [
+            "UX/UI Design", "Design Systems", "Prototyping", "Information Architecture",
+            "Figma", "AI Tools", "Visual Design"
+        ]
+        let overlap = service.calculateSkillOverlap(resumeSkills: resumeSkills, jobSkills: jobSkills)
+        #expect(overlap >= 0.5)
+    }
+
     @Test("Skill overlap no match returns 0")
     func skillOverlapNoMatch() {
         let overlap = service.calculateSkillOverlap(
@@ -121,14 +135,14 @@ struct AIServiceTests {
         #expect(abs(fit - 0.6375) < 0.0001)
     }
 
-    @Test("Seniority fit returns 1 when data missing")
+    @Test("Seniority fit returns neutral 0.5 when data missing")
     func seniorityFitMissingData() {
         let fit = service.calculateSeniorityFit(
             resumeSeniority: nil,
             resumeYears: nil,
             jobDifficulty: "senior"
         )
-        #expect(fit == 1.0)
+        #expect(fit == 0.5)
     }
 
     @Test("Seniority fit junior on senior job is low")
@@ -141,7 +155,7 @@ struct AIServiceTests {
         #expect(fit == 0.40)
     }
 
-    @Test("Hybrid score calibrates strong mid match above 82 percent")
+    @Test("Hybrid score calibrates strong mid match above 61 percent")
     func hybridScoreCalibratedStrongMatch() {
         let score = service.calculateHybridScore(
             embeddingScore: 0.65,
@@ -149,8 +163,36 @@ struct AIServiceTests {
             seniorityFit: 1.0,
             hasJobSkills: true
         )
-        #expect(score > 0.82)
+        #expect(score > 0.61)
         #expect(score < 0.95)
+    }
+
+    @Test("Hybrid score irrelevant stack stays below 30 percent")
+    func hybridScoreIrrelevantStackBelow30() {
+        let score = service.calculateHybridScore(
+            embeddingScore: 0.50,
+            skillOverlap: 0.0,
+            seniorityFit: 1.0,
+            hasJobSkills: true
+        )
+        #expect(score < 0.30)
+    }
+
+    @Test("Hybrid score ignores seniority bonus when skills do not overlap")
+    func hybridScoreSeniorityIgnoredWhenNoOverlap() {
+        let withoutSeniorityBoost = service.calculateHybridScore(
+            embeddingScore: 0.50,
+            skillOverlap: 0.0,
+            seniorityFit: 1.0,
+            hasJobSkills: true
+        )
+        let withOverlap = service.calculateHybridScore(
+            embeddingScore: 0.50,
+            skillOverlap: 0.40,
+            seniorityFit: 1.0,
+            hasJobSkills: true
+        )
+        #expect(withOverlap > withoutSeniorityBoost + 0.15)
     }
 
     @Test("Hybrid score penalizes low overlap when embedding is weak")
@@ -161,18 +203,26 @@ struct AIServiceTests {
             seniorityFit: 1.0,
             hasJobSkills: true
         )
-        #expect(score < 0.75)
+        #expect(score < 0.30)
     }
 
-    @Test("Hybrid score skips overlap penalty when embedding is strong")
-    func hybridScoreNoPenaltyWhenEmbeddingStrong() {
+    @Test("Hybrid score stays low when overlap weak despite strong embedding")
+    func hybridScoreLowOverlapDespiteEmbedding() {
         let score = service.calculateHybridScore(
             embeddingScore: 0.62,
             skillOverlap: 0.20,
             seniorityFit: 1.0,
             hasJobSkills: true
         )
-        #expect(score > 0.70)
+        #expect(score < 0.35)
+    }
+
+    @Test("Match score tier thresholds")
+    func matchScoreTierThresholds() {
+        #expect(MatchScoreTier(score: 0.29) == .low)
+        #expect(MatchScoreTier(score: 0.30) == .medium)
+        #expect(MatchScoreTier(score: 0.61) == .high)
+        #expect(MatchScoreTier(score: 0.90) == .excellent)
     }
 
     @Test("Hybrid score never exceeds 0.95 cap")

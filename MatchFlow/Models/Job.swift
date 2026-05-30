@@ -16,6 +16,9 @@ struct Job: Identifiable, Codable, Equatable {
     var companyLogoUrl: String?
     var rawText: String?
     var matchScore: Double?
+    var experienceScore: Double?
+    var skillsCoverage: Double?
+    var levelFit: Double?
     var status: JobStatus
     var coverLetter: String?
     var notes: String?
@@ -43,6 +46,9 @@ struct Job: Identifiable, Codable, Equatable {
         case companyLogoUrl = "company_logo_url"
         case rawText = "raw_text"
         case matchScore = "match_score"
+        case experienceScore = "experience_score"
+        case skillsCoverage = "skills_coverage"
+        case levelFit = "level_fit"
         case status
         case coverLetter = "cover_letter"
         case notes
