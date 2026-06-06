@@ -14,6 +14,18 @@ class DashboardViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var isLoadingInsights = false
     @Published var insights: JobInsights? = nil
+    @Published var errorMessage = ""
+
+    private let jobService: JobServiceProtocol
+    private let aiService: AIServiceProtocol
+
+    init(
+        jobService: JobServiceProtocol = JobService(),
+        aiService: AIServiceProtocol = AIService()
+    ) {
+        self.jobService = jobService
+        self.aiService = aiService
+    }
     
     var totalJobs: Int { allJobs.count }
     
@@ -37,13 +49,13 @@ class DashboardViewModel: ObservableObject {
     func load(userId: UUID) async {
         isLoading = true
         do {
-            allJobs = try await JobService().fetchJobs(userId: userId)
+            allJobs = try await jobService.fetchJobs(userId: userId)
         } catch {
+            errorMessage = error.localizedDescription
             print("❌ Dashboard load error: \(error)")
         }
         isLoading = false
         
-        // Генерируем инсайты после загрузки
         await generateInsights()
     }
     
@@ -51,11 +63,9 @@ class DashboardViewModel: ObservableObject {
         guard !allJobs.isEmpty else { return }
         isLoadingInsights = true
         do {
-            let raw = try await AIService().generateInsights(jobs: allJobs)
-            if let data = raw.data(using: .utf8) {
-                insights = try JSONDecoder().decode(JobInsights.self, from: data)
-            }
+            insights = try await aiService.generateInsights(jobs: allJobs)
         } catch {
+            errorMessage = error.localizedDescription
             print("❌ Insights error: \(error)")
         }
         isLoadingInsights = false

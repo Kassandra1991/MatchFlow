@@ -6,17 +6,15 @@
 //
 
 import SwiftUI
-import Supabase
-import Auth
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
+    @EnvironmentObject private var auth: AuthViewModel
     @EnvironmentObject private var tabSelection: TabSelectionViewModel
     
     var body: some View {
         NavigationStack {
             List {
-                // MARK: - Status Grid
                 Section {
                     if viewModel.isLoading {
                         HStack {
@@ -67,7 +65,6 @@ struct DashboardView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                // MARK: - Top Matches
                 if !viewModel.topMatches.isEmpty {
                     Section("Top Matches") {
                         ForEach(viewModel.topMatches) { job in
@@ -81,57 +78,43 @@ struct DashboardView: View {
             .listStyle(.insetGrouped)
             .navigationTitle("Insights")
             .task {
-                if let session = try? await supabase.auth.session,
-                   let uuid = UUID(uuidString: session.user.id.uuidString) {
-                    await viewModel.load(userId: uuid)
+                if let userId = auth.currentUserId {
+                    await viewModel.load(userId: userId)
                 }
             }
             .refreshable {
-                if let session = try? await supabase.auth.session,
-                   let uuid = UUID(uuidString: session.user.id.uuidString) {
-                    await viewModel.load(userId: uuid)
+                if let userId = auth.currentUserId {
+                    await viewModel.load(userId: userId)
                 }
             }
         }
     }
 }
 
-// MARK: - Status Card
 struct StatusCard: View {
     let status: JobStatus
     let count: Int
     let action: () -> Void
-    
-    var color: Color {
-        switch status {
-        case .exploring: return .gray
-        case .applied: return .blue
-        case .interview: return .orange
-        case .rejected: return .red
-        case .offer: return .green
-        }
-    }
     
     var body: some View {
         Button(action: action) {
             VStack(spacing: 6) {
                 Text("\(count)")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
-                    .foregroundColor(color)
-                Text(status.rawValue.capitalized)
+                    .foregroundColor(JobStatusStyle.color(for: status))
+                Text(JobStatusStyle.label(for: status))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(color.opacity(0.08))
+            .background(JobStatusStyle.color(for: status).opacity(0.08))
             .cornerRadius(14)
         }
         .buttonStyle(.plain)
     }
 }
 
-// MARK: - Top Match Row
 struct TopMatchRow: View {
     let job: Job
     
@@ -177,5 +160,6 @@ struct TopMatchRow: View {
 
 #Preview {
     DashboardView()
+        .environmentObject(AuthViewModel())
         .environmentObject(TabSelectionViewModel())
 }

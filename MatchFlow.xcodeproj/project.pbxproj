@@ -47,6 +47,19 @@
 		03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */; };
 		03BEA1612FBEF695000D36C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */; };
 		03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */; };
+		03AUTH0012FC3000100545ACD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AUTH0022FC3000100545ACD /* AuthService.swift */; };
+		03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JSS0022FC3000100545ACD /* JobStatusStyle.swift */; };
+		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
+		03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */; };
+		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
+		03FL0012FC3000100545ACD /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FL0022FC3000100545ACD /* FlowLayout.swift */; };
+		03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AJV0022FC3000100545ACD /* AddJobView.swift */; };
+		03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JRV0022FC3000100545ACD /* JobRowView.swift */; };
+		03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ARV0022FC3000100545ACD /* AddResumeView.swift */; };
+		03RRV0012FC3000100545ACD /* ResumeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RRV0022FC3000100545ACD /* ResumeRowView.swift */; };
+		03MAS0012FC3000100545ACD /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAS0022FC3000100545ACD /* MockAuthService.swift */; };
+		03AVT0012FC3000100545ACD /* AuthViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AVT0022FC3000100545ACD /* AuthViewModelTests.swift */; };
+		03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */; };
 		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
 /* End PBXBuildFile section */
@@ -126,6 +139,19 @@
 		03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyle.swift; sourceTree = "<group>"; };
+		03AUTH0022FC3000100545ACD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		03JSS0022FC3000100545ACD /* JobStatusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobStatusStyle.swift; sourceTree = "<group>"; };
+		03SB0022FC3000100545ACD /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreBadge.swift; sourceTree = "<group>"; };
+		03ST0022FC3000100545ACD /* SkillTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTag.swift; sourceTree = "<group>"; };
+		03FL0022FC3000100545ACD /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
+		03AJV0022FC3000100545ACD /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
+		03JRV0022FC3000100545ACD /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
+		03ARV0022FC3000100545ACD /* AddResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResumeView.swift; sourceTree = "<group>"; };
+		03RRV0022FC3000100545ACD /* ResumeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRowView.swift; sourceTree = "<group>"; };
+		03MAS0022FC3000100545ACD /* MockAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		03AVT0022FC3000100545ACD /* AuthViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModelTests.swift; sourceTree = "<group>"; };
+		03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		03MBD0022FC2000200545ACD /* MatchBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdown.swift; sourceTree = "<group>"; };
 		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +243,7 @@
 		03A4BA442FB07DBC00158FCC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				03FSH0012FC3000100545ACD /* Shared */,
 				03A4BA492FB07E2D00158FCC /* Insights */,
 				03A4BA482FB07E2500158FCC /* Resume */,
 				03A4BA472FB07E0200158FCC /* Jobs */,
@@ -224,6 +251,19 @@
 				03A4BA452FB07DD600158FCC /* Auth */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		03FSH0012FC3000100545ACD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				03JSS0022FC3000100545ACD /* JobStatusStyle.swift */,
+				03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */,
+				03SB0022FC3000100545ACD /* StatusBadge.swift */,
+				03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */,
+				03ST0022FC3000100545ACD /* SkillTag.swift */,
+				03FL0022FC3000100545ACD /* FlowLayout.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		03A4BA452FB07DD600158FCC /* Auth */ = {
@@ -249,9 +289,10 @@
 			children = (
 				03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */,
 				03A4BA712FB090A900158FCC /* JobsView.swift */,
+				03AJV0022FC3000100545ACD /* AddJobView.swift */,
+				03JRV0022FC3000100545ACD /* JobRowView.swift */,
 				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
 				03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */,
-				03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */,
 				03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */,
 				037F36232FB3DC0100545ACD /* CoverLetterView.swift */,
 			);
@@ -263,6 +304,8 @@
 			children = (
 				03A4BA732FB0937500158FCC /* ResumeViewModel.swift */,
 				03A4BA752FB093DD00158FCC /* ResumeView.swift */,
+				03ARV0022FC3000100545ACD /* AddResumeView.swift */,
+				03RRV0022FC3000100545ACD /* ResumeRowView.swift */,
 				0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */,
 			);
 			path = Resume;
@@ -289,6 +332,7 @@
 		03A4BA4B2FB07E5600158FCC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				03AUTH0022FC3000100545ACD /* AuthService.swift */,
 				039DEAA22FC10663001AEF26 /* AnalyticsService.swift */,
 				03A4BA512FB07F5F00158FCC /* JobService.swift */,
 				03A4BA532FB07F8D00158FCC /* ResumeService.swift */,
@@ -328,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				03BEA1562FB9310C000D36C9 /* MockJobService.swift */,
+				03MAS0022FC3000100545ACD /* MockAuthService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -352,6 +397,8 @@
 			children = (
 				03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */,
 				03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */,
+				03AVT0022FC3000100545ACD /* AuthViewModelTests.swift */,
+				03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -532,6 +579,16 @@
 				03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */,
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
 				03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */,
+				03AUTH0012FC3000100545ACD /* AuthService.swift in Sources */,
+				03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */,
+				03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */,
+				03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */,
+				03ST0012FC3000100545ACD /* SkillTag.swift in Sources */,
+				03FL0012FC3000100545ACD /* FlowLayout.swift in Sources */,
+				03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */,
+				03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */,
+				03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */,
+				03RRV0012FC3000100545ACD /* ResumeRowView.swift in Sources */,
 				03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */,
 				03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
@@ -571,6 +628,9 @@
 				03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */,
 				03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */,
 				03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */,
+				03MAS0012FC3000100545ACD /* MockAuthService.swift in Sources */,
+				03AVT0012FC3000100545ACD /* AuthViewModelTests.swift in Sources */,
+				03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

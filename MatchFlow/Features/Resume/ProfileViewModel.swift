@@ -10,7 +10,6 @@ class ProfileViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var successMessage = ""
     
-    // Edit fields
     @Published var fullName = ""
     @Published var headline = ""
     @Published var importantInCompany = ""
@@ -18,7 +17,11 @@ class ProfileViewModel: ObservableObject {
     @Published var careerGoals = ""
     @Published var coverLetterTone = "friendly"
     
-    private let profileService = ProfileService()
+    private let profileService: ProfileServiceProtocol
+    
+    init(profileService: ProfileServiceProtocol = ProfileService()) {
+        self.profileService = profileService
+    }
     
     func fetchProfile(userId: UUID) async {
         isLoading = true
@@ -27,7 +30,7 @@ class ProfileViewModel: ObservableObject {
             if let profile {
                 populateFields(from: profile)
             } else {
-                isEditing = true // первый раз — сразу в режим редактирования
+                isEditing = true
             }
         } catch {
             errorMessage = error.localizedDescription

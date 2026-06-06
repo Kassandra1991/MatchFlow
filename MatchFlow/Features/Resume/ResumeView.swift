@@ -1,25 +1,19 @@
 import SwiftUI
-import UniformTypeIdentifiers
-import Supabase
-import Auth
-import PDFKit
 
 struct ResumeView: View {
     @EnvironmentObject private var auth: AuthViewModel
     @StateObject private var resumeViewModel = ResumeViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showAddResume = false
-    @State private var userId: UUID?
     
     var body: some View {
         NavigationStack {
             List {
-                // MARK: - Profile Section
                 Section {
                     if profileViewModel.isLoading {
                         ProgressView()
                     } else if profileViewModel.isEditing {
-                        ProfileEditView(viewModel: profileViewModel, userId: userId)
+                        ProfileEditView(viewModel: profileViewModel, userId: auth.currentUserId)
                     } else if let profile = profileViewModel.profile {
                         ProfileReadView(profile: profile) {
                             profileViewModel.startEditing()
@@ -35,7 +29,6 @@ struct ResumeView: View {
                     Text("About me")
                 }
                 
-                // MARK: - Resumes Section
                 Section {
                     if resumeViewModel.isLoading {
                         ProgressView()
@@ -73,32 +66,24 @@ struct ResumeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Sign Out") {
-                        Task { await signOut() }
+                        Task { await auth.signOut() }
                     }
                     .foregroundColor(.red)
                 }
             }
             .sheet(isPresented: $showAddResume) {
-                AddResumeView(viewModel: resumeViewModel, userId: userId)
+                AddResumeView(viewModel: resumeViewModel, userId: auth.currentUserId)
             }
             .task {
-                if let session = try? await supabase.auth.session,
-                   let uuid = UUID(uuidString: session.user.id.uuidString) {
-                    userId = uuid
-                    await profileViewModel.fetchProfile(userId: uuid)
-                    await resumeViewModel.fetchResumes(userId: uuid)
+                if let userId = auth.currentUserId {
+                    await profileViewModel.fetchProfile(userId: userId)
+                    await resumeViewModel.fetchResumes(userId: userId)
                 }
             }
         }
     }
-    
-    private func signOut() async {
-        try? await supabase.auth.signOut()
-        await auth.checkSession()
-    }
 }
 
-// MARK: - Profile Read View
 struct ProfileReadView: View {
     let profile: UserProfile
     let onEdit: () -> Void
@@ -135,7 +120,6 @@ struct ProfileReadView: View {
     }
 }
 
-// MARK: - Profile Row
 struct ProfileRow: View {
     let icon: String
     let label: String
@@ -158,7 +142,6 @@ struct ProfileRow: View {
     }
 }
 
-// MARK: - Profile Edit View
 struct ProfileEditView: View {
     @ObservedObject var viewModel: ProfileViewModel
     let userId: UUID?
@@ -204,7 +187,7 @@ struct ProfileEditView: View {
             }
             
             HStack {
-                if profileViewModel_hasProfile {
+                if viewModel.profile != nil {
                     Button("Cancel") {
                         viewModel.isEditing = false
                     }
@@ -226,142 +209,14 @@ struct ProfileEditView: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(viewModel.fullName.isEmpty || viewModel.isSaving)
+                .disabled(viewModel.fullName.isEmpty || viewModel.isSaving || userId == nil)
             }
         }
         .padding(.vertical, 4)
-    }
-    
-    private var profileViewModel_hasProfile: Bool {
-        viewModel.profile != nil
-    }
-}
-
-// MARK: - Resume Row View
-struct ResumeRowView: View {
-    let resume: Resume
-    let onDelete: () -> Void
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(resume.title)
-                .font(.headline)
-            Text("Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))")
-                .font(.caption)
-                .foregroundColor(.secondary)
-        }
-        .padding(.vertical, 4)
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive, action: onDelete) {
-                Label("Delete", systemImage: "trash")
-            }
-        }
-    }
-}
-
-// MARK: - Add Resume View
-struct AddResumeView: View {
-    @ObservedObject var viewModel: ResumeViewModel
-    let userId: UUID?
-    @Environment(\.dismiss) private var dismiss
-    @State private var title = ""
-    @State private var rawText = ""
-    @State private var showFilePicker = false
-
-    var body: some View {
-        NavigationView {
-            Form {
-                Section("Resume Title") {
-                    TextField("e.g. iOS Developer CV", text: $title)
-                }
-
-                Section("Content") {
-                    Button {
-                        showFilePicker = true
-                    } label: {
-                        Label("Import from PDF", systemImage: "doc.fill")
-                    }
-
-                    if !rawText.isEmpty {
-                        Text("✓ Text extracted (\(rawText.count) chars)")
-                            .font(.caption)
-                            .foregroundColor(.green)
-                    }
-
-                    TextEditor(text: $rawText)
-                        .frame(minHeight: 150)
-                        .overlay(
-                            Group {
-                                if rawText.isEmpty {
-                                    Text("Or paste resume text here...")
-                                        .foregroundColor(.secondary)
-                                        .padding(8)
-                                }
-                            },
-                            alignment: .topLeading
-                        )
-                }
-
-                if !viewModel.errorMessage.isEmpty {
-                    Section {
-                        Text(viewModel.errorMessage)
-                            .foregroundColor(.red)
-                            .font(.caption)
-                    }
-                }
-            }
-            .navigationTitle("Add Resume")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") { dismiss() }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        Task {
-                            if let userId {
-                                await viewModel.saveResume(
-                                    userId: userId,
-                                    title: title,
-                                    rawText: rawText,
-                                    isDefault: true
-                                )
-                                if viewModel.errorMessage.isEmpty {
-                                    dismiss()
-                                }
-                            }
-                        }
-                    }
-                    .disabled(rawText.isEmpty || title.isEmpty || viewModel.isLoading)
-                }
-            }
-            .fileImporter(
-                isPresented: $showFilePicker,
-                allowedContentTypes: [.pdf],
-                allowsMultipleSelection: false
-            ) { result in
-                if let url = try? result.get().first {
-                    extractText(from: url)
-                }
-            }
-        }
-    }
-
-    private func extractText(from url: URL) {
-        guard url.startAccessingSecurityScopedResource() else { return }
-        defer { url.stopAccessingSecurityScopedResource() }
-        if let pdf = PDFDocument(url: url) {
-            var text = ""
-            for i in 0..<pdf.pageCount {
-                if let page = pdf.page(at: i) {
-                    text += (page.string ?? "") + "\n"
-                }
-            }
-            rawText = text
-        }
     }
 }
 
 #Preview {
     ResumeView()
+        .environmentObject(AuthViewModel())
 }

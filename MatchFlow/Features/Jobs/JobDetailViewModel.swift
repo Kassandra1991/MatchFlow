@@ -38,6 +38,34 @@ class JobDetailViewModel: ObservableObject {
         self.aiService = aiService
     }
 
+    func loadOnAppear(job: Job, userId: UUID) async {
+        selectedStatus = job.status
+        notes = job.notes ?? ""
+
+        await loadJob(jobId: job.id)
+
+        let currentJob = updatedJob ?? job
+        if currentJob.summary == nil {
+            await analyze(job: currentJob)
+        } else {
+            analysis = JobAnalysis(
+                title: currentJob.title,
+                company: currentJob.company,
+                summary: currentJob.summary,
+                skills: currentJob.skills,
+                difficulty: currentJob.difficulty
+            )
+        }
+
+        if currentJob.coverLetter == nil {
+            await generateCoverLetter(job: currentJob, userId: userId)
+        }
+    }
+
+    func regenerateCoverLetter(job: Job, userId: UUID) async {
+        await generateCoverLetter(job: job, userId: userId)
+    }
+
     func generateCoverLetter(job: Job, userId: UUID) async {
         isGeneratingCoverLetter = true
         do {

@@ -6,6 +6,9 @@
 - import Combine on every ObservableObject
 - Codable structs for all DB models with CodingKeys matching snake_case DB columns
 - Never put business logic in Views
+- Never import Supabase or call `supabase` outside Services
+- Inject services into ViewModels via protocols (with default concrete implementations)
+- Use auth.currentUserId from AuthViewModel for user context in Views
 - Use .task {} for async calls in Views, not .onAppear
 
 ## Supabase
@@ -30,6 +33,7 @@
 - Views: FeatureNameView.swift
 - ViewModels: FeatureNameViewModel.swift
 - Services: FeatureNameService.swift
+- Shared UI: DescriptiveName.swift in Features/Shared/
 - Models: ModelName.swift (singular)
 
 ## Error handling

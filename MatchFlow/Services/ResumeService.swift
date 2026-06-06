@@ -7,6 +7,7 @@
 
 import Foundation
 import Supabase
+import PDFKit
 
 protocol ResumeServiceProtocol {
     func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool) async throws -> Resume
@@ -14,23 +15,41 @@ protocol ResumeServiceProtocol {
     func fetchDefaultResume(userId: UUID) async throws -> Resume?
     func setDefault(resumeId: UUID, userId: UUID) async throws
     func deleteResume(resumeId: UUID) async throws
+    func extractTextFromPDF(url: URL) -> String
 }
 
 struct ResumeService: ResumeServiceProtocol {
+    private let aiService: AIServiceProtocol
+
+    init(aiService: AIServiceProtocol = AIService()) {
+        self.aiService = aiService
+    }
+
+    func extractTextFromPDF(url: URL) -> String {
+        guard url.startAccessingSecurityScopedResource() else { return "" }
+        defer { url.stopAccessingSecurityScopedResource() }
+        guard let pdf = PDFDocument(url: url) else { return "" }
+
+        var text = ""
+        for index in 0..<pdf.pageCount {
+            if let page = pdf.page(at: index) {
+                text += (page.string ?? "") + "\n"
+            }
+        }
+        return text
+    }
     
     func saveResume(userId: UUID, title: String, rawText: String, isDefault: Bool = true) async throws -> Resume {
-        // Удаляем старое резюме если есть
         try await supabase
             .from("resumes")
             .delete()
             .eq("user_id", value: userId.uuidString)
             .execute()
-        
 
-        let embedding = try await AIService().getEmbedding(for: rawText)
+        let embedding = try await aiService.getEmbedding(for: rawText)
         let embeddingString = "[" + embedding.map { String($0) }.joined(separator: ",") + "]"
 
-        let profile = try await AIService().extractResumeProfile(from: rawText)
+        let profile = try await aiService.extractResumeProfile(from: rawText)
         let skillsString = (try? JSONEncoder().encode(profile.skills))
             .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
 
@@ -93,14 +112,12 @@ struct ResumeService: ResumeServiceProtocol {
     }
     
     func setDefault(resumeId: UUID, userId: UUID) async throws {
-        // Сбрасываем все
         try await supabase
             .from("resumes")
             .update(["is_default": false])
             .eq("user_id", value: userId.uuidString)
             .execute()
         
-        // Устанавливаем новый дефолт
         try await supabase
             .from("resumes")
             .update(["is_default": true])

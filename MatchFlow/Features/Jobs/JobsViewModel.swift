@@ -21,6 +21,12 @@ class JobsViewModel: ObservableObject {
         self.jobService = jobService
     }
     
+    func load(userId: UUID?) async {
+        guard let userId else { return }
+        await fetchJobs(userId: userId)
+        await addJobFromShare(userId: userId)
+    }
+
     func fetchJobs(userId: UUID) async {
         isLoading = true
         do {
@@ -32,37 +38,12 @@ class JobsViewModel: ObservableObject {
     }
     
     func addJobFromShare(userId: UUID) async {
-        let pending = jobService.checkPendingJob()
-        guard let url = pending.url ?? pending.text else { return }
-        
         isLoading = true
         do {
-            var rawText = url
-            var title: String? = nil
-            var company: String? = nil
-            var companyLogoUrl: String? = nil
-
-            if url.contains("linkedin.com/jobs/view") {
-                let jobData = try await AIService().fetchJobFromURL(url)
-                rawText = jobData.description ?? url
-                title = jobData.title
-                company = jobData.company
-                companyLogoUrl = jobData.companyLogo
-            } else if url.hasPrefix("http") {
-                rawText = (try? await jobService.fetchJobText(from: url)) ?? url
+            if let job = try await jobService.addJobFromShare(userId: userId) {
+                jobs.insert(job, at: 0)
+                await fetchJobs(userId: userId)
             }
-
-            let job = try await jobService.addJob(
-                userId: userId,
-                url: url.hasPrefix("http") ? url : nil,
-                rawText: rawText,
-                title: title,
-                company: company,
-                companyLogoUrl: companyLogoUrl
-            )
-            jobs.insert(job, at: 0)
-            try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
-            await fetchJobs(userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -105,7 +86,7 @@ class JobsViewModel: ObservableObject {
         for index in indexSet {
             let job = filteredJobs[index]
             do {
-                try await JobService().deleteJob(jobId: job.id)
+                try await jobService.deleteJob(jobId: job.id)
                 jobs.removeAll { $0.id == job.id }
                 AnalyticsService.log(.jobDeleted)
             } catch {

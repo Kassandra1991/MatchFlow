@@ -15,7 +15,11 @@ class ResumeViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var successMessage = ""
     
-    private let resumeService = ResumeService()
+    private let resumeService: ResumeServiceProtocol
+    
+    init(resumeService: ResumeServiceProtocol = ResumeService()) {
+        self.resumeService = resumeService
+    }
     
     func fetchResumes(userId: UUID) async {
         isLoading = true
@@ -43,6 +47,10 @@ class ResumeViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
         isLoading = false
+    }
+
+    func extractTextFromPDF(url: URL) -> String {
+        resumeService.extractTextFromPDF(url: url)
     }
     
     func setDefault(resume: Resume, userId: UUID) async {

@@ -26,8 +26,9 @@ protocol AIServiceProtocol {
         matchedSkillsCount: Int,
         totalJobSkillsCount: Int
     ) -> MatchBreakdown
-    func generateInsights(jobs: [Job]) async throws -> String
+    func generateInsights(jobs: [Job]) async throws -> JobInsights
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String
+    func fetchJobFromURL(_ url: String) async throws -> (title: String?, company: String?, location: String?, description: String?, companyLogo: String?)
 }
 
 struct AIService: AIServiceProtocol {
@@ -385,8 +386,8 @@ struct AIService: AIServiceProtocol {
         return min(0.95, max(0.0, display))
     }
     
-    func generateInsights(jobs: [Job]) async throws -> String {
-        guard !jobs.isEmpty else { return "Add more jobs to get insights." }
+    func generateInsights(jobs: [Job]) async throws -> JobInsights {
+        guard !jobs.isEmpty else { return JobInsights(summary: "Add more jobs to get insights.") }
         
         // Разделяем exploring и активные
         let exploringJobs = jobs.filter { $0.status == .exploring }
@@ -454,7 +455,11 @@ struct AIService: AIServiceProtocol {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
-        return response.choices.first?.message.content ?? "{}"
+        let content = response.choices.first?.message.content ?? "{}"
+        guard let jsonData = content.data(using: .utf8) else {
+            return JobInsights(summary: nil)
+        }
+        return try JSONDecoder().decode(JobInsights.self, from: jsonData)
     }
     
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String {

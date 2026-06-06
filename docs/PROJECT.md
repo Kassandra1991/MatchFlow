@@ -25,9 +25,10 @@ MVP Phase 1 — Complete. Core RAG pipeline working end-to-end.
 
 ## Architecture Pattern
 MVVM + Services
-- Views — UI only, no business logic
-- ViewModels — @MainActor, @Published state, user actions
-- Services — Supabase and AI calls, singletons
+- Views — UI only, no business logic, no direct Supabase access
+- ViewModels — @MainActor, @Published state, user actions, inject services via protocols
+- Services — Supabase, AI, and auth calls; sole layer that touches external APIs
+- Shared — reusable UI styling and components (JobStatusStyle, MatchScoreStyle, StatusBadge)
 - Models — Codable structs matching DB schema with CodingKeys
 
 ## File Structure

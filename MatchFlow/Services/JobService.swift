@@ -11,6 +11,7 @@ import Supabase
 
 protocol JobServiceProtocol {
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String?) async throws -> Job
+    func addJobFromShare(userId: UUID) async throws -> Job?
     func fetchJobs(userId: UUID) async throws -> [Job]
     func fetchJob(jobId: UUID) async throws -> Job
     func updateStatus(jobId: UUID, status: JobStatus) async throws
@@ -25,9 +26,49 @@ protocol JobServiceProtocol {
 }
 
 struct JobService: JobServiceProtocol {
+    private let aiService: AIServiceProtocol
+    private let resumeService: ResumeServiceProtocol
+
+    init(
+        aiService: AIServiceProtocol = AIService(),
+        resumeService: ResumeServiceProtocol = ResumeService()
+    ) {
+        self.aiService = aiService
+        self.resumeService = resumeService
+    }
+
+    func addJobFromShare(userId: UUID) async throws -> Job? {
+        let pending = checkPendingJob()
+        guard let url = pending.url ?? pending.text else { return nil }
+
+        var rawText = url
+        var title: String?
+        var company: String?
+        var companyLogoUrl: String?
+
+        if url.contains("linkedin.com/jobs/view") {
+            let jobData = try await aiService.fetchJobFromURL(url)
+            rawText = jobData.description ?? url
+            title = jobData.title
+            company = jobData.company
+            companyLogoUrl = jobData.companyLogo
+        } else if url.hasPrefix("http") {
+            rawText = (try? await fetchJobText(from: url)) ?? url
+        }
+
+        let job = try await addJob(
+            userId: userId,
+            url: url.hasPrefix("http") ? url : nil,
+            rawText: rawText,
+            title: title,
+            company: company,
+            companyLogoUrl: companyLogoUrl
+        )
+        try await calculateAndSaveMatchScore(job: job, userId: userId)
+        return job
+    }
     
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String? = nil) async throws -> Job {
-        let aiService = AIService()
         let englishText = try await aiService.ensureEnglishJobText(rawText)
 
         let embedding = try await aiService.getEmbedding(for: englishText)
@@ -126,11 +167,9 @@ struct JobService: JobServiceProtocol {
     }
     
     func calculateAndSaveMatchScore(job: Job, userId: UUID) async throws {
-        guard let resume = try await ResumeService().fetchDefaultResume(userId: userId) else { return }
+        guard let resume = try await resumeService.fetchDefaultResume(userId: userId) else { return }
         guard let resumeText = resume.rawText else { return }
         guard let jobText = job.rawText else { return }
-
-        let aiService = AIService()
 
         let resumeEmbedding = try await aiService.getEmbedding(for: resumeText)
         let jobTextEnglish = try await aiService.ensureEnglishJobText(jobText)

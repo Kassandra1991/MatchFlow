@@ -58,6 +58,13 @@ enum MatchScoreTier: Equatable {
     func secondaryLabel(percent: Int) -> String? {
         self == .excellent ? "\(percent)%" : nil
     }
+
+    func rowLabel(percent: Int) -> String {
+        if self == .excellent {
+            return "Excellent match · \(percent)%"
+        }
+        return "Match: \(percent)%"
+    }
 }
 
 enum MatchScoreStyle {

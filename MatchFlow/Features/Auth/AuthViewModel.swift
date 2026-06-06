@@ -7,24 +7,28 @@
 
 import Foundation
 import Combine
-import Supabase
 
 @MainActor
 class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
+    @Published var currentUserId: UUID?
     @Published var isLoading = false
     @Published var errorMessage = ""
     @Published var isCheckingSession = true
+
+    private let authService: AuthServiceProtocol
+
+    init(authService: AuthServiceProtocol = AuthService()) {
+        self.authService = authService
+    }
 
     func signUp(email: String, password: String) async {
         isLoading = true
         errorMessage = ""
         do {
-            try await supabase.auth.signUp(
-                email: email,
-                password: password
-            )
+            try await authService.signUp(email: email, password: password)
             isAuthenticated = true
+            currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signUp)
         } catch {
             errorMessage = error.localizedDescription
@@ -36,11 +40,9 @@ class AuthViewModel: ObservableObject {
         isLoading = true
         errorMessage = ""
         do {
-            try await supabase.auth.signIn(
-                email: email,
-                password: password
-            )
+            try await authService.signIn(email: email, password: password)
             isAuthenticated = true
+            currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signIn)
         } catch {
             errorMessage = error.localizedDescription
@@ -48,15 +50,27 @@ class AuthViewModel: ObservableObject {
         isLoading = false
     }
 
+    func signOut() async {
+        do {
+            try await authService.signOut()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+        isAuthenticated = false
+        currentUserId = nil
+    }
+
     func checkSession() async {
         isCheckingSession = true
         do {
-            _ = try await supabase.auth.session
+            try await authService.checkSession()
             isAuthenticated = true
+            currentUserId = try await authService.currentUserId()
         } catch {
             isAuthenticated = false
+            currentUserId = nil
         }
-        try? await Task.sleep(nanoseconds: 800_000_000) // 0.8 секунды
+        try? await Task.sleep(nanoseconds: 800_000_000)
         isCheckingSession = false
     }
 }

@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Supabase
-import Auth
 
 struct JobsView: View {
     @StateObject private var viewModel = JobsViewModel()
@@ -23,7 +21,6 @@ struct JobsView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // MARK: - Filter Bar
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         FilterChip(title: "All", count: viewModel.jobs.count, isSelected: tabSelection.jobsFilter == nil, color: .primary) {
@@ -32,10 +29,10 @@ struct JobsView: View {
                         ForEach(JobStatus.allCases, id: \.self) { status in
                             let count = viewModel.jobs.filter { $0.status == status }.count
                             FilterChip(
-                                title: status.rawValue.capitalized,
+                                title: JobStatusStyle.label(for: status),
                                 count: count,
                                 isSelected: tabSelection.jobsFilter == status,
-                                color: statusColor(status)
+                                color: JobStatusStyle.color(for: status)
                             ) {
                                 tabSelection.jobsFilter = status
                             }
@@ -46,7 +43,6 @@ struct JobsView: View {
                 }
                 .background(Color(.systemBackground))
                 
-                // MARK: - List
                 if viewModel.isLoading {
                     Spacer()
                     ProgressView()
@@ -98,43 +94,20 @@ struct JobsView: View {
                 }
             }
             .sheet(isPresented: $showAddManually) {
-                AddJobView(viewModel: viewModel)
+                AddJobView(viewModel: viewModel, userId: auth.currentUserId)
             }
             .task {
-                if let userId = await getCurrentUserId() {
-                    await viewModel.fetchJobs(userId: userId)
-                    await viewModel.addJobFromShare(userId: userId)
-                }
+                await viewModel.load(userId: auth.currentUserId)
             }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
                 Task {
-                    if let userId = try? await supabase.auth.session.user.id,
-                       let uuid = UUID(uuidString: userId.uuidString) {
-                        await viewModel.addJobFromShare(userId: uuid)
-                        await viewModel.fetchJobs(userId: uuid)
-                    }
+                    await viewModel.load(userId: auth.currentUserId)
                 }
             }
-        }
-    }
-    
-    private func getCurrentUserId() async -> UUID? {
-        guard let session = try? await supabase.auth.session else { return nil }
-        return UUID(uuidString: session.user.id.uuidString)
-    }
-    
-    private func statusColor(_ status: JobStatus) -> Color {
-        switch status {
-        case .exploring: return .gray
-        case .applied: return .blue
-        case .interview: return .orange
-        case .rejected: return .red
-        case .offer: return .green
         }
     }
 }
 
-// MARK: - Filter Chip
 struct FilterChip: View {
     let title: String
     let count: Int
@@ -157,140 +130,6 @@ struct FilterChip: View {
             .background(isSelected ? color.opacity(0.15) : Color(.systemGray6))
             .foregroundColor(isSelected ? color : .secondary)
             .clipShape(Capsule())
-        }
-    }
-}
-
-struct JobRowView: View {
-    let job: Job
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            if let logoUrl = job.companyLogoUrl, let url = URL(string: logoUrl) {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } placeholder: {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray5))
-                }
-                .frame(width: 44, height: 44)
-                .cornerRadius(8)
-            } else {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(.systemGray5))
-                    .frame(width: 44, height: 44)
-                    .overlay(
-                        Image(systemName: "briefcase")
-                            .foregroundColor(.secondary)
-                    )
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(job.title ?? "Unknown Role")
-                        .font(.headline)
-                    Spacer()
-                    StatusBadge(status: job.status)
-                }
-                Text(job.company ?? "Unknown Company")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                if let score = job.matchScore {
-                    let tier = MatchScoreTier(score: score)
-                    HStack(spacing: 6) {
-                        Image(systemName: "chart.bar.fill")
-                            .foregroundColor(tier.foregroundColor)
-                        Text(matchRowLabel(score: score, tier: tier))
-                            .font(.caption)
-                            .foregroundColor(tier.foregroundColor)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(tier.backgroundColor)
-                            .clipShape(Capsule())
-                    }
-                }
-            }
-        }
-        .padding(.vertical, 4)
-    }
-
-    private func matchRowLabel(score: Double, tier: MatchScoreTier) -> String {
-        let percent = Int(score * 100)
-        if tier == .excellent {
-            return "Excellent match · \(percent)%"
-        }
-        return "Match: \(percent)%"
-    }
-}
-
-struct StatusBadge: View {
-    let status: JobStatus
-    
-    var color: Color {
-        switch status {
-        case .exploring: return .gray
-        case .applied: return .blue
-        case .interview: return .orange
-        case .rejected: return .red
-        case .offer: return .green
-        }
-    }
-    
-    var body: some View {
-        Text(status.rawValue.capitalized)
-            .font(.caption)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(color.opacity(0.15))
-            .foregroundColor(color)
-            .clipShape(Capsule())
-    }
-}
-
-struct AddJobView: View {
-    @ObservedObject var viewModel: JobsViewModel
-    @Environment(\.dismiss) private var dismiss
-    @State private var url = ""
-    @State private var rawText = ""
-    
-    var body: some View {
-        NavigationView {
-            Form {
-                Section("Job URL (optional)") {
-                    TextField("https://linkedin.com/jobs/...", text: $url)
-                        .autocapitalization(.none)
-                        .keyboardType(.URL)
-                }
-                Section("Job Description") {
-                    TextEditor(text: $rawText)
-                        .frame(minHeight: 200)
-                }
-            }
-            .navigationTitle("Add Job")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Cancel") { dismiss() }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Add") {
-                        Task {
-                            if let userId = try? await supabase.auth.session.user.id,
-                               let uuid = UUID(uuidString: userId.uuidString) {
-                                await viewModel.addJobManually(
-                                    userId: uuid,
-                                    url: url,
-                                    rawText: rawText
-                                )
-                                dismiss()
-                            }
-                        }
-                    }
-                    .disabled(rawText.isEmpty || viewModel.isLoading)
-                }
-            }
         }
     }
 }

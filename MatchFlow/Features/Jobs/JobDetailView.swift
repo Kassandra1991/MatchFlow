@@ -6,17 +6,14 @@
 //
 
 import SwiftUI
-import Auth
-import Supabase
 
 struct JobDetailView: View {
     @State var job: Job
     @StateObject private var viewModel = JobDetailViewModel()
-    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var auth: AuthViewModel
     
     var body: some View {
         List {
-            // MARK: - Header
             Section {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(job.title ?? "Unknown Role")
@@ -42,15 +39,15 @@ struct JobDetailView: View {
                         ForEach(JobStatus.allCases, id: \.self) { status in
                             HStack(spacing: 6) {
                                 Circle()
-                                    .fill(statusColor(status))
+                                    .fill(JobStatusStyle.color(for: status))
                                     .frame(width: 8, height: 8)
-                                Text(status.rawValue.capitalized)
+                                Text(JobStatusStyle.label(for: status))
                             }
                             .tag(status)
                         }
                     }
                     .pickerStyle(.menu)
-                    .tint(statusColor(viewModel.selectedStatus))
+                    .tint(JobStatusStyle.color(for: viewModel.selectedStatus))
                 }
             }
             
@@ -60,7 +57,6 @@ struct JobDetailView: View {
                 }
             }
 
-            // MARK: - AI Analysis
             Section {
                 HStack {
                     Text("AI Analysis")
@@ -135,7 +131,6 @@ struct JobDetailView: View {
                 }
             }
             
-            // MARK: - Cover Letter
             Section {
                 Button {
                     viewModel.showCoverLetter = true
@@ -164,16 +159,14 @@ struct JobDetailView: View {
                     coverLetter: viewModel.coverLetter ?? job.coverLetter ?? "",
                     onRegenerate: {
                         Task {
-                            if let session = try? await supabase.auth.session,
-                               let uuid = UUID(uuidString: session.user.id.uuidString) {
-                                await viewModel.generateCoverLetter(job: job, userId: uuid)
+                            if let userId = auth.currentUserId {
+                                await viewModel.regenerateCoverLetter(job: job, userId: userId)
                             }
                         }
                     }
                 )
             }
             
-            // MARK: - Notes
             Section("Notes") {
                 TextEditor(text: $viewModel.notes)
                     .frame(minHeight: 100)
@@ -193,36 +186,9 @@ struct JobDetailView: View {
         .navigationTitle("Job Detail")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .tabBar)
-        .onAppear {
-            viewModel.selectedStatus = job.status
-            viewModel.notes = job.notes ?? ""
-            
-            Task {
-                // Загружаем свежие данные
-                await viewModel.loadJob(jobId: job.id)
-                
-                // Анализ только если нет summary
-                if job.summary == nil {
-                    await viewModel.analyze(job: job)
-                } else {
-                    viewModel.analysis = JobAnalysis(
-                        title: job.title,
-                        company: job.company,
-                        summary: job.summary,
-                        skills: job.skills,
-                        difficulty: job.difficulty
-                    )
-                }
-                
-                // Генерируем cover letter в фоне но не показываем автоматически
-                if job.coverLetter == nil {
-                    Task {
-                        if let session = try? await supabase.auth.session,
-                           let uuid = UUID(uuidString: session.user.id.uuidString) {
-                            await viewModel.generateCoverLetter(job: job, userId: uuid)
-                        }
-                    }
-                }
+        .task {
+            if let userId = auth.currentUserId {
+                await viewModel.loadOnAppear(job: job, userId: userId)
             }
         }
         .onChange(of: viewModel.selectedStatus) {
@@ -232,116 +198,6 @@ struct JobDetailView: View {
             if let updated = viewModel.updatedJob {
                 job = updated
             }
-        }
-        
-    }
-    
-    
-    private func statusColor(_ status: JobStatus) -> Color {
-        switch status {
-        case .exploring: return .gray
-        case .applied: return .blue
-        case .interview: return .orange
-        case .rejected: return .red
-        case .offer: return .green
-        }
-    }
-}
-
-// MARK: - Match Score Badge
-struct MatchScoreBadge: View {
-    let score: Double
-
-    private var tier: MatchScoreTier { MatchScoreTier(score: score) }
-    private var percent: Int { Int(score * 100) }
-
-    var body: some View {
-        VStack(spacing: 2) {
-            Text(tier.primaryLabel(percent: percent))
-                .font(.subheadline)
-                .fontWeight(.bold)
-            if let secondary = tier.secondaryLabel(percent: percent) {
-                Text(secondary)
-                    .font(.caption2)
-                    .fontWeight(.medium)
-            }
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
-        .background(tier.backgroundColor)
-        .foregroundColor(tier.foregroundColor)
-        .clipShape(Capsule())
-    }
-}
-
-// MARK: - Skill Tag
-struct SkillTag: View {
-    let name: String
-    let color: Color
-    
-    var body: some View {
-        Text(name)
-            .font(.caption)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 4)
-            .background(color.opacity(0.15))
-            .foregroundColor(color)
-            .clipShape(Capsule())
-    }
-}
-
-// MARK: - Flow Layout
-struct FlowLayout: View {
-    let items: [String]
-    let content: (String) -> SkillTag
-    
-    var body: some View {
-        TagFlowLayout(spacing: 6) {
-            ForEach(items, id: \.self) { item in
-                content(item)
-            }
-        }
-    }
-}
-
-struct TagFlowLayout: Layout {
-    var spacing: CGFloat = 6
-    
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let width = proposal.width ?? 0
-        var height: CGFloat = 0
-        var rowWidth: CGFloat = 0
-        var rowHeight: CGFloat = 0
-        
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            if rowWidth + size.width > width && rowWidth > 0 {
-                height += rowHeight + spacing
-                rowWidth = 0
-                rowHeight = 0
-            }
-            rowWidth += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
-        }
-        height += rowHeight
-        return CGSize(width: width, height: height)
-    }
-    
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX
-        var y = bounds.minY
-        var rowHeight: CGFloat = 0
-        
-        for subview in subviews {
-            let size = subview.sizeThatFits(.unspecified)
-            if x + size.width > bounds.maxX && x > bounds.minX {
-                y += rowHeight + spacing
-                x = bounds.minX
-                rowHeight = 0
-            }
-            subview.place(at: CGPoint(x: x, y: y), proposal: .unspecified)
-            x += size.width + spacing
-            rowHeight = max(rowHeight, size.height)
         }
     }
 }
@@ -360,5 +216,6 @@ struct TagFlowLayout: Layout {
             appliedAt: Date(),
             createdAt: Date()
         ))
+        .environmentObject(AuthViewModel())
     }
 }

@@ -52,6 +52,8 @@ class MockJobService: JobServiceProtocol {
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws {}
     func checkPendingJob() -> (url: String?, text: String?) { (nil, nil) }
 
+    func addJobFromShare(userId: UUID) async throws -> Job? { nil }
+
     func deleteJob(jobId: UUID) async throws {
         if shouldThrow { throw TestError.mock }
         jobs.removeAll { $0.id == jobId }
