@@ -43,7 +43,7 @@ struct LoginView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, DSSpacing.s16)
-            .padding(.bottom, DSSpacing.s24)
+            .padding(.bottom, DSSpacing.s64)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -52,19 +52,11 @@ struct LoginView: View {
     }
 
     private var headerSection: some View {
-        VStack(spacing: DSSpacing.s8) {
-            Image(systemName: "person.crop.circle.fill")
-                .font(.system(size: 40))
-                .foregroundStyle(Color.foregroundAccent)
-
-            Text("Welcome back!")
-                .textStyle(.title2)
-                .foregroundStyle(Color.foregroundPrimary)
-
-            Text("Log in to your account")
-                .textStyle(.body2Regular)
-                .foregroundStyle(Color.foregroundSecondary)
-        }
+        AuthHeaderView(
+            systemImage: "person.crop.circle",
+            title: "Welcome back",
+            subtitle: "Log in to your account"
+        )
     }
 
     private var inputCard: some View {

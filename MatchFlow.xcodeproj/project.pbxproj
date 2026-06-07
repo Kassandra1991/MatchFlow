@@ -67,6 +67,7 @@
 		03SGV0012FC8000100545ACD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SGV0022FC8000100545ACD /* SignUpView.swift */; };
 		03AFV0012FC8000100545ACD /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AFV0022FC8000100545ACD /* AuthFlowView.swift */; };
 		03AEB0012FC8000100545ACD /* AuthErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */; };
+		03AHV0012FC8000100545ACD /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AHV0022FC8000100545ACD /* AuthHeaderView.swift */; };
 		03MAS0012FC3000100545ACD /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAS0022FC3000100545ACD /* MockAuthService.swift */; };
 		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
@@ -144,6 +145,7 @@
 		03A4BA8F2FB1019E00158FCC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBackgroundView.swift; sourceTree = "<group>"; };
 		03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorBanner.swift; sourceTree = "<group>"; };
+		03AHV0022FC8000100545ACD /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		03AFV0022FC8000100545ACD /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
 		03AJV0022FC3000100545ACD /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
 		03ARV0022FC3000100545ACD /* AddResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResumeView.swift; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */,
 				03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */,
 				03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */,
+				03AHV0022FC8000100545ACD /* AuthHeaderView.swift */,
 				03DSBT0022FC9000100545ACD /* DSButton.swift */,
 			);
 			path = Shared;
@@ -666,6 +669,7 @@
 				03SGV0012FC8000100545ACD /* SignUpView.swift in Sources */,
 				03AFV0012FC8000100545ACD /* AuthFlowView.swift in Sources */,
 				03AEB0012FC8000100545ACD /* AuthErrorBanner.swift in Sources */,
+				03AHV0012FC8000100545ACD /* AuthHeaderView.swift in Sources */,
 				03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */,
 				03AUTH0012FC3000100545ACD /* AuthService.swift in Sources */,
 				03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */,

@@ -39,7 +39,7 @@ struct SignUpView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, DSSpacing.s16)
-            .padding(.bottom, DSSpacing.s24)
+            .padding(.bottom, DSSpacing.s64)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -48,19 +48,11 @@ struct SignUpView: View {
     }
 
     private var headerSection: some View {
-        VStack(spacing: DSSpacing.s8) {
-            Image(systemName: "person.badge.key")
-                .font(.system(size: 40))
-                .foregroundStyle(Color.foregroundAccent)
-
-            Text("Let's get started")
-                .textStyle(.title2)
-                .foregroundStyle(Color.foregroundPrimary)
-
-            Text("Create your account")
-                .textStyle(.body2Regular)
-                .foregroundStyle(Color.foregroundSecondary)
-        }
+        AuthHeaderView(
+            systemImage: "person.badge.key.fill",
+            title: "Let's get started",
+            subtitle: "Create your account"
+        )
     }
 
     private var inputCard: some View {
