@@ -10,6 +10,22 @@ enum AuthRoute: Hashable {
     case signUp
 }
 
+private extension AnyTransition {
+    static var authPushInsertion: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .trailing),
+            removal: .move(edge: .leading)
+        )
+    }
+
+    static var authIntroRemoval: AnyTransition {
+        .asymmetric(
+            insertion: .opacity,
+            removal: .move(edge: .leading)
+        )
+    }
+}
+
 struct AuthFlowView: View {
     @EnvironmentObject private var auth: AuthViewModel
     @State private var route: AuthRoute?
@@ -18,48 +34,45 @@ struct AuthFlowView: View {
         ZStack {
             if route == nil {
                 IntroView(
-                    onLogin: { route = .login },
-                    onSignUp: { route = .signUp }
+                    onLogin: { withAnimation(.easeInOut(duration: 0.35)) { route = .login } },
+                    onSignUp: { withAnimation(.easeInOut(duration: 0.35)) { route = .signUp } }
                 )
                 .opacity(auth.isCheckingSession || auth.isAuthenticated ? 0 : 1)
                 .animation(.easeInOut(duration: 0.5), value: auth.isCheckingSession)
                 .allowsHitTesting(!auth.isCheckingSession)
+                .transition(.authIntroRemoval)
             }
 
-            if let route {
-                authScreen(for: route)
+            if route == .login {
+                LoginView(onRegister: switchToSignUp)
+                    .transition(.authPushInsertion)
+            }
+
+            if route == .signUp {
+                SignUpView(onSwitchToLogin: switchToLogin)
+                    .transition(.authPushInsertion)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
+        .animation(.easeInOut(duration: 0.35), value: route)
         .onChange(of: route) {
             auth.errorMessage = ""
         }
     }
 
-    @ViewBuilder
-    private func authScreen(for route: AuthRoute) -> some View {
-        switch route {
-        case .login:
-            LoginView(
-                onRegister: switchToSignUp,
-                onBack: { self.route = nil }
-            )
-        case .signUp:
-            SignUpView(
-                onSwitchToLogin: switchToLogin,
-                onBack: { self.route = nil }
-            )
-        }
-    }
-
     private func switchToSignUp() {
         guard route != .signUp else { return }
-        route = .signUp
+        withAnimation(.easeInOut(duration: 0.35)) {
+            route = .signUp
+        }
     }
 
     private func switchToLogin() {
         guard route == .signUp else { return }
-        route = .login
+        withAnimation(.easeInOut(duration: 0.35)) {
+            route = .login
+        }
     }
 }
 

@@ -12,7 +12,6 @@ struct SignUpView: View {
     @State private var isPasswordVisible = false
 
     var onSwitchToLogin: () -> Void
-    var onBack: () -> Void
 
     private var isSignUpEnabled: Bool {
         !email.trimmingCharacters(in: .whitespaces).isEmpty && !password.isEmpty
@@ -23,8 +22,6 @@ struct SignUpView: View {
             AuthBackgroundView()
 
             VStack(spacing: DSSpacing.s24) {
-                AuthBackButton(action: onBack)
-
                 Spacer()
 
                 headerSection
@@ -133,6 +130,6 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView(onSwitchToLogin: {}, onBack: {})
+    SignUpView(onSwitchToLogin: {})
         .environmentObject(AuthViewModel())
 }

@@ -9,7 +9,6 @@ struct LoginView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
 
     var onRegister: () -> Void
-    var onBack: () -> Void
     @State private var email = ""
     @State private var password = ""
     @State private var isPasswordVisible = false
@@ -23,8 +22,6 @@ struct LoginView: View {
             AuthBackgroundView()
 
             VStack(spacing: DSSpacing.s24) {
-                AuthBackButton(action: onBack)
-
                 Spacer()
 
                 headerSection
@@ -152,6 +149,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(onRegister: {}, onBack: {})
+    LoginView(onRegister: {})
         .environmentObject(AuthViewModel())
 }
