@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 @MainActor
 class AuthViewModel: ObservableObject {
@@ -27,7 +28,9 @@ class AuthViewModel: ObservableObject {
         errorMessage = ""
         do {
             try await authService.signUp(email: email, password: password)
-            isAuthenticated = true
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isAuthenticated = true
+            }
             currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signUp)
         } catch {
@@ -41,7 +44,9 @@ class AuthViewModel: ObservableObject {
         errorMessage = ""
         do {
             try await authService.signIn(email: email, password: password)
-            isAuthenticated = true
+            withAnimation(.easeInOut(duration: 0.5)) {
+                isAuthenticated = true
+            }
             currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signIn)
         } catch {
@@ -71,6 +76,8 @@ class AuthViewModel: ObservableObject {
             currentUserId = nil
         }
         try? await Task.sleep(nanoseconds: 800_000_000)
-        isCheckingSession = false
+        withAnimation(.easeInOut(duration: 0.5)) {
+            isCheckingSession = false
+        }
     }
 }

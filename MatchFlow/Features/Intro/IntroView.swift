@@ -10,20 +10,15 @@ struct IntroView: View {
     var onSignUp: () -> Void
 
     var body: some View {
-        ZStack {
-            SplashBackgroundView()
+        VStack(spacing: 0) {
+            Spacer()
 
-            VStack(spacing: 0) {
-                Spacer()
+            headlineBlock
 
-                headlineBlock
+            Spacer()
 
-                Spacer()
-
-                buttonStack
-            }
+            buttonStack
         }
-        .navigationBarHidden(true)
     }
 
     private var headlineBlock: some View {
@@ -59,5 +54,8 @@ struct IntroView: View {
 }
 
 #Preview {
-    IntroView(onLogin: {}, onSignUp: {})
+    ZStack {
+        SplashBackgroundView()
+        IntroView(onLogin: {}, onSignUp: {})
+    }
 }

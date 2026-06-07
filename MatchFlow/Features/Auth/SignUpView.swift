@@ -12,6 +12,7 @@ struct SignUpView: View {
     @State private var isPasswordVisible = false
 
     var onSwitchToLogin: () -> Void
+    var onBack: () -> Void
 
     private var isSignUpEnabled: Bool {
         !email.trimmingCharacters(in: .whitespaces).isEmpty && !password.isEmpty
@@ -22,6 +23,8 @@ struct SignUpView: View {
             AuthBackgroundView()
 
             VStack(spacing: DSSpacing.s24) {
+                backButton
+
                 Spacer()
 
                 headerSection
@@ -40,10 +43,22 @@ struct SignUpView: View {
             .padding(.horizontal, DSSpacing.s16)
             .padding(.bottom, DSSpacing.s24)
         }
-        .navigationBarBackButtonHidden(false)
         .onAppear {
             viewModel.errorMessage = ""
         }
+    }
+
+    private var backButton: some View {
+        HStack {
+            Button(action: onBack) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(Color.foregroundPrimaryWhite)
+            }
+            Spacer()
+        }
+        .padding(.horizontal, DSSpacing.s16)
+        .padding(.top, DSSpacing.s8)
     }
 
     private var headerSection: some View {
@@ -129,8 +144,6 @@ struct SignUpView: View {
 }
 
 #Preview {
-    NavigationStack {
-        SignUpView(onSwitchToLogin: {})
-            .environmentObject(AuthViewModel())
-    }
+    SignUpView(onSwitchToLogin: {}, onBack: {})
+        .environmentObject(AuthViewModel())
 }

@@ -75,6 +75,8 @@
 		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
 		03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */; };
 		03SPV0012FC5000100545ACD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SPV0022FC5000100545ACD /* SplashView.swift */; };
+		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
+		03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */; };
 		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +183,8 @@
 		03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBackgroundView.swift; sourceTree = "<group>"; };
 		03SGV0022FC8000100545ACD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		03SPV0022FC5000100545ACD /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		03SLG0022FCB000100545ACD /* SplashLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLogoView.swift; sourceTree = "<group>"; };
+		03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedContainer.swift; sourceTree = "<group>"; };
 		03ST0022FC3000100545ACD /* SkillTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTag.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -486,6 +490,8 @@
 			isa = PBXGroup;
 			children = (
 				03SPV0022FC5000100545ACD /* SplashView.swift */,
+				03SLG0022FCB000100545ACD /* SplashLogoView.swift */,
+				03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -651,6 +657,8 @@
 				03DSB0012FC9000100545ACD /* Button.swift in Sources */,
 				03DSBT0012FC9000100545ACD /* DSButton.swift in Sources */,
 				03SPV0012FC5000100545ACD /* SplashView.swift in Sources */,
+				03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */,
+				03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */,
 				03INT0012FC6000100545ACD /* IntroView.swift in Sources */,
 				03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */,
 				03ABG0012FC7000100545ACD /* AuthBackgroundView.swift in Sources */,

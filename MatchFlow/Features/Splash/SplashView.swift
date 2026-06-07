@@ -9,11 +9,7 @@ struct SplashView: View {
     var body: some View {
         ZStack {
             SplashBackgroundView()
-
-            Image("SplashLogo")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200)
+            SplashLogoView()
         }
     }
 }

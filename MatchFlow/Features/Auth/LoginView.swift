@@ -9,6 +9,7 @@ struct LoginView: View {
     @EnvironmentObject private var viewModel: AuthViewModel
 
     var onRegister: () -> Void
+    var onBack: () -> Void
     @State private var email = ""
     @State private var password = ""
     @State private var isPasswordVisible = false
@@ -22,6 +23,8 @@ struct LoginView: View {
             AuthBackgroundView()
 
             VStack(spacing: DSSpacing.s24) {
+                backButton
+
                 Spacer()
 
                 headerSection
@@ -44,10 +47,22 @@ struct LoginView: View {
             .padding(.horizontal, DSSpacing.s16)
             .padding(.bottom, DSSpacing.s24)
         }
-        .navigationBarBackButtonHidden(false)
         .onAppear {
             viewModel.errorMessage = ""
         }
+    }
+
+    private var backButton: some View {
+        HStack {
+            Button(action: onBack) {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(Color.foregroundPrimaryWhite)
+            }
+            Spacer()
+        }
+        .padding(.horizontal, DSSpacing.s16)
+        .padding(.top, DSSpacing.s8)
     }
 
     private var headerSection: some View {
@@ -148,8 +163,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    NavigationStack {
-        LoginView(onRegister: {})
-            .environmentObject(AuthViewModel())
-    }
+    LoginView(onRegister: {}, onBack: {})
+        .environmentObject(AuthViewModel())
 }

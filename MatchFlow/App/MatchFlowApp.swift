@@ -20,17 +20,17 @@ struct MatchFlowApp: App {
     var body: some Scene {
         WindowGroup {
             Group {
-                if auth.isCheckingSession {
-                    SplashView()
-                } else if auth.isAuthenticated {
+                if auth.isAuthenticated {
                     MainTabView()
                         .environmentObject(auth)
                         .environmentObject(tabSelection)
+                        .transition(.opacity)
                 } else {
-                    AuthFlowView()
+                    UnauthenticatedContainer()
                         .environmentObject(auth)
                 }
             }
+            .animation(.easeInOut(duration: 0.5), value: auth.isAuthenticated)
             .task {
                 await auth.checkSession()
             }
