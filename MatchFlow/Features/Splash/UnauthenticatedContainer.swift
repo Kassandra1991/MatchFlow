@@ -19,6 +19,9 @@ struct UnauthenticatedContainer: View {
                 .animation(.easeInOut(duration: 0.5), value: auth.isCheckingSession)
                 .allowsHitTesting(auth.isCheckingSession)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(SplashBackgroundView())
+        .ignoresSafeArea()
     }
 }
 

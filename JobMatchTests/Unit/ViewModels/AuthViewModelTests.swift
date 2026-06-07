@@ -18,8 +18,10 @@ struct AuthViewModelTests {
         await viewModel.signIn(email: "test@example.com", password: "password")
 
         let isAuthenticated = await viewModel.isAuthenticated
+        let showMainUI = await viewModel.showMainUI
         let userId = await viewModel.currentUserId
         #expect(isAuthenticated)
+        #expect(showMainUI)
         #expect(userId != nil)
         #expect(mockService.signInCalled)
     }
@@ -34,8 +36,30 @@ struct AuthViewModelTests {
 
         let error = await viewModel.errorMessage
         let isAuthenticated = await viewModel.isAuthenticated
+        let showMainUI = await viewModel.showMainUI
         #expect(!error.isEmpty)
         #expect(!isAuthenticated)
+        #expect(!showMainUI)
+    }
+
+    @Test("Check session sets authenticated state when session exists")
+    func checkSessionSetsAuthenticatedState() async {
+        let mockService = MockAuthService()
+        mockService.isAuthenticated = true
+        mockService.currentUserIdValue = UUID()
+        let viewModel = await AuthViewModel(authService: mockService)
+
+        await viewModel.checkSession()
+
+        let isAuthenticated = await viewModel.isAuthenticated
+        let showMainUI = await viewModel.showMainUI
+        let userId = await viewModel.currentUserId
+        let isCheckingSession = await viewModel.isCheckingSession
+        #expect(isAuthenticated)
+        #expect(showMainUI)
+        #expect(userId != nil)
+        #expect(isCheckingSession)
+        #expect(mockService.checkSessionCalled)
     }
 
     @Test("Check session clears state when no session")
@@ -47,8 +71,10 @@ struct AuthViewModelTests {
         await viewModel.checkSession()
 
         let isAuthenticated = await viewModel.isAuthenticated
+        let showMainUI = await viewModel.showMainUI
         let userId = await viewModel.currentUserId
         #expect(!isAuthenticated)
+        #expect(!showMainUI)
         #expect(userId == nil)
         #expect(mockService.checkSessionCalled)
     }
@@ -61,15 +87,20 @@ struct AuthViewModelTests {
         let viewModel = await AuthViewModel(authService: mockService)
         await MainActor.run {
             viewModel.isAuthenticated = true
+            viewModel.showMainUI = true
             viewModel.currentUserId = mockService.currentUserIdValue
         }
 
         await viewModel.signOut()
 
         let isAuthenticated = await viewModel.isAuthenticated
+        let showMainUI = await viewModel.showMainUI
         let userId = await viewModel.currentUserId
+        let isCheckingSession = await viewModel.isCheckingSession
         #expect(!isAuthenticated)
+        #expect(!showMainUI)
         #expect(userId == nil)
+        #expect(!isCheckingSession)
         #expect(mockService.signOutCalled)
     }
 }

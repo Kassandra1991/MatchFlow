@@ -12,6 +12,7 @@ import SwiftUI
 @MainActor
 class AuthViewModel: ObservableObject {
     @Published var isAuthenticated = false
+    @Published var showMainUI = false
     @Published var currentUserId: UUID?
     @Published var isLoading = false
     @Published var errorMessage = ""
@@ -28,10 +29,11 @@ class AuthViewModel: ObservableObject {
         errorMessage = ""
         do {
             try await authService.signUp(email: email, password: password)
+            currentUserId = try await authService.currentUserId()
             withAnimation(.easeInOut(duration: 0.5)) {
                 isAuthenticated = true
+                showMainUI = true
             }
-            currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signUp)
         } catch {
             errorMessage = error.localizedDescription
@@ -44,10 +46,11 @@ class AuthViewModel: ObservableObject {
         errorMessage = ""
         do {
             try await authService.signIn(email: email, password: password)
+            currentUserId = try await authService.currentUserId()
             withAnimation(.easeInOut(duration: 0.5)) {
                 isAuthenticated = true
+                showMainUI = true
             }
-            currentUserId = try await authService.currentUserId()
             AnalyticsService.log(.signIn)
         } catch {
             errorMessage = error.localizedDescription
@@ -62,22 +65,32 @@ class AuthViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
         isAuthenticated = false
+        showMainUI = false
+        isCheckingSession = false
         currentUserId = nil
     }
 
     func checkSession() async {
         isCheckingSession = true
+        var hasSession = false
         do {
             try await authService.checkSession()
-            isAuthenticated = true
+            hasSession = true
             currentUserId = try await authService.currentUserId()
         } catch {
             isAuthenticated = false
             currentUserId = nil
         }
         try? await Task.sleep(nanoseconds: 800_000_000)
+        if hasSession {
+            isAuthenticated = true
+        }
         withAnimation(.easeInOut(duration: 0.5)) {
-            isCheckingSession = false
+            if hasSession {
+                showMainUI = true
+            } else {
+                isCheckingSession = false
+            }
         }
     }
 }

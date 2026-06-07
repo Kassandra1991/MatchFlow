@@ -19,18 +19,23 @@ struct MatchFlowApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
+            ZStack {
                 if auth.isAuthenticated {
                     MainTabView()
                         .environmentObject(auth)
                         .environmentObject(tabSelection)
-                        .transition(.opacity)
-                } else {
+                        .opacity(auth.showMainUI ? 1 : 0)
+                        .zIndex(0)
+                }
+
+                if !auth.showMainUI {
                     UnauthenticatedContainer()
                         .environmentObject(auth)
+                        .opacity(auth.showMainUI ? 0 : 1)
+                        .zIndex(1)
                 }
             }
-            .animation(.easeInOut(duration: 0.5), value: auth.isAuthenticated)
+            .animation(.easeInOut(duration: 0.5), value: auth.showMainUI)
             .task {
                 await auth.checkSession()
             }

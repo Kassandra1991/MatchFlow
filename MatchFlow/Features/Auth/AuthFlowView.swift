@@ -21,7 +21,7 @@ struct AuthFlowView: View {
                     onLogin: { route = .login },
                     onSignUp: { route = .signUp }
                 )
-                .opacity(auth.isCheckingSession ? 0 : 1)
+                .opacity(auth.isCheckingSession || auth.isAuthenticated ? 0 : 1)
                 .animation(.easeInOut(duration: 0.5), value: auth.isCheckingSession)
                 .allowsHitTesting(!auth.isCheckingSession)
             }
