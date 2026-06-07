@@ -1,0 +1,41 @@
+---
+description: Never modify Figma design token JSON files; consume tokens in Swift UI only
+alwaysApply: true
+---
+
+# Design Tokens (Figma JSON)
+
+`DesignTokens/figma/` is the design source of truth. Do not edit it during UI work.
+
+## Never modify
+
+- `DesignTokens/figma/colors.json`
+- `DesignTokens/figma/typography.json`
+- `DesignTokens/figma/spacing.json`
+- `DesignTokens/figma/radius.json`
+- `DesignTokens/figma/stroke.json`
+- `DesignTokens/figma/splash-colors.json`
+
+Do not change these unless the user explicitly exports updated tokens from Figma and asks to replace them.
+
+## What to do instead
+
+- Use existing assets: `Color.buttonSecondaryWhite`, `Color.foregroundPrimaryWhite`, etc.
+- Use `MatchFlow/DesignSystem/`: `DSTextStyle`, `DSSpacing`, `DSRadius`, `DSStroke`
+- Fix screens in Swift views (`IntroView`, `LoginView`, etc.), not in JSON
+
+## Examples
+
+```swift
+// ✅ GOOD — consume token in UI
+Text("Sign up")
+    .textStyle(.body1Semibold)
+    .background(Color.buttonSecondaryWhite)
+
+// ❌ BAD — patching typography.json to match one screen
+// editing DesignTokens/figma/typography.json fontSize from 15 to 17
+```
+
+## Adding new tokens
+
+Only when the user provides a new Figma export. Add new files or replace wholesale — never rewrite existing JSON in place during UI iterations.

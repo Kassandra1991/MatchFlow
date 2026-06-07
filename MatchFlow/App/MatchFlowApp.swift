@@ -27,7 +27,7 @@ struct MatchFlowApp: App {
                         .environmentObject(auth)
                         .environmentObject(tabSelection)
                 } else {
-                    AuthView()
+                    AuthFlowView()
                         .environmentObject(auth)
                 }
             }
