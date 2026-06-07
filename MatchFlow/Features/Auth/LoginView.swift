@@ -18,34 +18,29 @@ struct LoginView: View {
     }
 
     var body: some View {
-        ZStack {
-            AuthBackgroundView()
+        VStack(spacing: DSSpacing.s24) {
+            Spacer()
 
-            VStack(spacing: DSSpacing.s24) {
-                Spacer()
+            headerSection
+            inputCard
+            loginButton
 
-                headerSection
-                inputCard
-                loginButton
-
-                if !viewModel.errorMessage.isEmpty {
-                    Text(viewModel.errorMessage)
-                        .textStyle(.captionRegular)
-                        .foregroundStyle(Color.foregroundError)
-                        .multilineTextAlignment(.center)
-                }
-
-                forgotPasswordRow
-
-                Spacer()
-
-                registerFooter
+            if !viewModel.errorMessage.isEmpty {
+                Text(viewModel.errorMessage)
+                    .textStyle(.captionRegular)
+                    .foregroundStyle(Color.foregroundError)
+                    .multilineTextAlignment(.center)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, DSSpacing.s16)
-            .padding(.bottom, DSSpacing.s64)
+
+            forgotPasswordRow
+
+            Spacer()
+
+            registerFooter
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, DSSpacing.s16)
+        .padding(.bottom, DSSpacing.s64)
         .onAppear {
             viewModel.errorMessage = ""
         }
@@ -141,6 +136,9 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(onRegister: {})
-        .environmentObject(AuthViewModel())
+    ZStack {
+        AuthBackgroundView()
+        LoginView(onRegister: {})
+    }
+    .environmentObject(AuthViewModel())
 }

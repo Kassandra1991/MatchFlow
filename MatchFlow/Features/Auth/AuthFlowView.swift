@@ -32,6 +32,10 @@ struct AuthFlowView: View {
 
     var body: some View {
         ZStack {
+            if route == .login || route == .signUp {
+                AuthBackgroundView()
+            }
+
             if route == nil {
                 IntroView(
                     onLogin: { withAnimation(.easeInOut(duration: 0.35)) { route = .login } },

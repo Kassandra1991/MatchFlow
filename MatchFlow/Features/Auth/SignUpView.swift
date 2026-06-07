@@ -18,30 +18,25 @@ struct SignUpView: View {
     }
 
     var body: some View {
-        ZStack {
-            AuthBackgroundView()
+        VStack(spacing: DSSpacing.s24) {
+            Spacer()
 
-            VStack(spacing: DSSpacing.s24) {
-                Spacer()
+            headerSection
+            inputCard
 
-                headerSection
-                inputCard
-
-                if !viewModel.errorMessage.isEmpty {
-                    AuthErrorBanner(message: viewModel.errorMessage)
-                }
-
-                signUpButton
-
-                Spacer()
-
-                loginFooter
+            if !viewModel.errorMessage.isEmpty {
+                AuthErrorBanner(message: viewModel.errorMessage)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.horizontal, DSSpacing.s16)
-            .padding(.bottom, DSSpacing.s64)
+
+            signUpButton
+
+            Spacer()
+
+            loginFooter
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, DSSpacing.s16)
+        .padding(.bottom, DSSpacing.s64)
         .onAppear {
             viewModel.errorMessage = ""
         }
@@ -122,6 +117,9 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView(onSwitchToLogin: {})
-        .environmentObject(AuthViewModel())
+    ZStack {
+        AuthBackgroundView()
+        SignUpView(onSwitchToLogin: {})
+    }
+    .environmentObject(AuthViewModel())
 }
