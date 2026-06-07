@@ -17,7 +17,6 @@
 		03A4BA222FAFF87C00158FCC /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 03A4BA212FAFF87C00158FCC /* Supabase */; };
 		03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */; };
 		03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */; };
-		03A4BA402FB07D8C00158FCC /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA3A2FB07D8C00158FCC /* AuthView.swift */; };
 		03A4BA412FB07D8C00158FCC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA3B2FB07D8C00158FCC /* AuthViewModel.swift */; };
 		03A4BA432FB07D8C00158FCC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03A4BA392FB07D8C00158FCC /* Assets.xcassets */; };
 		03A4BA4E2FB07EC200158FCC /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA4D2FB07EC200158FCC /* Job.swift */; };
@@ -75,7 +74,6 @@
 		03RRV0012FC3000100545ACD /* ResumeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RRV0022FC3000100545ACD /* ResumeRowView.swift */; };
 		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
 		03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */; };
-		03SPV0012FC5000100545ACD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SPV0022FC5000100545ACD /* SplashView.swift */; };
 		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
 		03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */; };
 		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
@@ -123,7 +121,6 @@
 		03A4BA362FB07D8C00158FCC /* MatchFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchFlowApp.swift; sourceTree = "<group>"; };
 		03A4BA372FB07D8C00158FCC /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
 		03A4BA392FB07D8C00158FCC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		03A4BA3A2FB07D8C00158FCC /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		03A4BA3B2FB07D8C00158FCC /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		03A4BA4D2FB07EC200158FCC /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
 		03A4BA4F2FB07EE700158FCC /* Resume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resume.swift; sourceTree = "<group>"; };
@@ -184,7 +181,6 @@
 		03SB0022FC3000100545ACD /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBackgroundView.swift; sourceTree = "<group>"; };
 		03SGV0022FC8000100545ACD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		03SPV0022FC5000100545ACD /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		03SLG0022FCB000100545ACD /* SplashLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLogoView.swift; sourceTree = "<group>"; };
 		03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedContainer.swift; sourceTree = "<group>"; };
 		03ST0022FC3000100545ACD /* SkillTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTag.swift; sourceTree = "<group>"; };
@@ -296,7 +292,6 @@
 				03LGV0022FC7000100545ACD /* LoginView.swift */,
 				03SGV0022FC8000100545ACD /* SignUpView.swift */,
 				03AFV0022FC8000100545ACD /* AuthFlowView.swift */,
-				03A4BA3A2FB07D8C00158FCC /* AuthView.swift */,
 				03A4BA3B2FB07D8C00158FCC /* AuthViewModel.swift */,
 			);
 			path = Auth;
@@ -492,7 +487,6 @@
 		03SPG0012FC5000100545ACD /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				03SPV0022FC5000100545ACD /* SplashView.swift */,
 				03SLG0022FCB000100545ACD /* SplashLogoView.swift */,
 				03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */,
 			);
@@ -659,7 +653,6 @@
 				03DST0012FC4000100545ACD /* Typography.swift in Sources */,
 				03DSB0012FC9000100545ACD /* Button.swift in Sources */,
 				03DSBT0012FC9000100545ACD /* DSButton.swift in Sources */,
-				03SPV0012FC5000100545ACD /* SplashView.swift in Sources */,
 				03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */,
 				03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */,
 				03INT0012FC6000100545ACD /* IntroView.swift in Sources */,
@@ -689,7 +682,6 @@
 				03A4BA502FB07EE700158FCC /* Resume.swift in Sources */,
 				03A4BA3E2FB07D8C00158FCC /* MatchFlowApp.swift in Sources */,
 				03A4BA3F2FB07D8C00158FCC /* SupabaseConfig.swift in Sources */,
-				03A4BA402FB07D8C00158FCC /* AuthView.swift in Sources */,
 				03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */,
 				0305E1E42FB31DCD004E9832 /* ProfileViewModel.swift in Sources */,
 				03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */,

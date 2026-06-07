@@ -81,6 +81,7 @@ class AuthViewModel: ObservableObject {
             isAuthenticated = false
             currentUserId = nil
         }
+        // Minimum splash logo display before revealing intro/auth UI
         try? await Task.sleep(nanoseconds: 800_000_000)
         if hasSession {
             isAuthenticated = true

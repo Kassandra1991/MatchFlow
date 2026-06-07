@@ -38,8 +38,8 @@ struct AuthFlowView: View {
 
             if route == nil {
                 IntroView(
-                    onLogin: { withAnimation(.easeInOut(duration: 0.35)) { route = .login } },
-                    onSignUp: { withAnimation(.easeInOut(duration: 0.35)) { route = .signUp } }
+                    onLogin: { route = .login },
+                    onSignUp: { route = .signUp }
                 )
                 .opacity(auth.isCheckingSession || auth.isAuthenticated ? 0 : 1)
                 .animation(.easeInOut(duration: 0.5), value: auth.isCheckingSession)
@@ -67,16 +67,12 @@ struct AuthFlowView: View {
 
     private func switchToSignUp() {
         guard route != .signUp else { return }
-        withAnimation(.easeInOut(duration: 0.35)) {
-            route = .signUp
-        }
+        route = .signUp
     }
 
     private func switchToLogin() {
         guard route == .signUp else { return }
-        withAnimation(.easeInOut(duration: 0.35)) {
-            route = .login
-        }
+        route = .login
     }
 }
 

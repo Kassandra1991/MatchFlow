@@ -41,9 +41,6 @@ struct LoginView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, DSSpacing.s16)
         .padding(.bottom, DSSpacing.s64)
-        .onAppear {
-            viewModel.errorMessage = ""
-        }
     }
 
     private var headerSection: some View {
