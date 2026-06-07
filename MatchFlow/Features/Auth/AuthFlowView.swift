@@ -30,6 +30,7 @@ struct AuthFlowView: View {
                 authScreen(for: route)
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onChange(of: route) {
             auth.errorMessage = ""
         }

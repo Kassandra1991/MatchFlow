@@ -20,8 +20,6 @@ struct UnauthenticatedContainer: View {
                 .allowsHitTesting(auth.isCheckingSession)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(SplashBackgroundView())
-        .ignoresSafeArea()
     }
 }
 

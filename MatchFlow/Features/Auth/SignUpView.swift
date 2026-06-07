@@ -23,7 +23,7 @@ struct SignUpView: View {
             AuthBackgroundView()
 
             VStack(spacing: DSSpacing.s24) {
-                backButton
+                AuthBackButton(action: onBack)
 
                 Spacer()
 
@@ -40,25 +40,14 @@ struct SignUpView: View {
 
                 loginFooter
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.horizontal, DSSpacing.s16)
             .padding(.bottom, DSSpacing.s24)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             viewModel.errorMessage = ""
         }
-    }
-
-    private var backButton: some View {
-        HStack {
-            Button(action: onBack) {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Color.foregroundPrimaryWhite)
-            }
-            Spacer()
-        }
-        .padding(.horizontal, DSSpacing.s16)
-        .padding(.top, DSSpacing.s8)
     }
 
     private var headerSection: some View {
