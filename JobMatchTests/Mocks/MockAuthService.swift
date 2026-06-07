@@ -10,6 +10,7 @@ class MockAuthService: AuthServiceProtocol {
     var isAuthenticated = false
     var currentUserIdValue: UUID?
     var shouldThrow = false
+    var shouldThrowOnCurrentUserId = false
 
     var signUpCalled = false
     var signInCalled = false
@@ -44,7 +45,7 @@ class MockAuthService: AuthServiceProtocol {
     }
 
     func currentUserId() async throws -> UUID? {
-        if shouldThrow { throw TestError.mock }
+        if shouldThrow || shouldThrowOnCurrentUserId { throw TestError.mock }
         return currentUserIdValue
     }
 }
