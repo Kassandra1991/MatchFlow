@@ -1,0 +1,10 @@
+{
+  "description": "Mesh gradient colors for splash background (reference only — rendered in SplashBackground.png)",
+  "colors": [
+    { "name": "accent", "hex": "#5B34E9", "opacity": 1 },
+    { "name": "lime", "hex": "#D3FFB5", "opacity": 1 },
+    { "name": "coral", "hex": "#FF6062", "opacity": 1 },
+    { "name": "peach", "hex": "#FFB5B5", "opacity": 1 },
+    { "name": "pink", "hex": "#FFB5D8", "opacity": 1 }
+  ]
+}

@@ -101,14 +101,14 @@ struct StatusCard: View {
             VStack(spacing: 6) {
                 Text("\(count)")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
-                    .foregroundColor(JobStatusStyle.color(for: status))
+                    .foregroundStyle(Color.foregroundPrimary)
                 Text(JobStatusStyle.label(for: status))
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.foregroundSecondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(JobStatusStyle.color(for: status).opacity(0.08))
+            .background(Color.backgroundSecondary)
             .cornerRadius(14)
         }
         .buttonStyle(.plain)

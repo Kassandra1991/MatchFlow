@@ -23,7 +23,7 @@ struct JobsView: View {
             VStack(spacing: 0) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
-                        FilterChip(title: "All", count: viewModel.jobs.count, isSelected: tabSelection.jobsFilter == nil, color: .primary) {
+                        FilterChip(title: "All", count: viewModel.jobs.count, isSelected: tabSelection.jobsFilter == nil) {
                             tabSelection.jobsFilter = nil
                         }
                         ForEach(JobStatus.allCases, id: \.self) { status in
@@ -31,8 +31,7 @@ struct JobsView: View {
                             FilterChip(
                                 title: JobStatusStyle.label(for: status),
                                 count: count,
-                                isSelected: tabSelection.jobsFilter == status,
-                                color: JobStatusStyle.color(for: status)
+                                isSelected: tabSelection.jobsFilter == status
                             ) {
                                 tabSelection.jobsFilter = status
                             }
@@ -112,12 +111,11 @@ struct FilterChip: View {
     let title: String
     let count: Int
     let isSelected: Bool
-    let color: Color
     let action: () -> Void
     
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 4) {
+            HStack(spacing: DSSpacing.s4) {
                 Text(title)
                     .font(.subheadline)
                     .fontWeight(isSelected ? .semibold : .regular)
@@ -125,10 +123,10 @@ struct FilterChip: View {
                     .font(.caption)
                     .fontWeight(isSelected ? .semibold : .regular)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(isSelected ? color.opacity(0.15) : Color(.systemGray6))
-            .foregroundColor(isSelected ? color : .secondary)
+            .padding(.horizontal, DSSpacing.s8 + DSSpacing.s4)
+            .padding(.vertical, DSSpacing.s4 + DSSpacing.s2)
+            .background(isSelected ? Color.backgroundAccent : Color.backgroundMinor)
+            .foregroundStyle(isSelected ? Color.foregroundAccent : Color.foregroundSecondary)
             .clipShape(Capsule())
         }
     }

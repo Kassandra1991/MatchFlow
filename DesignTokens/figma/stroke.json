@@ -1,0 +1,26 @@
+{
+  "stroke-1": {
+    "$type": "number",
+    "$value": 1,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2559:630",
+      "com.figma.scopes": [
+        "STROKE_FLOAT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "stroke-2": {
+    "$type": "number",
+    "$value": 2,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2559:631",
+      "com.figma.scopes": [
+        "STROKE_FLOAT"
+      ]
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Mode 1"
+  }
+}

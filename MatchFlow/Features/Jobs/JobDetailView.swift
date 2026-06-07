@@ -37,17 +37,11 @@ struct JobDetailView: View {
                     Spacer()
                     Picker("", selection: $viewModel.selectedStatus) {
                         ForEach(JobStatus.allCases, id: \.self) { status in
-                            HStack(spacing: 6) {
-                                Circle()
-                                    .fill(JobStatusStyle.color(for: status))
-                                    .frame(width: 8, height: 8)
-                                Text(JobStatusStyle.label(for: status))
-                            }
-                            .tag(status)
+                            Text(JobStatusStyle.label(for: status))
+                                .tag(status)
                         }
                     }
                     .pickerStyle(.menu)
-                    .tint(JobStatusStyle.color(for: viewModel.selectedStatus))
                 }
             }
             
@@ -86,7 +80,7 @@ struct JobDetailView: View {
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                             FlowLayout(items: job.skills) { skill in
-                                SkillTag(name: skill, color: .blue)
+                                SkillTag(name: skill)
                             }
                         }
                     }

@@ -12,20 +12,18 @@ struct MatchScoreBadge: View {
     private var percent: Int { Int(score * 100) }
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: DSSpacing.s2) {
             Text(tier.primaryLabel(percent: percent))
-                .font(.subheadline)
-                .fontWeight(.bold)
+                .textStyle(.body2Semibold)
             if let secondary = tier.secondaryLabel(percent: percent) {
                 Text(secondary)
-                    .font(.caption2)
-                    .fontWeight(.medium)
+                    .textStyle(.captionSemibold)
             }
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
+        .padding(.horizontal, DSSpacing.s8 + DSSpacing.s4)
+        .padding(.vertical, DSSpacing.s4 + DSSpacing.s2)
         .background(tier.backgroundColor)
-        .foregroundColor(tier.foregroundColor)
+        .foregroundStyle(tier.foregroundColor)
         .clipShape(Capsule())
     }
 }

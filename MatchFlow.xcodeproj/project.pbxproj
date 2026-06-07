@@ -62,6 +62,11 @@
 		03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */; };
 		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
+		03DSS0012FC4000100545ACD /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSS0022FC4000100545ACD /* Spacing.swift */; };
+		03DSR0012FC4000100545ACD /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSR0022FC4000100545ACD /* Radius.swift */; };
+		03DSST0012FC4000100545ACD /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSST0022FC4000100545ACD /* Stroke.swift */; };
+		03DST0012FC4000100545ACD /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DST0022FC4000100545ACD /* Typography.swift */; };
+		03SPV0012FC5000100545ACD /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SPV0022FC5000100545ACD /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +159,11 @@
 		03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
 		03MBD0022FC2000200545ACD /* MatchBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdown.swift; sourceTree = "<group>"; };
 		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
+		03DSS0022FC4000100545ACD /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		03DSR0022FC4000100545ACD /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
+		03DSST0022FC4000100545ACD /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
+		03DST0022FC4000100545ACD /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		03SPV0022FC5000100545ACD /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +239,7 @@
 			children = (
 				039DEAA62FC2F668001AEF26 /* Info.plist */,
 				03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */,
+				03DSG0012FC4000100545ACD /* DesignSystem */,
 				03A4BA4C2FB07E5F00158FCC /* Shared */,
 				03A4BA4B2FB07E5600158FCC /* Services */,
 				03A4BA4A2FB07E4F00158FCC /* Models */,
@@ -243,6 +254,7 @@
 		03A4BA442FB07DBC00158FCC /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				03SPG0012FC5000100545ACD /* Splash */,
 				03FSH0012FC3000100545ACD /* Shared */,
 				03A4BA492FB07E2D00158FCC /* Insights */,
 				03A4BA482FB07E2500158FCC /* Resume */,
@@ -251,6 +263,25 @@
 				03A4BA452FB07DD600158FCC /* Auth */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		03SPG0012FC5000100545ACD /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				03SPV0022FC5000100545ACD /* SplashView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		03DSG0012FC4000100545ACD /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				03DSS0022FC4000100545ACD /* Spacing.swift */,
+				03DSR0022FC4000100545ACD /* Radius.swift */,
+				03DSST0022FC4000100545ACD /* Stroke.swift */,
+				03DST0022FC4000100545ACD /* Typography.swift */,
+			);
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 		03FSH0012FC3000100545ACD /* Shared */ = {
@@ -578,6 +609,11 @@
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
 				03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */,
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
+				03DSS0012FC4000100545ACD /* Spacing.swift in Sources */,
+				03DSR0012FC4000100545ACD /* Radius.swift in Sources */,
+				03DSST0012FC4000100545ACD /* Stroke.swift in Sources */,
+				03DST0012FC4000100545ACD /* Typography.swift in Sources */,
+				03SPV0012FC5000100545ACD /* SplashView.swift in Sources */,
 				03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */,
 				03AUTH0012FC3000100545ACD /* AuthService.swift in Sources */,
 				03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */,

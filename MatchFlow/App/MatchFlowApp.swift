@@ -21,20 +21,7 @@ struct MatchFlowApp: App {
         WindowGroup {
             Group {
                 if auth.isCheckingSession {
-                    ZStack {
-                        Color(.systemBackground)
-                        VStack(spacing: 16) {
-                            Image(systemName: "briefcase.fill")
-                                .font(.system(size: 60))
-                                .foregroundColor(.blue)
-                            Text("JobMatch")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
-                            ProgressView()
-                                .padding(.top, 8)
-                        }
-                    }
-                    .ignoresSafeArea()
+                    SplashView()
                 } else if auth.isAuthenticated {
                     MainTabView()
                         .environmentObject(auth)

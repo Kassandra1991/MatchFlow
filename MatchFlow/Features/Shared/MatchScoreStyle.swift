@@ -27,22 +27,22 @@ enum MatchScoreTier: Equatable {
     var foregroundColor: Color {
         switch self {
         case .low:
-            return Color.black.opacity(0.6)
+            return .foregroundMatchLow
         case .medium:
-            return .orange
+            return .foregroundMatchMedium
         case .high, .excellent:
-            return .green
+            return .foregroundMatchHigh
         }
     }
 
     var backgroundColor: Color {
         switch self {
         case .low:
-            return Color.black.opacity(0.1)
+            return .backgroundMatchLow
         case .medium:
-            return Color.orange.opacity(0.15)
+            return .backgroundMatchMedium
         case .high, .excellent:
-            return Color.green.opacity(0.15)
+            return .backgroundMatchHigh
         }
     }
 

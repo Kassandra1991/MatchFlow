@@ -1,0 +1,104 @@
+{
+  "fileName": "Job Match",
+  "textStyles": [
+    {
+      "name": "Title/Title 1",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Bold",
+      "fontSize": 60,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0.4000000059604645
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Title/Title 2",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Bold",
+      "fontSize": 34,
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0.4000000059604645
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Header/Header 1",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Bold",
+      "fontSize": 24,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Body 1/Regular",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Regular",
+      "fontSize": 17,
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -0.4300000071525574
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Body 1/Semibold",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Semibold",
+      "fontSize": 17,
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": -0.4300000071525574
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Body 2/Regular",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Regular",
+      "fontSize": 15,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Body 2/Semibold",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Semibold",
+      "fontSize": 15,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Caption/Regular",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Regular",
+      "fontSize": 13,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "Caption/Semibold",
+      "fontFamily": "SF Pro",
+      "fontWeight": "Semibold",
+      "fontSize": 13,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    }
+  ]
+}

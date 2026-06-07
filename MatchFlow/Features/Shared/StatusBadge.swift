@@ -10,11 +10,11 @@ struct StatusBadge: View {
 
     var body: some View {
         Text(JobStatusStyle.label(for: status))
-            .font(.caption)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 4)
-            .background(JobStatusStyle.color(for: status).opacity(0.15))
-            .foregroundColor(JobStatusStyle.color(for: status))
+            .textStyle(.captionSemibold)
+            .padding(.horizontal, DSSpacing.s8)
+            .padding(.vertical, DSSpacing.s4)
+            .background(Color.backgroundMinor)
+            .foregroundStyle(Color.foregroundSecondary)
             .clipShape(Capsule())
     }
 }

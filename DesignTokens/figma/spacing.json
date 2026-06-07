@@ -1,0 +1,236 @@
+{
+  "spacing-0": {
+    "$type": "number",
+    "$value": 0,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1343",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-2": {
+    "$type": "number",
+    "$value": 2,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1344",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-4": {
+    "$type": "number",
+    "$value": 4,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1345",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-8": {
+    "$type": "number",
+    "$value": 8,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1346",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-16": {
+    "$type": "number",
+    "$value": 16,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1347",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-24": {
+    "$type": "number",
+    "$value": 24,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1348",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-32": {
+    "$type": "number",
+    "$value": 32,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1349",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-40": {
+    "$type": "number",
+    "$value": 40,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2603:3895",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-48": {
+    "$type": "number",
+    "$value": 48,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2603:3896",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-64": {
+    "$type": "number",
+    "$value": 64,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2603:3897",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "spacing-116": {
+    "$type": "number",
+    "$value": 116,
+    "$extensions": {
+      "com.figma.variableId": "VariableID:2558:1350",
+      "com.figma.scopes": [
+        "TEXT_CONTENT",
+        "WIDTH_HEIGHT",
+        "GAP",
+        "EFFECT_FLOAT",
+        "OPACITY",
+        "FONT_STYLE",
+        "FONT_SIZE",
+        "LINE_HEIGHT",
+        "LETTER_SPACING",
+        "PARAGRAPH_SPACING",
+        "PARAGRAPH_INDENT",
+        "FONT_VARIATIONS"
+      ]
+    }
+  },
+  "$extensions": {
+    "com.figma.modeName": "Mode 1"
+  }
+}
