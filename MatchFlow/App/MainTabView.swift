@@ -14,25 +14,26 @@ struct MainTabView: View {
         TabView(selection: $tabSelection.selectedTab) {
             DashboardView()
                 .tabItem {
-                    Label("Insights", systemImage: "sparkles")
+                    Label("Insights", systemImage: "sparkle")
                 }
                 .tag(0)
                 .onAppear { AnalyticsService.log(.tabOpened(name: "insights")) }
             
             JobsView()
                 .tabItem {
-                    Label("Jobs", systemImage: "briefcase")
+                    Label("Jobs", systemImage: "case.fill")
                 }
                 .tag(1)
                 .onAppear { AnalyticsService.log(.tabOpened(name: "jobs")) }
             
             ResumeView()
                 .tabItem {
-                    Label("Profile", systemImage: "person.crop.circle")
+                    Label("Profile", systemImage: "person.fill")
                 }
                 .tag(2)
                 .onAppear { AnalyticsService.log(.tabOpened(name: "profile")) }
         }
+        .tint(Color.foregroundAccent)
         .environmentObject(tabSelection)
     }
 }
