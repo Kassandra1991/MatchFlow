@@ -27,6 +27,7 @@ struct ResumeView: View {
             }
             .sheet(isPresented: $profileViewModel.isEditing) {
                 ProfileEditView(viewModel: profileViewModel, userId: auth.currentUserId)
+                    .presentationDragIndicator(.visible)
             }
             .task {
                 if let userId = auth.currentUserId {
