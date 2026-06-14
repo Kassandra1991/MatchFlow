@@ -125,6 +125,12 @@ struct AIServiceTests {
         #expect(overlap == 0.0)
     }
 
+    // Scoring contract baseline (bcd613d, skills-first scoring):
+    // - missing resume seniority/years returns neutral 0.5 (was 1.0 in 7dcba9b)
+    // - hybrid thresholds are lower; weak overlap caps score despite strong embedding
+    // Keep expectations aligned with AIService.calculateSeniorityFit / calculateHybridScore.
+    // Do not change assertions to match refactors without an explicit contract change.
+
     @Test("Seniority fit mid candidate on senior job")
     func seniorityFitMidOnSenior() {
         let fit = service.calculateSeniorityFit(
