@@ -22,6 +22,24 @@ struct UserProfile: Codable {
     }
 }
 
+extension UserProfile {
+    var displayFullName: String {
+        guard let name = fullName?.trimmingCharacters(in: .whitespacesAndNewlines),
+              !name.isEmpty else {
+            return "Add your name"
+        }
+        return name
+    }
+
+    var profileSubtitle: String? {
+        let parts = [headline, workStyle]
+            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+        guard !parts.isEmpty else { return nil }
+        return parts.joined(separator: " • ")
+    }
+}
+
 enum CoverLetterTone: String, CaseIterable {
     case formal = "formal"
     case friendly = "friendly"

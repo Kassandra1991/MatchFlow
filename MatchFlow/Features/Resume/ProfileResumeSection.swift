@@ -8,8 +8,7 @@ import SwiftUI
 struct ProfileResumeSection: View {
     let resumes: [Resume]
     let isLoading: Bool
-    let onUpdate: () -> Void
-    let onUpload: () -> Void
+    let onAddResume: () -> Void
     let onDelete: (Resume) -> Void
 
     var body: some View {
@@ -21,7 +20,7 @@ struct ProfileResumeSection: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, DSSpacing.s24)
             } else if resumes.isEmpty {
-                ProfileResumeEmptyCardView(onUpload: onUpload)
+                ProfileResumeEmptyCardView(onUpload: onAddResume)
             } else {
                 ForEach(resumes) { resume in
                     ProfileResumeCardView(resume: resume) {
@@ -47,7 +46,7 @@ struct ProfileResumeSection: View {
     }
 
     private var updateButton: some View {
-        Button(action: onUpdate) {
+        Button(action: onAddResume) {
             Text("Update")
                 .textStyle(.captionSemibold)
                 .foregroundStyle(Color.foregroundPrimary)
@@ -66,8 +65,7 @@ struct ProfileResumeSection: View {
         ProfileResumeSection(
             resumes: [],
             isLoading: false,
-            onUpdate: {},
-            onUpload: {},
+            onAddResume: {},
             onDelete: { _ in }
         )
         .padding()

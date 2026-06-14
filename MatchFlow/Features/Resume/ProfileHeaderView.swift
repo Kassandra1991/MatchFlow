@@ -8,8 +8,6 @@ import SwiftUI
 struct ProfileHeaderView: View {
     let profile: UserProfile?
 
-    private static let headerTopOffset = DSSpacing.s116
-
     var body: some View {
         VStack(spacing: DSSpacing.s0) {
             Image(systemName: "person.crop.circle.fill")
@@ -18,13 +16,13 @@ struct ProfileHeaderView: View {
                 .foregroundStyle(Color.foregroundPrimaryWhite, Color.foregroundAccent)
                 .frame(width: 34, height: 41)
 
-            Text(displayName)
+            Text(profile?.displayFullName ?? "Add your name")
                 .textStyle(.header1)
                 .foregroundStyle(Color.foregroundPrimary)
                 .multilineTextAlignment(.center)
                 .padding(.top, DSSpacing.s8)
 
-            if let subtitle = subtitleText, !subtitle.isEmpty {
+            if let subtitle = profile?.profileSubtitle, !subtitle.isEmpty {
                 Text(subtitle)
                     .textStyle(.body1Regular)
                     .foregroundStyle(Color.foregroundSecondary)
@@ -43,24 +41,7 @@ struct ProfileHeaderView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.top, Self.headerTopOffset)
-    }
-
-    private var displayName: String {
-        guard let name = profile?.fullName?.trimmingCharacters(in: .whitespacesAndNewlines),
-              !name.isEmpty else {
-            return "Add your name"
-        }
-        return name
-    }
-
-    private var subtitleText: String? {
-        guard let profile else { return nil }
-        let parts = [profile.headline, profile.workStyle]
-            .compactMap { $0?.trimmingCharacters(in: .whitespacesAndNewlines) }
-            .filter { !$0.isEmpty }
-        guard !parts.isEmpty else { return nil }
-        return parts.joined(separator: " • ")
+        .padding(.top, ProfileLayout.headerTop)
     }
 }
 

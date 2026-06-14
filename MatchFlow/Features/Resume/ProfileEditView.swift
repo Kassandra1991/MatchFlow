@@ -10,20 +10,8 @@ struct ProfileEditView: View {
     let userId: UUID?
     @Environment(\.dismiss) private var dismiss
 
-    @State private var initialSnapshot: ProfileEditSnapshot?
-
-    private let workStyleOptions = ["Hybrid", "Remote"]
-
     private var isSaveEnabled: Bool {
-        hasChanges
-            && !viewModel.fullName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            && !viewModel.isSaving
-            && userId != nil
-    }
-
-    private var hasChanges: Bool {
-        guard let initialSnapshot else { return false }
-        return currentSnapshot != initialSnapshot
+        viewModel.canSave && userId != nil
     }
 
     var body: some View {
@@ -43,25 +31,14 @@ struct ProfileEditView: View {
                         AuthErrorBanner(message: viewModel.errorMessage)
                     }
 
-                    // Future feature: career goals editor
-                    // VStack(alignment: .leading, spacing: DSSpacing.s8) {
-                    //     Text("Career goals")
-                    //         .textStyle(.captionRegular)
-                    //         .foregroundStyle(Color.foregroundSecondary)
-                    //     TextEditor(text: $viewModel.careerGoals)
-                    //         .textStyle(.body1Regular)
-                    //         .frame(minHeight: 100)
-                    //         .padding(DSSpacing.s8)
-                    //         .background(Color.backgroundSecondary)
-                    //         .clipShape(RoundedRectangle(cornerRadius: DSRadius.r16))
-                    // }
+                    // MARK: - Future: career goals editor
                 }
                 .padding(DSSpacing.s16)
             }
         }
         .background(Color.backgroundPrimary)
         .onAppear {
-            initialSnapshot = currentSnapshot
+            viewModel.captureEditBaseline()
         }
     }
 
@@ -110,16 +87,15 @@ struct ProfileEditView: View {
         VStack(spacing: DSSpacing.s0) {
             profileTextRow(label: "Full name", text: $viewModel.fullName)
 
-            fieldDivider
+            ProfileCardDivider()
 
             profileTextRow(label: "Job title", text: $viewModel.headline)
 
-            fieldDivider
+            ProfileCardDivider()
 
             workStyleRow
         }
-        .background(Color.backgroundSecondary)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.r16))
+        .profileSecondaryCard()
     }
 
     private func profileTextRow(label: String, text: Binding<String>) -> some View {
@@ -146,14 +122,14 @@ struct ProfileEditView: View {
             Spacer()
 
             Menu {
-                ForEach(workStyleOptions, id: \.self) { option in
+                ForEach(ProfileViewModel.workStyleOptions, id: \.self) { option in
                     Button(option) {
                         viewModel.workStyle = option
                     }
                 }
             } label: {
                 HStack(spacing: DSSpacing.s4) {
-                    Text(viewModel.workStyle.isEmpty ? workStyleOptions[0] : viewModel.workStyle)
+                    Text(viewModel.displayWorkStyle)
                         .textStyle(.body1Regular)
                         .foregroundStyle(Color.foregroundSecondary)
                     Image(systemName: "chevron.up.chevron.down")
@@ -174,7 +150,7 @@ struct ProfileEditView: View {
                 .padding(.horizontal, DSSpacing.s16)
                 .padding(.vertical, DSSpacing.s16)
 
-            fieldDivider
+            ProfileCardDivider()
 
             TextEditor(text: $viewModel.importantInCompany)
                 .textStyle(.body1Regular)
@@ -184,8 +160,7 @@ struct ProfileEditView: View {
                 .padding(.vertical, DSSpacing.s8)
                 .scrollContentBackground(.hidden)
         }
-        .background(Color.backgroundSecondary)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.r16))
+        .profileSecondaryCard()
     }
 
     private var footerCaption: some View {
@@ -195,26 +170,4 @@ struct ProfileEditView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, DSSpacing.s16)
     }
-
-    private var fieldDivider: some View {
-        Rectangle()
-            .fill(Color.borderDefault)
-            .frame(height: DSStroke.s1)
-    }
-
-    private var currentSnapshot: ProfileEditSnapshot {
-        ProfileEditSnapshot(
-            fullName: viewModel.fullName.trimmingCharacters(in: .whitespacesAndNewlines),
-            headline: viewModel.headline.trimmingCharacters(in: .whitespacesAndNewlines),
-            importantInCompany: viewModel.importantInCompany.trimmingCharacters(in: .whitespacesAndNewlines),
-            workStyle: viewModel.workStyle.trimmingCharacters(in: .whitespacesAndNewlines)
-        )
-    }
-}
-
-private struct ProfileEditSnapshot: Equatable {
-    let fullName: String
-    let headline: String
-    let importantInCompany: String
-    let workStyle: String
 }

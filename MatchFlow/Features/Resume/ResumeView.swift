@@ -46,7 +46,7 @@ struct ResumeView: View {
             VStack(spacing: DSSpacing.s0) {
                 if profileViewModel.isLoading {
                     ProgressView()
-                        .padding(.top, DSSpacing.s116)
+                        .padding(.top, ProfileLayout.headerTop)
                 } else {
                     ProfileHeaderView(profile: profileViewModel.profile)
                 }
@@ -54,8 +54,7 @@ struct ResumeView: View {
                 ProfileResumeSection(
                     resumes: resumeViewModel.resumes,
                     isLoading: resumeViewModel.isLoading,
-                    onUpdate: { showAddResume = true },
-                    onUpload: { showAddResume = true },
+                    onAddResume: { showAddResume = true },
                     onDelete: { resume in
                         Task { await resumeViewModel.deleteResume(resume: resume) }
                     }
@@ -88,7 +87,7 @@ struct ResumeView: View {
                         .frame(width: 44, height: 44)
                 }
             }
-            .padding(.top, DSSpacing.s62)
+            .padding(.top, ProfileLayout.menuTop)
             .padding(.trailing, DSSpacing.s16)
 
             Spacer()

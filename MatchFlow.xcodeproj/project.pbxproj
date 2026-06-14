@@ -74,6 +74,7 @@
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
 		03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */; };
 		03PEV0012FCA100100545ACD /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PEV0022FCA100100545ACD /* ProfileEditView.swift */; };
+		03PUH0012FCA100100545ACD /* ProfileUIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */; };
 		03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */; };
 		03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */; };
 		03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */; };
@@ -185,6 +186,7 @@
 		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
 		03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreBadge.swift; sourceTree = "<group>"; };
 		03PEV0022FCA100100545ACD /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIHelpers.swift; sourceTree = "<group>"; };
 		03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeCardView.swift; sourceTree = "<group>"; };
 		03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeSection.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				03A4BA752FB093DD00158FCC /* ResumeView.swift */,
 				03ARV0022FC3000100545ACD /* AddResumeView.swift */,
 				03PEV0022FCA100100545ACD /* ProfileEditView.swift */,
+				03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */,
 				03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */,
 				03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */,
 				03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */,
@@ -691,6 +694,7 @@
 				03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */,
 				03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */,
 				03PEV0012FCA100100545ACD /* ProfileEditView.swift in Sources */,
+				03PUH0012FCA100100545ACD /* ProfileUIHelpers.swift in Sources */,
 				03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */,
 				03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */,
 				03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */,
