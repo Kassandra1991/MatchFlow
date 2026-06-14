@@ -1,3 +1,8 @@
+//
+//  ResumeView.swift
+//  MatchFlow
+//
+
 import SwiftUI
 
 struct ResumeView: View {
@@ -5,214 +10,88 @@ struct ResumeView: View {
     @StateObject private var resumeViewModel = ResumeViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showAddResume = false
-    
+
     var body: some View {
         NavigationStack {
-            List {
-                Section {
-                    if profileViewModel.isLoading {
-                        ProgressView()
-                    } else if profileViewModel.isEditing {
-                        ProfileEditView(viewModel: profileViewModel, userId: auth.currentUserId)
-                    } else if let profile = profileViewModel.profile {
-                        ProfileReadView(profile: profile) {
-                            profileViewModel.startEditing()
-                        }
-                    } else {
-                        Button {
-                            profileViewModel.isEditing = true
-                        } label: {
-                            Label("Complete your profile", systemImage: "person.crop.circle.badge.plus")
-                        }
-                    }
-                } header: {
-                    Text("About me")
+            GeometryReader { geometry in
+                ZStack {
+                    AuthBackgroundView()
+                    scrollContent(minHeight: geometry.size.height)
+                    profileMenu
                 }
-                
-                Section {
-                    if resumeViewModel.isLoading {
-                        ProgressView()
-                    } else if resumeViewModel.resumes.isEmpty {
-                        Button {
-                            showAddResume = true
-                        } label: {
-                            Label("Upload Resume", systemImage: "doc.badge.plus")
-                                .frame(maxWidth: .infinity)
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.vertical, 4)
-                    } else {
-                        ForEach(resumeViewModel.resumes) { resume in
-                            ResumeRowView(resume: resume) {
-                                Task { await resumeViewModel.deleteResume(resume: resume) }
-                            }
-                        }
-                    }
-                } header: {
-                    HStack {
-                        Text("My Resume")
-                        Spacer()
-                        if !resumeViewModel.resumes.isEmpty {
-                            Button("Update") {
-                                showAddResume = true
-                            }
-                            .font(.caption)
-                        }
-                    }
-                }
+                .ignoresSafeArea(edges: .top)
             }
-            .listStyle(.insetGrouped)
-            .navigationTitle("Profile")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Sign Out") {
-                        Task { await auth.signOut() }
-                    }
-                    .foregroundColor(.red)
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
             .sheet(isPresented: $showAddResume) {
                 AddResumeView(viewModel: resumeViewModel, userId: auth.currentUserId)
+            }
+            .sheet(isPresented: $profileViewModel.isEditing) {
+                ProfileEditView(viewModel: profileViewModel, userId: auth.currentUserId)
             }
             .task {
                 if let userId = auth.currentUserId {
                     await profileViewModel.fetchProfile(userId: userId)
+                    if profileViewModel.profile == nil {
+                        profileViewModel.isEditing = false
+                    }
                     await resumeViewModel.fetchResumes(userId: userId)
                 }
             }
         }
     }
-}
 
-struct ProfileReadView: View {
-    let profile: UserProfile
-    let onEdit: () -> Void
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(profile.fullName ?? "Add your name")
-                        .font(.headline)
-                    if let headline = profile.headline, !headline.isEmpty {
-                        Text(headline)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+    private func scrollContent(minHeight: CGFloat) -> some View {
+        ScrollView {
+            VStack(spacing: DSSpacing.s0) {
+                if profileViewModel.isLoading {
+                    ProgressView()
+                        .padding(.top, DSSpacing.s116)
+                } else {
+                    ProfileHeaderView(profile: profileViewModel.profile)
                 }
-                Spacer()
-                Button("Edit", action: onEdit)
-                    .font(.subheadline)
-                    .foregroundColor(.blue)
-            }
-            
-            if let important = profile.importantInCompany, !important.isEmpty {
-                ProfileRow(icon: "building.2", label: "Important in company", value: important)
-            }
-            if let workStyle = profile.workStyle, !workStyle.isEmpty {
-                ProfileRow(icon: "laptopcomputer", label: "Work style", value: workStyle)
-            }
-            if let goals = profile.careerGoals, !goals.isEmpty {
-                ProfileRow(icon: "target", label: "Career goals", value: goals)
-            }
-        }
-        .padding(.vertical, 4)
-    }
-}
 
-struct ProfileRow: View {
-    let icon: String
-    let label: String
-    let value: String
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Image(systemName: icon)
-                .foregroundColor(.secondary)
-                .font(.subheadline)
-                .frame(width: 20)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(label)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                Text(value)
-                    .font(.subheadline)
-            }
-        }
-    }
-}
-
-struct ProfileEditView: View {
-    @ObservedObject var viewModel: ProfileViewModel
-    let userId: UUID?
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            TextField("Full name", text: $viewModel.fullName)
-                .textFieldStyle(.roundedBorder)
-            
-            TextField("Headline (e.g. iOS Developer)", text: $viewModel.headline)
-                .textFieldStyle(.roundedBorder)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("What's important to you in a company?")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextEditor(text: $viewModel.importantInCompany)
-                    .frame(minHeight: 80)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Work style preferences")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextField("e.g. remote, small team, async", text: $viewModel.workStyle)
-                    .textFieldStyle(.roundedBorder)
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Career goals")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                TextEditor(text: $viewModel.careerGoals)
-                    .frame(minHeight: 80)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.secondary.opacity(0.3)))
-            }
-            
-            if !viewModel.errorMessage.isEmpty {
-                Text(viewModel.errorMessage)
-                    .font(.caption)
-                    .foregroundColor(.red)
-            }
-            
-            HStack {
-                if viewModel.profile != nil {
-                    Button("Cancel") {
-                        viewModel.isEditing = false
+                ProfileResumeSection(
+                    resumes: resumeViewModel.resumes,
+                    isLoading: resumeViewModel.isLoading,
+                    onUpdate: { showAddResume = true },
+                    onUpload: { showAddResume = true },
+                    onDelete: { resume in
+                        Task { await resumeViewModel.deleteResume(resume: resume) }
                     }
-                    .foregroundColor(.secondary)
-                }
+                )
+                .padding(.top, DSSpacing.s64)
+
+                Spacer(minLength: DSSpacing.s64)
+            }
+            .padding(.horizontal, DSSpacing.s16)
+            .padding(.bottom, DSSpacing.s64)
+            .frame(minHeight: minHeight, alignment: .top)
+        }
+        .contentMargins(.top, DSSpacing.s0, for: .scrollContent)
+    }
+
+    private var profileMenu: some View {
+        VStack {
+            HStack {
                 Spacer()
-                Button {
-                    Task {
-                        if let userId {
-                            await viewModel.saveProfile(userId: userId)
-                        }
+                Menu {
+                    Button("Edit Profile") {
+                        profileViewModel.startEditing()
+                    }
+                    Button("Sign Out", role: .destructive) {
+                        Task { await auth.signOut() }
                     }
                 } label: {
-                    if viewModel.isSaving {
-                        ProgressView()
-                    } else {
-                        Text("Save")
-                            .fontWeight(.semibold)
-                    }
+                    Image(systemName: "ellipsis")
+                        .foregroundStyle(Color.foregroundPrimary)
+                        .frame(width: 44, height: 44)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(viewModel.fullName.isEmpty || viewModel.isSaving || userId == nil)
             }
+            .padding(.top, DSSpacing.s62)
+            .padding(.trailing, DSSpacing.s16)
+
+            Spacer()
         }
-        .padding(.vertical, 4)
     }
 }
 

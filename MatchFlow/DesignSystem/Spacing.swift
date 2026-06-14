@@ -10,6 +10,7 @@ enum DSSpacing {
     static let s32: CGFloat = 32
     static let s40: CGFloat = 40
     static let s48: CGFloat = 48
+    static let s62: CGFloat = 62
     static let s64: CGFloat = 64
     static let s116: CGFloat = 116
 }

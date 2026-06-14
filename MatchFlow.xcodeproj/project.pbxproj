@@ -73,7 +73,10 @@
 		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
 		03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */; };
-		03RRV0012FC3000100545ACD /* ResumeRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RRV0022FC3000100545ACD /* ResumeRowView.swift */; };
+		03PEV0012FCA100100545ACD /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PEV0022FCA100100545ACD /* ProfileEditView.swift */; };
+		03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */; };
+		03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */; };
+		03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */; };
 		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
 		03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */; };
 		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
@@ -181,7 +184,10 @@
 		03MBD0022FC2000200545ACD /* MatchBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdown.swift; sourceTree = "<group>"; };
 		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
 		03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreBadge.swift; sourceTree = "<group>"; };
-		03RRV0022FC3000100545ACD /* ResumeRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeRowView.swift; sourceTree = "<group>"; };
+		03PEV0022FCA100100545ACD /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
+		03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeCardView.swift; sourceTree = "<group>"; };
+		03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeSection.swift; sourceTree = "<group>"; };
 		03SB0022FC3000100545ACD /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBackgroundView.swift; sourceTree = "<group>"; };
 		03SGV0022FC8000100545ACD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -332,7 +338,10 @@
 				03A4BA732FB0937500158FCC /* ResumeViewModel.swift */,
 				03A4BA752FB093DD00158FCC /* ResumeView.swift */,
 				03ARV0022FC3000100545ACD /* AddResumeView.swift */,
-				03RRV0022FC3000100545ACD /* ResumeRowView.swift */,
+				03PEV0022FCA100100545ACD /* ProfileEditView.swift */,
+				03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */,
+				03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */,
+				03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */,
 				0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */,
 			);
 			path = Resume;
@@ -681,7 +690,10 @@
 				03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */,
 				03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */,
 				03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */,
-				03RRV0012FC3000100545ACD /* ResumeRowView.swift in Sources */,
+				03PEV0012FCA100100545ACD /* ProfileEditView.swift in Sources */,
+				03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */,
+				03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */,
+				03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */,
 				03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */,
 				03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,
