@@ -9,6 +9,7 @@ struct ProfileResumeSection: View {
     let resumes: [Resume]
     let isLoading: Bool
     let onAddResume: () -> Void
+    let onOpen: (Resume) -> Void
     let onDelete: (Resume) -> Void
 
     var body: some View {
@@ -24,6 +25,8 @@ struct ProfileResumeSection: View {
             } else {
                 ForEach(resumes) { resume in
                     ProfileResumeCardView(resume: resume) {
+                        onOpen(resume)
+                    } onDelete: {
                         onDelete(resume)
                     }
                 }
@@ -66,6 +69,7 @@ struct ProfileResumeSection: View {
             resumes: [],
             isLoading: false,
             onAddResume: {},
+            onOpen: { _ in },
             onDelete: { _ in }
         )
         .padding()

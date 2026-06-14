@@ -78,6 +78,7 @@
 		03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */; };
 		03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */; };
 		03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */; };
+		03RPV0012FCA100100545ACD /* ResumePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RPV0022FCA100100545ACD /* ResumePreviewView.swift */; };
 		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
 		03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */; };
 		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
@@ -190,6 +191,7 @@
 		03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeCardView.swift; sourceTree = "<group>"; };
 		03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeSection.swift; sourceTree = "<group>"; };
+		03RPV0022FCA100100545ACD /* ResumePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumePreviewView.swift; sourceTree = "<group>"; };
 		03SB0022FC3000100545ACD /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBackgroundView.swift; sourceTree = "<group>"; };
 		03SGV0022FC8000100545ACD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 				03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */,
 				03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */,
 				03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */,
+				03RPV0022FCA100100545ACD /* ResumePreviewView.swift */,
 				0305E1E32FB31DCD004E9832 /* ProfileViewModel.swift */,
 			);
 			path = Resume;
@@ -698,6 +701,7 @@
 				03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */,
 				03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */,
 				03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */,
+				03RPV0012FCA100100545ACD /* ResumePreviewView.swift in Sources */,
 				03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */,
 				03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */,
 				03A4BA522FB07F5F00158FCC /* JobService.swift in Sources */,

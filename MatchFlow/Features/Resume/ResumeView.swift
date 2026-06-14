@@ -10,6 +10,7 @@ struct ResumeView: View {
     @StateObject private var resumeViewModel = ResumeViewModel()
     @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showAddResume = false
+    @State private var resumeToPreview: Resume?
 
     var body: some View {
         NavigationStack {
@@ -24,6 +25,10 @@ struct ResumeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .sheet(isPresented: $showAddResume) {
                 AddResumeView(viewModel: resumeViewModel, userId: auth.currentUserId)
+            }
+            .sheet(item: $resumeToPreview) { resume in
+                ResumePreviewView(resume: resume)
+                    .presentationDragIndicator(.visible)
             }
             .sheet(isPresented: $profileViewModel.isEditing) {
                 ProfileEditView(viewModel: profileViewModel, userId: auth.currentUserId)
@@ -55,6 +60,7 @@ struct ResumeView: View {
                     resumes: resumeViewModel.resumes,
                     isLoading: resumeViewModel.isLoading,
                     onAddResume: { showAddResume = true },
+                    onOpen: { resumeToPreview = $0 },
                     onDelete: { resume in
                         Task { await resumeViewModel.deleteResume(resume: resume) }
                     }

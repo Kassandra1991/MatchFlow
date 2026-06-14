@@ -7,19 +7,23 @@ import SwiftUI
 
 struct ProfileResumeCardView: View {
     let resume: Resume
+    let onTap: () -> Void
     let onDelete: () -> Void
 
     var body: some View {
-        ProfileChevronCardRow(
-            thumbnail: {
-                ResumeThumbnailView(
-                    systemImage: "doc.text.image",
-                    iconColor: Color.foregroundSecondary
-                )
-            },
-            title: resume.title,
-            subtitle: "Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))"
-        )
+        Button(action: onTap) {
+            ProfileChevronCardRow(
+                thumbnail: {
+                    ResumeThumbnailView(
+                        systemImage: "doc.text.image",
+                        iconColor: Color.foregroundSecondary
+                    )
+                },
+                title: resume.title,
+                subtitle: "Uploaded \(resume.createdAt.formatted(date: .abbreviated, time: .omitted))"
+            )
+        }
+        .buttonStyle(.plain)
         .contextMenu {
             Button(role: .destructive, action: onDelete) {
                 Label("Delete", systemImage: "trash")
@@ -62,6 +66,7 @@ struct ProfileResumeEmptyCardView: View {
                 isDefault: true,
                 createdAt: Date()
             ),
+            onTap: {},
             onDelete: {}
         )
         ProfileResumeEmptyCardView(onUpload: {})
