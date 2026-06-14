@@ -28,14 +28,10 @@ private extension AnyTransition {
 
 struct AuthFlowView: View {
     @EnvironmentObject private var auth: AuthViewModel
-    @State private var route: AuthRoute?
+    @Binding var route: AuthRoute?
 
     var body: some View {
         ZStack {
-            if route == .login || route == .signUp {
-                AuthBackgroundView()
-            }
-
             if route == nil {
                 IntroView(
                     onLogin: { route = .login },
@@ -79,7 +75,7 @@ struct AuthFlowView: View {
 #Preview {
     ZStack {
         SplashBackgroundView()
-        AuthFlowView()
+        AuthFlowView(route: .constant(nil))
     }
     .environmentObject(AuthViewModel())
 }

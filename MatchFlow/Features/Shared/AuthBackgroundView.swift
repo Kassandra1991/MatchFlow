@@ -7,9 +7,13 @@ import SwiftUI
 
 struct AuthBackgroundView: View {
     var body: some View {
-        Image("AuthBackground")
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
+        ZStack {
+            Color.backgroundPrimary
+                .ignoresSafeArea()
+            Image("AuthBackground")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        }
     }
 }

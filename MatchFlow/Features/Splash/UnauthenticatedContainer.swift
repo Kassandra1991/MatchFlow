@@ -7,12 +7,23 @@ import SwiftUI
 
 struct UnauthenticatedContainer: View {
     @EnvironmentObject private var auth: AuthViewModel
+    @State private var route: AuthRoute?
 
     var body: some View {
         ZStack {
-            SplashBackgroundView()
+            if auth.isCheckingSession || route == nil {
+                SplashBackgroundView()
+                    .ignoresSafeArea()
+                    .transition(.identity)
+            }
 
-            AuthFlowView()
+            if route == .login || route == .signUp {
+                AuthBackgroundView()
+                    .ignoresSafeArea()
+                    .transition(.identity)
+            }
+
+            AuthFlowView(route: $route)
 
             SplashLogoView()
                 .opacity(auth.isCheckingSession ? 1 : 0)
@@ -20,6 +31,7 @@ struct UnauthenticatedContainer: View {
                 .allowsHitTesting(auth.isCheckingSession)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .animation(.easeInOut(duration: 0.35), value: route)
     }
 }
 
