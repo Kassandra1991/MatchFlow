@@ -22,6 +22,7 @@ protocol JobServiceProtocol {
     func fetchJobText(from urlString: String) async throws -> String
     func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws
+    func saveNotes(jobId: UUID, notes: String) async throws
     func deleteJob(jobId: UUID) async throws
 }
 
@@ -237,6 +238,14 @@ struct JobService: JobServiceProtocol {
         try await supabase
             .from("jobs")
             .update(["cover_letter": coverLetter])
+            .eq("id", value: jobId.uuidString)
+            .execute()
+    }
+
+    func saveNotes(jobId: UUID, notes: String) async throws {
+        try await supabase
+            .from("jobs")
+            .update(["notes": notes])
             .eq("id", value: jobId.uuidString)
             .execute()
     }

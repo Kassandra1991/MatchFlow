@@ -33,6 +33,8 @@
 		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
 		03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */; };
 		03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */; };
+		03NEV0012FCA000100545ACD /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03NEV0022FCA000100545ACD /* NotesEditorView.swift */; };
+		03DKT0012FCA000100545ACD /* View+DismissKeyboardOnTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */; };
 		03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */; };
 		03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */; };
 		03A4BA902FB1019E00158FCC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8F2FB1019E00158FCC /* DashboardView.swift */; };
@@ -137,6 +139,8 @@
 		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
 		03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
+		03NEV0022FCA000100545ACD /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
+		03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DismissKeyboardOnTap.swift"; sourceTree = "<group>"; };
 		03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8F2FB1019E00158FCC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 				03JRV0022FC3000100545ACD /* JobRowView.swift */,
 				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
 				03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */,
+				03NEV0022FCA000100545ACD /* NotesEditorView.swift */,
 				03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */,
 				037F36232FB3DC0100545ACD /* CoverLetterView.swift */,
 			);
@@ -471,6 +476,7 @@
 				03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */,
 				03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */,
 				03AHV0022FC8000100545ACD /* AuthHeaderView.swift */,
+				03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */,
 				03DSBT0022FC9000100545ACD /* DSButton.swift */,
 			);
 			path = Shared;
@@ -647,6 +653,8 @@
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
 				03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */,
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
+				03NEV0012FCA000100545ACD /* NotesEditorView.swift in Sources */,
+				03DKT0012FCA000100545ACD /* View+DismissKeyboardOnTap.swift in Sources */,
 				03DSS0012FC4000100545ACD /* Spacing.swift in Sources */,
 				03DSR0012FC4000100545ACD /* Radius.swift in Sources */,
 				03DSST0012FC4000100545ACD /* Stroke.swift in Sources */,

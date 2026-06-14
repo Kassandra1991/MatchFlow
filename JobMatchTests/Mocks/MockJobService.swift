@@ -18,6 +18,8 @@ class MockJobService: JobServiceProtocol {
     var addJobCalled = false
     var updateStatusCalled = false
     var lastStatus: JobStatus?
+    var saveNotesCalled = false
+    var lastSavedNotes: String?
     
     func fetchJobs(userId: UUID) async throws -> [Job] {
         fetchJobsCalled = true
@@ -50,6 +52,14 @@ class MockJobService: JobServiceProtocol {
     func fetchJobText(from urlString: String) async throws -> String { "" }
     func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws {}
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws {}
+    func saveNotes(jobId: UUID, notes: String) async throws {
+        saveNotesCalled = true
+        lastSavedNotes = notes
+        if shouldThrow { throw TestError.mock }
+        if let index = jobs.firstIndex(where: { $0.id == jobId }) {
+            jobs[index].notes = notes
+        }
+    }
     func checkPendingJob() -> (url: String?, text: String?) { (nil, nil) }
 
     func addJobFromShare(userId: UUID) async throws -> Job? { nil }

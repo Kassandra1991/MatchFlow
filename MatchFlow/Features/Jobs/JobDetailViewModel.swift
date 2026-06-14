@@ -21,6 +21,8 @@ class JobDetailViewModel: ObservableObject {
     @Published var isGeneratingCoverLetter = false
     @Published var showCoverLetter = false
 
+    private var loadedNotes: String = ""
+
     private let jobService: JobServiceProtocol
     private let resumeService: ResumeServiceProtocol
     private let profileService: ProfileServiceProtocol
@@ -39,12 +41,13 @@ class JobDetailViewModel: ObservableObject {
     }
 
     func loadOnAppear(job: Job, userId: UUID) async {
-        selectedStatus = job.status
-        notes = job.notes ?? ""
-
         await loadJob(jobId: job.id)
 
         let currentJob = updatedJob ?? job
+        selectedStatus = currentJob.status
+        let serverNotes = currentJob.notes ?? ""
+        notes = serverNotes
+        loadedNotes = serverNotes
         if currentJob.summary == nil {
             await analyze(job: currentJob)
         } else {
@@ -100,6 +103,16 @@ class JobDetailViewModel: ObservableObject {
     func updateStatus(job: Job, status: JobStatus) async {
         do {
             try await jobService.updateStatus(jobId: job.id, status: status)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func saveNotesIfNeeded(job: Job) async {
+        guard notes != loadedNotes else { return }
+        do {
+            try await jobService.saveNotes(jobId: job.id, notes: notes)
+            loadedNotes = notes
         } catch {
             errorMessage = error.localizedDescription
         }
