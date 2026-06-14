@@ -1,0 +1,64 @@
+---
+description: Do not auto-edit existing tests when new logic breaks them; fix production code or ask the user
+alwaysApply: true
+---
+
+# Test Immutability
+
+Existing tests in `JobMatchTests/` are a regression contract. When implementing new logic, do not automatically change old tests to make CI green again.
+
+## Never do automatically
+
+When new logic breaks an existing test:
+
+- Remove or comment out assertions
+- Weaken expectations (`#expect(true)`, flip booleans, drop mock call checks)
+- Rewrite the test scenario to match the new implementation without user approval
+
+## What to do instead
+
+1. **Default** — fix production code in `MatchFlow/` so the old test passes (preserve backward compatibility).
+2. If behavior **intentionally** changes — stop and ask the user whether to update the test. Do not edit the old test without explicit approval.
+3. **Adding new tests** for new logic is encouraged — add them alongside old tests, not instead of them.
+
+## Examples
+
+```swift
+// ❌ BAD — old test failed after new logic, agent "fixed" the test
+// AuthViewModelTests: #expect(viewModel.isAuthenticated) — removed or weakened
+
+// ❌ BAD — updated expectation without asking the user
+// was: #expect(mockService.signInCalled)
+// now: #expect(!mockService.signInCalled)
+
+// ✅ GOOD — old test failed → fix production, contract preserved
+// new logic must not break existing signIn() scenarios
+
+// ✅ GOOD — behavior really changes → ask the user first
+// "signUp no longer logs in immediately — update AuthViewModelTests?"
+
+// ✅ GOOD — added new tests for new logic, left old tests untouched
+// JobDetailViewModelTests: +3 notes tests, existing loadJob tests unchanged
+```
+
+## Exceptions
+
+- User **explicitly** asks to change or delete a specific old test.
+- User **explicitly** confirms a contract change — then update test and code together, deliberately.
+- Obvious bug in the test itself (typo, wrong mock setup) — fix without changing the behavior under test.
+
+## Allowed
+
+- New tests and mocks for new logic.
+- Refactoring test infrastructure (fixtures, helpers) when assertions and scenarios stay the same.
+- Editing old tests **after an explicit user request**.
+
+## Relevant test files
+
+Do not auto-edit these when adding new features:
+
+- `JobMatchTests/Unit/ViewModels/AuthViewModelTests.swift`
+- `JobMatchTests/Unit/ViewModels/JobDetailViewModelTests.swift`
+- `JobMatchTests/Unit/ViewModels/JobsViewModelTests.swift`
+- `JobMatchTests/Unit/ViewModels/DashboardViewModelTests.swift`
+- `JobMatchTests/Unit/Services/AIServiceTests.swift`
