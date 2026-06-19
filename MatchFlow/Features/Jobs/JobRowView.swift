@@ -7,56 +7,87 @@ import SwiftUI
 
 struct JobRowView: View {
     let job: Job
-    
+
+    private var titleParts: (primary: String, secondary: String?) {
+        JobStatusStyle.titleParts(for: job.title)
+    }
+
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(alignment: .top, spacing: DSSpacing.s16) {
+            companyLogo
+
+            VStack(alignment: .leading, spacing: DSSpacing.s4) {
+                HStack(alignment: .top, spacing: DSSpacing.s8) {
+                    Text(job.company ?? "Unknown Company")
+                        .textStyle(.body1Semibold)
+                        .foregroundStyle(Color.foregroundPrimary)
+                        .lineLimit(1)
+
+                    Spacer(minLength: DSSpacing.s8)
+
+                    if let score = job.matchScore {
+                        compactMatchBadge(score: score)
+                    }
+
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Color.foregroundSecondary)
+                        .frame(width: 14, height: 20, alignment: .center)
+                }
+
+                Text(titleParts.primary)
+                    .textStyle(.captionRegular)
+                    .foregroundStyle(Color.foregroundSecondary)
+                    .lineLimit(2)
+
+                Text(JobStatusStyle.listSubtitle(secondaryTitle: titleParts.secondary, status: job.status))
+                    .textStyle(.captionRegular)
+                    .foregroundStyle(Color.foregroundSecondary)
+                    .lineLimit(1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.vertical, DSSpacing.s8)
+    }
+
+    @ViewBuilder
+    private var companyLogo: some View {
+        Group {
             if let logoUrl = job.companyLogoUrl, let url = URL(string: logoUrl) {
                 AsyncImage(url: url) { image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
                 } placeholder: {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color(.systemGray5))
+                    logoPlaceholder
                 }
-                .frame(width: 44, height: 44)
-                .cornerRadius(8)
             } else {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color(.systemGray5))
-                    .frame(width: 44, height: 44)
-                    .overlay(
-                        Image(systemName: "briefcase")
-                            .foregroundColor(.secondary)
-                    )
-            }
-            
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                    Text(job.title ?? "Unknown Role")
-                        .font(.headline)
-                    Spacer()
-                    StatusBadge(status: job.status)
-                }
-                Text(job.company ?? "Unknown Company")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                if let score = job.matchScore {
-                    let tier = MatchScoreTier(score: score)
-                    HStack(spacing: 6) {
-                        Image(systemName: "chart.bar.fill")
-                            .foregroundColor(tier.foregroundColor)
-                        Text(tier.rowLabel(percent: Int(score * 100)))
-                            .font(.caption)
-                            .foregroundColor(tier.foregroundColor)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 3)
-                            .background(tier.backgroundColor)
-                            .clipShape(Capsule())
-                    }
-                }
+                logoPlaceholder
             }
         }
-        .padding(.vertical, 4)
+        .frame(width: 44, height: 44)
+        .clipShape(Circle())
+    }
+
+    private var logoPlaceholder: some View {
+        Circle()
+            .fill(Color.backgroundMinor)
+            .overlay {
+                Image(systemName: "briefcase.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(Color.foregroundSecondary)
+            }
+    }
+
+    private func compactMatchBadge(score: Double) -> some View {
+        let tier = MatchScoreTier(score: score)
+        let percent = Int(score * 100)
+        return Text(tier.listPercentLabel(percent: percent))
+            .textStyle(.captionSemibold)
+            .foregroundStyle(tier.foregroundColor)
+            .padding(.horizontal, DSSpacing.s8)
+            .padding(.vertical, DSSpacing.s4)
+            .background(tier.backgroundColor)
+            .clipShape(Capsule())
     }
 }

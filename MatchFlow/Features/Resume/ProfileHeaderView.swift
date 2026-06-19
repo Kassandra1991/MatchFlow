@@ -10,11 +10,11 @@ struct ProfileHeaderView: View {
 
     var body: some View {
         VStack(spacing: DSSpacing.s0) {
-            Image(systemName: "person.crop.circle.fill")
-                .font(.system(size: 34))
-                .symbolRenderingMode(.palette)
-                .foregroundStyle(Color.foregroundPrimaryWhite, Color.foregroundAccent)
-                .frame(width: 34, height: 41)
+            Image(systemName: "person.crop.circle")
+                .font(.system(size: 60))
+                .symbolRenderingMode(.monochrome)
+                .foregroundStyle(Color.foregroundAccent)
+                .frame(width: 60, height: 72)
 
             Text(profile?.displayFullName ?? "Add your name")
                 .textStyle(.header1)

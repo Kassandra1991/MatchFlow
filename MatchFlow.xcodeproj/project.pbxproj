@@ -28,6 +28,7 @@
 		03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */; };
 		03A4BA722FB090A900158FCC /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA712FB090A900158FCC /* JobsView.swift */; };
+		03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */; };
 		03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA732FB0937500158FCC /* ResumeViewModel.swift */; };
 		03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA752FB093DD00158FCC /* ResumeView.swift */; };
 		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
@@ -139,6 +140,7 @@
 		03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlow.entitlements; sourceTree = "<group>"; };
 		03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
 		03A4BA712FB090A900158FCC /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
+		03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsEmptyStateView.swift; sourceTree = "<group>"; };
 		03A4BA732FB0937500158FCC /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
 		03A4BA752FB093DD00158FCC /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 			children = (
 				03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */,
 				03A4BA712FB090A900158FCC /* JobsView.swift */,
+				03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */,
 				03AJV0022FC3000100545ACD /* AddJobView.swift */,
 				03JRV0022FC3000100545ACD /* JobRowView.swift */,
 				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
@@ -663,6 +666,7 @@
 				03A4BA582FB08AFB00158FCC /* Secrets.swift in Sources */,
 				0305E1E02FB31D17004E9832 /* UserProfile.swift in Sources */,
 				03A4BA722FB090A900158FCC /* JobsView.swift in Sources */,
+				03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */,
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,

@@ -7,8 +7,6 @@ import SwiftUI
 
 enum ProfileLayout {
     static let headerTop = DSSpacing.s116
-    /// Menu top offset from physical top (Figma).
-    static let menuTop = DSSpacing.s62
 }
 
 struct ResumeThumbnailView: View {
