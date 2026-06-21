@@ -9,27 +9,27 @@ struct MatchBreakdownView: View {
     let breakdown: MatchBreakdown
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.s24) {
             MatchFactorRow(
-                title: "Relevant Experience",
-                subtitle: "Similarity between your CV and this job description",
+                title: "Relevant experience",
+                infoText: "Similarity between your CV and this job description",
                 value: breakdown.experienceScore
             )
             MatchFactorRow(
-                title: "Skills Coverage",
-                subtitle: skillsSubtitle,
+                title: "Skills coverage",
+                infoText: skillsInfoText,
                 value: breakdown.skillsCoverage
             )
             MatchFactorRow(
-                title: "Career Level Fit",
-                subtitle: "Alignment between your experience level and role expectations",
+                title: "Career level fit",
+                infoText: "Alignment between your experience level and role expectations",
                 value: breakdown.levelFit
             )
         }
-        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var skillsSubtitle: String {
+    private var skillsInfoText: String {
         guard breakdown.totalJobSkillsCount > 0 else {
             return "No job skills extracted yet"
         }
@@ -39,29 +39,53 @@ struct MatchBreakdownView: View {
 
 private struct MatchFactorRow: View {
     let title: String
-    let subtitle: String
+    let infoText: String
     let value: Double
+
+    @State private var showsInfo = false
 
     private var tier: MatchScoreTier { MatchScoreTier(score: value) }
 
+    private var clampedValue: CGFloat {
+        CGFloat(min(1, max(0, value)))
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(.medium)
-            Text(subtitle)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(Color.black.opacity(0.08))
-                    Capsule()
-                        .fill(tier.foregroundColor.opacity(0.85))
-                        .frame(width: max(0, geo.size.width * CGFloat(min(1, max(0, value)))))
+        VStack(alignment: .leading, spacing: DSSpacing.s8) {
+            HStack(spacing: DSSpacing.s8) {
+                Text(title)
+                    .textStyle(.body1Regular)
+                    .foregroundStyle(Color.foregroundPrimary)
+                Spacer()
+                Button {
+                    showsInfo = true
+                } label: {
+                    Image(systemName: "info.circle")
+                        .font(DSTextStyle.body2Regular.font)
+                        .foregroundStyle(Color.foregroundMinor)
+                }
+                .buttonStyle(.plain)
+                .popover(isPresented: $showsInfo) {
+                    Text(infoText)
+                        .textStyle(.captionRegular)
+                        .foregroundStyle(Color.foregroundSecondary)
+                        .padding(DSSpacing.s16)
+                        .presentationCompactAdaptation(.popover)
                 }
             }
-            .frame(height: 8)
+
+            Capsule()
+                .fill(Color.backgroundMinor)
+                .frame(maxWidth: .infinity)
+                .frame(height: DSSpacing.s4)
+                .overlay(alignment: .leading) {
+                    Capsule()
+                        .fill(tier.foregroundColor)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: DSSpacing.s4)
+                        .scaleEffect(x: clampedValue, y: 1, anchor: .leading)
+                }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

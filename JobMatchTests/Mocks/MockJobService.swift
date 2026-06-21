@@ -20,6 +20,9 @@ class MockJobService: JobServiceProtocol {
     var lastStatus: JobStatus?
     var saveNotesCalled = false
     var lastSavedNotes: String?
+    var saveImprovementSuggestionCalled = false
+    var lastImprovementSuggestion: String?
+    var clearImprovementSuggestionsCalled = false
     
     func fetchJobs(userId: UUID) async throws -> [Job] {
         fetchJobsCalled = true
@@ -60,6 +63,31 @@ class MockJobService: JobServiceProtocol {
             jobs[index].notes = notes
         }
     }
+
+    func saveImprovementSuggestion(jobId: UUID, suggestion: String) async throws {
+        saveImprovementSuggestionCalled = true
+        lastImprovementSuggestion = suggestion
+        if shouldThrow { throw TestError.mock }
+        if let index = jobs.firstIndex(where: { $0.id == jobId }) {
+            jobs[index].improvementSuggestion = suggestion
+        }
+    }
+
+    func updateCompanyLogoUrl(jobId: UUID, logoUrl: String) async throws {
+        if shouldThrow { throw TestError.mock }
+        if let index = jobs.firstIndex(where: { $0.id == jobId }) {
+            jobs[index].companyLogoUrl = logoUrl
+        }
+    }
+
+    func clearImprovementSuggestions(userId: UUID) async throws {
+        clearImprovementSuggestionsCalled = true
+        if shouldThrow { throw TestError.mock }
+        for index in jobs.indices where jobs[index].userId == userId && jobs[index].status == .exploring {
+            jobs[index].improvementSuggestion = nil
+        }
+    }
+
     func checkPendingJob() -> (url: String?, text: String?) { (nil, nil) }
 
     func addJobFromShare(userId: UUID) async throws -> Job? { nil }

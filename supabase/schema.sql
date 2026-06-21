@@ -40,6 +40,7 @@ create table jobs (
   summary text,
   skills text,
   difficulty text,
+  improvement_suggestion text,
   applied_at timestamp default now(),
   created_at timestamp default now()
 );

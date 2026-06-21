@@ -23,6 +23,9 @@ protocol JobServiceProtocol {
     func saveAnalysis(jobId: UUID, analysis: JobAnalysis, rawText: String?) async throws
     func saveCoverLetter(jobId: UUID, coverLetter: String) async throws
     func saveNotes(jobId: UUID, notes: String) async throws
+    func saveImprovementSuggestion(jobId: UUID, suggestion: String) async throws
+    func updateCompanyLogoUrl(jobId: UUID, logoUrl: String) async throws
+    func clearImprovementSuggestions(userId: UUID) async throws
     func deleteJob(jobId: UUID) async throws
 }
 
@@ -247,6 +250,34 @@ struct JobService: JobServiceProtocol {
             .from("jobs")
             .update(["notes": notes])
             .eq("id", value: jobId.uuidString)
+            .execute()
+    }
+
+    func saveImprovementSuggestion(jobId: UUID, suggestion: String) async throws {
+        try await supabase
+            .from("jobs")
+            .update(["improvement_suggestion": suggestion])
+            .eq("id", value: jobId.uuidString)
+            .execute()
+    }
+
+    func updateCompanyLogoUrl(jobId: UUID, logoUrl: String) async throws {
+        try await supabase
+            .from("jobs")
+            .update(["company_logo_url": logoUrl])
+            .eq("id", value: jobId.uuidString)
+            .execute()
+    }
+
+    func clearImprovementSuggestions(userId: UUID) async throws {
+        struct ImprovementClear: Encodable {
+            let improvement_suggestion: String?
+        }
+        try await supabase
+            .from("jobs")
+            .update(ImprovementClear(improvement_suggestion: nil))
+            .eq("user_id", value: userId.uuidString)
+            .eq("status", value: JobStatus.exploring.rawValue)
             .execute()
     }
     

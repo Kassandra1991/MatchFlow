@@ -69,6 +69,19 @@ enum MatchScoreTier: Equatable {
     func listPercentLabel(percent: Int) -> String {
         "\(percent)%"
     }
+
+    var detailTitle: String {
+        switch self {
+        case .low:
+            return "Low match"
+        case .medium:
+            return "Moderate match"
+        case .high:
+            return "Strong match"
+        case .excellent:
+            return "Excellent match"
+        }
+    }
 }
 
 enum MatchScoreStyle {

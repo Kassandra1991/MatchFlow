@@ -79,4 +79,90 @@ struct JobDetailViewModelTests {
 
         #expect(!mockJobService.saveNotesCalled)
     }
+
+    @Test("Exploring job uses cached improvement without calling AI")
+    func exploringUsesCachedImprovement() async {
+        let mockJobService = MockJobService()
+        let mockAIService = MockAIService()
+        let job = Job.mock(
+            status: .exploring,
+            summary: "Summary",
+            skills: ["Swift", "Python"],
+            coverLetter: "Letter",
+            improvementSuggestion: "Cached tip"
+        )
+        mockJobService.jobs = [job]
+        let viewModel = await JobDetailViewModel(
+            jobService: mockJobService,
+            aiService: mockAIService
+        )
+
+        await viewModel.loadOnAppear(job: job, userId: UUID())
+
+        let suggestion = await viewModel.improvementSuggestion
+        #expect(suggestion == "Cached tip")
+        #expect(!mockAIService.generateMatchImprovementCalled)
+        #expect(!mockJobService.saveImprovementSuggestionCalled)
+    }
+
+    @Test("Exploring job generates and saves improvement suggestion")
+    func exploringGeneratesImprovement() async {
+        let mockJobService = MockJobService()
+        let mockAIService = MockAIService()
+        let mockResumeService = MockResumeService()
+        let skillsJSON = try? String(data: JSONEncoder().encode(["Swift"]), encoding: .utf8)
+        mockResumeService.defaultResume = Resume(
+            id: UUID(),
+            userId: UUID(),
+            title: "CV",
+            rawText: "Resume text",
+            skillsRaw: skillsJSON,
+            yearsExperience: 5,
+            seniority: "senior",
+            isDefault: true,
+            createdAt: Date()
+        )
+        let job = Job.mock(
+            status: .exploring,
+            summary: "Summary",
+            skills: ["Swift", "Python", "TensorFlow"],
+            coverLetter: "Letter"
+        )
+        mockJobService.jobs = [job]
+        let viewModel = await JobDetailViewModel(
+            jobService: mockJobService,
+            resumeService: mockResumeService,
+            aiService: mockAIService
+        )
+
+        await viewModel.loadOnAppear(job: job, userId: UUID())
+
+        let suggestion = await viewModel.improvementSuggestion
+        #expect(mockAIService.generateMatchImprovementCalled)
+        #expect(mockJobService.saveImprovementSuggestionCalled)
+        #expect(suggestion == mockAIService.improvementResult)
+    }
+
+    @Test("Applied job does not load improvement suggestion")
+    func appliedSkipsImprovement() async {
+        let mockJobService = MockJobService()
+        let mockAIService = MockAIService()
+        let job = Job.mock(
+            status: .applied,
+            summary: "Summary",
+            skills: ["Swift"],
+            coverLetter: "Letter"
+        )
+        mockJobService.jobs = [job]
+        let viewModel = await JobDetailViewModel(
+            jobService: mockJobService,
+            aiService: mockAIService
+        )
+
+        await viewModel.loadOnAppear(job: job, userId: UUID())
+
+        let suggestion = await viewModel.improvementSuggestion
+        #expect(suggestion == nil)
+        #expect(!mockAIService.generateMatchImprovementCalled)
+    }
 }

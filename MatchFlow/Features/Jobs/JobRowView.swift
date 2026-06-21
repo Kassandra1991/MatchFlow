@@ -14,7 +14,7 @@ struct JobRowView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: DSSpacing.s16) {
-            companyLogo
+            CompanyLogoView(logoUrl: job.companyLogoUrl, style: .list)
 
             VStack(alignment: .leading, spacing: DSSpacing.s4) {
                 HStack(alignment: .top, spacing: DSSpacing.s8) {
@@ -48,35 +48,6 @@ struct JobRowView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, DSSpacing.s8)
-    }
-
-    @ViewBuilder
-    private var companyLogo: some View {
-        Group {
-            if let logoUrl = job.companyLogoUrl, let url = URL(string: logoUrl) {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    logoPlaceholder
-                }
-            } else {
-                logoPlaceholder
-            }
-        }
-        .frame(width: 44, height: 44)
-        .clipShape(Circle())
-    }
-
-    private var logoPlaceholder: some View {
-        Circle()
-            .fill(Color.backgroundMinor)
-            .overlay {
-                Image(systemName: "briefcase.fill")
-                    .font(.system(size: 18))
-                    .foregroundStyle(Color.foregroundSecondary)
-            }
     }
 
     private func compactMatchBadge(score: Double) -> some View {

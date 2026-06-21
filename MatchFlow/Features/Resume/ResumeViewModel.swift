@@ -16,9 +16,14 @@ class ResumeViewModel: ObservableObject {
     @Published var successMessage = ""
     
     private let resumeService: ResumeServiceProtocol
-    
-    init(resumeService: ResumeServiceProtocol = ResumeService()) {
+    private let jobService: JobServiceProtocol
+
+    init(
+        resumeService: ResumeServiceProtocol = ResumeService(),
+        jobService: JobServiceProtocol = JobService()
+    ) {
         self.resumeService = resumeService
+        self.jobService = jobService
     }
     
     func fetchResumes(userId: UUID) async {
@@ -43,6 +48,7 @@ class ResumeViewModel: ObservableObject {
             )
             resumes = [resume]
             successMessage = "Resume saved!"
+            try? await jobService.clearImprovementSuggestions(userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }

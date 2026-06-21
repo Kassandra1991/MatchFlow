@@ -29,6 +29,10 @@
 		03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */; };
 		03A4BA722FB090A900158FCC /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA712FB090A900158FCC /* JobsView.swift */; };
 		03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */; };
+		03JDH0012FCA200100545ACD /* JobDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */; };
+		03JMC0012FCA200100545ACD /* JobMatchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JMC0022FCA200100545ACD /* JobMatchCardView.swift */; };
+		03JAB0012FCA200100545ACD /* JobAboutRoleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */; };
+		03JCL0012FCA200100545ACD /* JobCoverLetterCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */; };
 		03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA732FB0937500158FCC /* ResumeViewModel.swift */; };
 		03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA752FB093DD00158FCC /* ResumeView.swift */; };
 		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
@@ -48,6 +52,8 @@
 		03BEA14C2FB9129F000D36C9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1482FB9129F000D36C9 /* ShareViewController.swift */; };
 		03BEA1552FB912A9000D36C9 /* JobMatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */; };
 		03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1562FB9310C000D36C9 /* MockJobService.swift */; };
+		03MAI0012FCA200100545ACD /* MockAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAI0022FCA200100545ACD /* MockAIService.swift */; };
+		03MRS0012FCA200100545ACD /* MockResumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MRS0022FCA200100545ACD /* MockResumeService.swift */; };
 		03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1582FB9319F000D36C9 /* Job+Mock.swift */; };
 		03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */; };
 		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
@@ -63,6 +69,9 @@
 		03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */; };
 		03INT0012FC6000100545ACD /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INT0022FC6000100545ACD /* IntroView.swift */; };
 		03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */; };
+		03MST0012FCA200100545ACD /* MatchScoreStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */; };
+		03CLT0012FCA300100545ACD /* CompanyLogoURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */; };
+		03RVM0012FCA200100545ACD /* ResumeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */; };
 		03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JRV0022FC3000100545ACD /* JobRowView.swift */; };
 		03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JSS0022FC3000100545ACD /* JobStatusStyle.swift */; };
 		03LGV0012FC7000100545ACD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03LGV0022FC7000100545ACD /* LoginView.swift */; };
@@ -85,6 +94,8 @@
 		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
 		03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */; };
 		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
+		03CLG0012FCA300100545ACD /* CompanyLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLG0022FCA300100545ACD /* CompanyLogoView.swift */; };
+		03CLU0012FCA300100545ACD /* CompanyLogoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +152,10 @@
 		03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
 		03A4BA712FB090A900158FCC /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
 		03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsEmptyStateView.swift; sourceTree = "<group>"; };
+		03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailHeaderView.swift; sourceTree = "<group>"; };
+		03JMC0022FCA200100545ACD /* JobMatchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchCardView.swift; sourceTree = "<group>"; };
+		03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobAboutRoleCardView.swift; sourceTree = "<group>"; };
+		03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCoverLetterCardView.swift; sourceTree = "<group>"; };
 		03A4BA732FB0937500158FCC /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
 		03A4BA752FB093DD00158FCC /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -166,6 +181,8 @@
 		03BEA1482FB9129F000D36C9 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchTests.swift; sourceTree = "<group>"; };
 		03BEA1562FB9310C000D36C9 /* MockJobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJobService.swift; sourceTree = "<group>"; };
+		03MAI0022FCA200100545ACD /* MockAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAIService.swift; sourceTree = "<group>"; };
+		03MRS0022FCA200100545ACD /* MockResumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResumeService.swift; sourceTree = "<group>"; };
 		03BEA1582FB9319F000D36C9 /* Job+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Job+Mock.swift"; sourceTree = "<group>"; };
 		03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
@@ -181,6 +198,9 @@
 		03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyle.swift; sourceTree = "<group>"; };
 		03INT0022FC6000100545ACD /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
+		03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyleTests.swift; sourceTree = "<group>"; };
+		03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURLTests.swift; sourceTree = "<group>"; };
+		03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModelTests.swift; sourceTree = "<group>"; };
 		03JRV0022FC3000100545ACD /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
 		03JSS0022FC3000100545ACD /* JobStatusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobStatusStyle.swift; sourceTree = "<group>"; };
 		03LGV0022FC7000100545ACD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -200,6 +220,8 @@
 		03SLG0022FCB000100545ACD /* SplashLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLogoView.swift; sourceTree = "<group>"; };
 		03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedContainer.swift; sourceTree = "<group>"; };
 		03ST0022FC3000100545ACD /* SkillTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTag.swift; sourceTree = "<group>"; };
+		03CLG0022FCA300100545ACD /* CompanyLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoView.swift; sourceTree = "<group>"; };
+		03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +350,10 @@
 				03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */,
 				03A4BA712FB090A900158FCC /* JobsView.swift */,
 				03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */,
+				03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */,
+				03JMC0022FCA200100545ACD /* JobMatchCardView.swift */,
+				03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */,
+				03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */,
 				03AJV0022FC3000100545ACD /* AddJobView.swift */,
 				03JRV0022FC3000100545ACD /* JobRowView.swift */,
 				03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */,
@@ -417,6 +443,8 @@
 			isa = PBXGroup;
 			children = (
 				03BEA1562FB9310C000D36C9 /* MockJobService.swift */,
+				03MAI0022FCA200100545ACD /* MockAIService.swift */,
+				03MRS0022FCA200100545ACD /* MockResumeService.swift */,
 				03MAS0022FC3000100545ACD /* MockAuthService.swift */,
 			);
 			path = Mocks;
@@ -444,6 +472,7 @@
 				03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */,
 				03AVT0022FC3000100545ACD /* AuthViewModelTests.swift */,
 				03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */,
+				03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -454,6 +483,8 @@
 				03BEA14F2FB912A9000D36C9 /* Models */,
 				03BEA1502FB912A9000D36C9 /* Services */,
 				03BEA1512FB912A9000D36C9 /* ViewModels */,
+				03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */,
+				03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
@@ -489,6 +520,8 @@
 				03SB0022FC3000100545ACD /* StatusBadge.swift */,
 				03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */,
 				03ST0022FC3000100545ACD /* SkillTag.swift */,
+				03CLG0022FCA300100545ACD /* CompanyLogoView.swift */,
+				03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */,
 				03FL0022FC3000100545ACD /* FlowLayout.swift */,
 				03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */,
 				03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */,
@@ -667,6 +700,10 @@
 				0305E1E02FB31D17004E9832 /* UserProfile.swift in Sources */,
 				03A4BA722FB090A900158FCC /* JobsView.swift in Sources */,
 				03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */,
+				03JDH0012FCA200100545ACD /* JobDetailHeaderView.swift in Sources */,
+				03JMC0012FCA200100545ACD /* JobMatchCardView.swift in Sources */,
+				03JAB0012FCA200100545ACD /* JobAboutRoleCardView.swift in Sources */,
+				03JCL0012FCA200100545ACD /* JobCoverLetterCardView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */,
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
@@ -696,6 +733,8 @@
 				03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */,
 				03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */,
 				03ST0012FC3000100545ACD /* SkillTag.swift in Sources */,
+				03CLG0012FCA300100545ACD /* CompanyLogoView.swift in Sources */,
+				03CLU0012FCA300100545ACD /* CompanyLogoURL.swift in Sources */,
 				03FL0012FC3000100545ACD /* FlowLayout.swift in Sources */,
 				03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */,
 				03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */,
@@ -742,11 +781,16 @@
 				03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */,
 				03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */,
 				03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */,
+				03MAI0012FCA200100545ACD /* MockAIService.swift in Sources */,
+				03MRS0012FCA200100545ACD /* MockResumeService.swift in Sources */,
 				03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */,
 				03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */,
 				03MAS0012FC3000100545ACD /* MockAuthService.swift in Sources */,
 				03AVT0012FC3000100545ACD /* AuthViewModelTests.swift in Sources */,
 				03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */,
+				03MST0012FCA200100545ACD /* MatchScoreStyleTests.swift in Sources */,
+				03CLT0012FCA300100545ACD /* CompanyLogoURLTests.swift in Sources */,
+				03RVM0012FCA200100545ACD /* ResumeViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

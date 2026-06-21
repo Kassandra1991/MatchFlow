@@ -14,7 +14,10 @@ struct NotesEditorView: View {
             .focused(isFocused)
             .textStyle(.body1Regular)
             .foregroundStyle(Color.foregroundPrimary)
+            .frame(maxWidth: .infinity)
             .frame(height: 140)
+            .padding(DSSpacing.s16)
+            .scrollContentBackground(.hidden)
             .overlay(placeholder, alignment: .topLeading)
     }
 
@@ -24,8 +27,7 @@ struct NotesEditorView: View {
             Text("Add your notes")
                 .textStyle(.body1Regular)
                 .foregroundStyle(Color.foregroundMinor)
-                .padding(.horizontal, DSSpacing.s16)
-                .padding(.vertical, DSSpacing.s16)
+                .padding(DSSpacing.s16)
                 .allowsHitTesting(false)
         }
     }

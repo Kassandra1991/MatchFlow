@@ -25,6 +25,7 @@ struct Job: Identifiable, Codable, Equatable {
     var summary: String?
     var skillsRaw: String?
     var difficulty: String?
+    var improvementSuggestion: String?
     var appliedAt: Date
     var createdAt: Date
     
@@ -55,6 +56,7 @@ struct Job: Identifiable, Codable, Equatable {
         case summary
         case skillsRaw = "skills"
         case difficulty
+        case improvementSuggestion = "improvement_suggestion"
         case appliedAt = "applied_at"
         case createdAt = "created_at"
     }

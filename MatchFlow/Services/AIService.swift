@@ -28,6 +28,12 @@ protocol AIServiceProtocol {
     ) -> MatchBreakdown
     func generateInsights(jobs: [Job]) async throws -> JobInsights
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String
+    func generateMatchImprovement(
+        job: Job,
+        resume: Resume,
+        breakdown: MatchBreakdown,
+        missingSkills: [String]
+    ) async throws -> String
     func fetchJobFromURL(_ url: String) async throws -> (title: String?, company: String?, location: String?, description: String?, companyLogo: String?)
 }
 
@@ -125,7 +131,7 @@ struct AIService: AIServiceProtocol {
         }
         
         Rules for skills:
-        - Maximum 15 skills
+        - Maximum 14 skills
         - Include ALL technical skills explicitly mentioned in the job description
         - Do not drop niche tools or domain-specific requirements
         - Each skill max 3 words, prefer 1-2 words
@@ -513,6 +519,63 @@ struct AIService: AIServiceProtocol {
         let (data, _) = try await URLSession.shared.data(for: request)
         let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
         return response.choices.first?.message.content ?? ""
+    }
+
+    func generateMatchImprovement(
+        job: Job,
+        resume: Resume,
+        breakdown: MatchBreakdown,
+        missingSkills: [String]
+    ) async throws -> String {
+        let weakestFactor = weakestMatchFactor(breakdown: breakdown)
+        let potentialGain = estimatedImprovementGain(breakdown: breakdown, missingCount: missingSkills.count)
+        let missingList = missingSkills.prefix(8).joined(separator: ", ")
+        let resumeSkills = resume.skills.prefix(12).joined(separator: ", ")
+        let jobSkills = job.skills.prefix(12).joined(separator: ", ")
+
+        let prompt = """
+        You are a career coach helping a candidate improve their job match score.
+
+        Job: \(job.title ?? "Unknown") at \(job.company ?? "Unknown")
+        Job summary: \(String((job.summary ?? "").prefix(600)))
+        Required skills: \(jobSkills)
+        Candidate resume skills: \(resumeSkills)
+        Missing skills: \(missingList.isEmpty ? "none identified" : missingList)
+        Match scores (0-100): overall \(breakdown.overallPercent), experience \(breakdown.experiencePercent), skills \(breakdown.skillsPercent), level \(breakdown.levelPercent)
+        Weakest area: \(weakestFactor)
+
+        Write 1-2 short sentences of actionable advice. Start with "Increase your match by up to \(potentialGain)% by" then name concrete CV or experience changes tied to missing skills or the weakest factor. Be specific to this role. Plain text only, no markdown.
+        """
+
+        var request = URLRequest(url: URL(string: completionURL)!)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let body: [String: Any] = [
+            "model": completionModel,
+            "messages": [["role": "user", "content": prompt]]
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+        let (data, _) = try await URLSession.shared.data(for: request)
+        let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
+        return response.choices.first?.message.content.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    }
+
+    private func weakestMatchFactor(breakdown: MatchBreakdown) -> String {
+        let factors: [(String, Double)] = [
+            ("Relevant experience", breakdown.experienceScore),
+            ("Skills coverage", breakdown.skillsCoverage),
+            ("Career level fit", breakdown.levelFit)
+        ]
+        return factors.min(by: { $0.1 < $1.1 })?.0 ?? "Skills coverage"
+    }
+
+    private func estimatedImprovementGain(breakdown: MatchBreakdown, missingCount: Int) -> Int {
+        let base = max(5, min(25, missingCount * 3))
+        let lowFactorPenalty = breakdown.skillsCoverage < 0.5 ? 5 : 0
+        return min(30, base + lowFactorPenalty + (breakdown.overallPercent < 50 ? 3 : 0))
     }
     
     func fetchJobFromURL(_ url: String) async throws -> (title: String?, company: String?, location: String?, description: String?, companyLogo: String?) {

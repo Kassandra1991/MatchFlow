@@ -25,6 +25,7 @@ extension Job {
         difficulty: String? = nil,
         coverLetter: String? = nil,
         notes: String? = nil,
+        improvementSuggestion: String? = nil,
         url: String? = nil,
         appliedAt: Date = Date(),
         createdAt: Date = Date()
@@ -47,6 +48,7 @@ extension Job {
             summary: summary,
             skillsRaw: skills.isEmpty ? nil : (try? String(data: JSONEncoder().encode(skills), encoding: .utf8) ?? nil),
             difficulty: difficulty,
+            improvementSuggestion: improvementSuggestion,
             appliedAt: appliedAt,
             createdAt: createdAt
         )

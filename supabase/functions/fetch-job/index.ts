@@ -1,5 +1,25 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 
+function extractCompanyLogo(html: string): string | null {
+  const patterns = [
+    /<img[^>]*class="[^"]*top-card-layout__entity-image[^"]*"[^>]*data-delayed-url="([^"]+)"/,
+    /<img[^>]*data-delayed-url="([^"]+)"[^>]*class="[^"]*top-card-layout__entity-image[^"]*"/,
+    /<img[^>]*class="[^"]*artdeco-entity-image[^"]*"[^>]*data-delayed-url="([^"]+)"/,
+    /<img[^>]*data-delayed-url="([^"]+)"[^>]*class="[^"]*artdeco-entity-image[^"]*"/,
+    /<img[^>]*class="[^"]*artdeco-entity-image[^"]*"[^>]*src="([^"]+)"/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = html.match(pattern)?.[1];
+    if (match) {
+      return match.replace(/&amp;/g, "&");
+    }
+  }
+
+  const ogImage = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/)?.[1];
+  return ogImage?.replace(/&amp;/g, "&") ?? null;
+}
+
 export default {
   fetch: async (req: Request) => {
     if (req.method === "OPTIONS") {
@@ -44,26 +64,21 @@ export default {
     const title = html.match(/<h2[^>]*class="[^"]*top-card-layout__title[^"]*"[^>]*>([^<]+)<\/h2>/)?.[1]?.trim();
     const company = html.match(/<a[^>]*class="[^"]*topcard__org-name-link[^"]*"[^>]*>([^<]+)<\/a>/)?.[1]?.trim();
     const location = html.match(/<span[^>]*class="[^"]*topcard__flavor--bullet[^"]*"[^>]*>([^<]+)<\/span>/)?.[1]?.trim();
-
-    const companyLogo = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/)?.[1]
-      ?? html.match(/<img[^>]*data-delayed-url="([^"]+)"/)?.[1]
-      ?? html.match(/<img[^>]*class="[^"]*artdeco-entity-image[^"]*"[^>]*src="([^"]+)"/)?.[1]
-      ?? null;
-	const companyLogoDecoded = companyLogo?.replace(/&amp;/g, '&') ?? null;
+    const companyLogo = extractCompanyLogo(html);
     const descMatch = html.match(/<div[^>]*class="[^"]*description__text[^"]*"[^>]*>([\s\S]*?)<\/div>/);
     const description = descMatch?.[1]
-      ?.replace(/<[^>]+>/g, ' ')
-      ?.replace(/\s+/g, ' ')
+      ?.replace(/<[^>]+>/g, " ")
+      ?.replace(/\s+/g, " ")
       ?.trim();
 
     return Response.json({
       title: title ?? null,
       company: company ?? null,
-	companyLogo: companyLogoDecoded,
+      companyLogo: companyLogo,
       location: location ?? null,
       description: description ?? null,
     }, {
-      headers: { "Access-Control-Allow-Origin": "*" }
+      headers: { "Access-Control-Allow-Origin": "*" },
     });
   },
 };

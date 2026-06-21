@@ -20,6 +20,8 @@ class JobDetailViewModel: ObservableObject {
     @Published var coverLetter: String? = nil
     @Published var isGeneratingCoverLetter = false
     @Published var showCoverLetter = false
+    @Published var improvementSuggestion: String?
+    @Published var isLoadingImprovement = false
 
     private var loadedNotes: String = ""
 
@@ -63,6 +65,9 @@ class JobDetailViewModel: ObservableObject {
         if currentJob.coverLetter == nil {
             await generateCoverLetter(job: currentJob, userId: userId)
         }
+
+        await loadOrGenerateImprovement(job: currentJob, userId: userId)
+        await refreshCompanyLogoIfNeeded(job: currentJob)
     }
 
     func regenerateCoverLetter(job: Job, userId: UUID) async {
@@ -139,6 +144,68 @@ class JobDetailViewModel: ObservableObject {
             updatedJob = fresh
         } catch {
             print("❌ load job error: \(error)")
+        }
+    }
+
+    func loadOrGenerateImprovement(job: Job, userId: UUID) async {
+        let currentJob = updatedJob ?? job
+        guard currentJob.status == .exploring else {
+            improvementSuggestion = nil
+            return
+        }
+
+        if let cached = currentJob.improvementSuggestion, !cached.isEmpty {
+            improvementSuggestion = cached
+            return
+        }
+
+        isLoadingImprovement = true
+        defer { isLoadingImprovement = false }
+
+        do {
+            guard let resume = try await resumeService.fetchDefaultResume(userId: userId) else { return }
+            guard let breakdown = MatchBreakdown.from(job: currentJob) else { return }
+
+            let matched = aiService.matchedJobSkills(resumeSkills: resume.skills, jobSkills: currentJob.skills)
+            let missingSkills = currentJob.skills.filter { jobSkill in
+                !matched.contains { $0.caseInsensitiveCompare(jobSkill) == .orderedSame }
+            }
+
+            let suggestion = try await aiService.generateMatchImprovement(
+                job: currentJob,
+                resume: resume,
+                breakdown: breakdown,
+                missingSkills: missingSkills
+            )
+            guard !suggestion.isEmpty else { return }
+
+            try await jobService.saveImprovementSuggestion(jobId: currentJob.id, suggestion: suggestion)
+            improvementSuggestion = suggestion
+            updatedJob = try await jobService.fetchJob(jobId: currentJob.id)
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    func refreshCompanyLogoIfNeeded(job: Job) async {
+        guard let jobURL = job.url, jobURL.contains("linkedin.com/jobs/view") else { return }
+        guard CompanyLogoURL.needsRefresh(raw: job.companyLogoUrl) else { return }
+
+        do {
+            let scraped = try await aiService.fetchJobFromURL(jobURL)
+            guard let logo = scraped.companyLogo,
+                  !logo.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                  let logoURL = URL(string: logo),
+                  !CompanyLogoURL.isLikelyJobSharePreview(logoURL) else {
+                return
+            }
+            try await jobService.updateCompanyLogoUrl(jobId: job.id, logoUrl: logo)
+            updatedJob = try await jobService.fetchJob(jobId: job.id)
+            #if DEBUG
+            NSLog("[CompanyLogo] refreshed logo for job %@", job.id.uuidString)
+            #endif
+        } catch {
+            errorMessage = error.localizedDescription
         }
     }
 }
