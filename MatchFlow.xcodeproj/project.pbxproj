@@ -42,7 +42,6 @@
 		03DKT0012FCA000100545ACD /* View+DismissKeyboardOnTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */; };
 		03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */; };
 		03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */; };
-		03A4BA902FB1019E00158FCC /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8F2FB1019E00158FCC /* DashboardView.swift */; };
 		03ABG0012FC7000100545ACD /* AuthBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */; };
 		03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AJV0022FC3000100545ACD /* AddJobView.swift */; };
 		03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ARV0022FC3000100545ACD /* AddResumeView.swift */; };
@@ -96,6 +95,16 @@
 		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
 		03CLG0012FCA300100545ACD /* CompanyLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLG0022FCA300100545ACD /* CompanyLogoView.swift */; };
 		03CLU0012FCA300100545ACD /* CompanyLogoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */; };
+		03INV0012FCA400100545ACD /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INV0022FCA400100545ACD /* InsightsView.swift */; };
+		03INH0012FCA400100545ACD /* InsightsHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INH0022FCA400100545ACD /* InsightsHeroView.swift */; };
+		03INL0012FCA400100545ACD /* InsightsHeroLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */; };
+		03INA0012FCA400100545ACD /* InsightsAddJobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */; };
+		03INS0012FCA400100545ACD /* InsightsMatchSkeletonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */; };
+		03INP0012FCA400100545ACD /* InsightsProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */; };
+		03INR0012FCA400100545ACD /* InsightsProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INR0022FCA400100545ACD /* InsightsProgressSection.swift */; };
+		03INT0012FCA400100545ACD /* InsightsTopMatchesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */; };
+		03INM0012FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */; };
+		03INB0012FCA400100545ACD /* InsightsHeroBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,7 +174,16 @@
 		03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DismissKeyboardOnTap.swift"; sourceTree = "<group>"; };
 		03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
-		03A4BA8F2FB1019E00158FCC /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		03INV0022FCA400100545ACD /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		03INH0022FCA400100545ACD /* InsightsHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroView.swift; sourceTree = "<group>"; };
+		03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroLayout.swift; sourceTree = "<group>"; };
+		03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsAddJobCard.swift; sourceTree = "<group>"; };
+		03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsMatchSkeletonRow.swift; sourceTree = "<group>"; };
+		03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressBadge.swift; sourceTree = "<group>"; };
+		03INR0022FCA400100545ACD /* InsightsProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressSection.swift; sourceTree = "<group>"; };
+		03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesSection.swift; sourceTree = "<group>"; };
+		03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesInsightBanner.swift; sourceTree = "<group>"; };
+		03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroBackground.swift; sourceTree = "<group>"; };
 		03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBackgroundView.swift; sourceTree = "<group>"; };
 		03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorBanner.swift; sourceTree = "<group>"; };
 		03AHV0022FC8000100545ACD /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
@@ -339,7 +357,6 @@
 			isa = PBXGroup;
 			children = (
 				03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */,
-				03A4BA8F2FB1019E00158FCC /* DashboardView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -385,6 +402,16 @@
 		03A4BA492FB07E2D00158FCC /* Insights */ = {
 			isa = PBXGroup;
 			children = (
+				03INV0022FCA400100545ACD /* InsightsView.swift */,
+				03INH0022FCA400100545ACD /* InsightsHeroView.swift */,
+				03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */,
+				03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */,
+				03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */,
+				03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */,
+				03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */,
+				03INR0022FCA400100545ACD /* InsightsProgressSection.swift */,
+				03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */,
+				03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */,
 			);
 			path = Insights;
 			sourceTree = "<group>";
@@ -706,6 +733,16 @@
 				03JCL0012FCA200100545ACD /* JobCoverLetterCardView.swift in Sources */,
 				03A4BA562FB089AC00158FCC /* AIService.swift in Sources */,
 				03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */,
+				03INV0012FCA400100545ACD /* InsightsView.swift in Sources */,
+				03INH0012FCA400100545ACD /* InsightsHeroView.swift in Sources */,
+				03INB0012FCA400100545ACD /* InsightsHeroBackground.swift in Sources */,
+				03INL0012FCA400100545ACD /* InsightsHeroLayout.swift in Sources */,
+				03INA0012FCA400100545ACD /* InsightsAddJobCard.swift in Sources */,
+				03INS0012FCA400100545ACD /* InsightsMatchSkeletonRow.swift in Sources */,
+				03INP0012FCA400100545ACD /* InsightsProgressBadge.swift in Sources */,
+				03INR0012FCA400100545ACD /* InsightsProgressSection.swift in Sources */,
+				03INT0012FCA400100545ACD /* InsightsTopMatchesSection.swift in Sources */,
+				03INM0012FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift in Sources */,
 				03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */,
 				03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */,
 				03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */,
@@ -758,7 +795,6 @@
 				03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */,
 				03A4BA412FB07D8C00158FCC /* AuthViewModel.swift in Sources */,
 				03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */,
-				03A4BA902FB1019E00158FCC /* DashboardView.swift in Sources */,
 				03A4BA4E2FB07EC200158FCC /* Job.swift in Sources */,
 				03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */,
 				0305E1E22FB31D6D004E9832 /* ProfileService.swift in Sources */,

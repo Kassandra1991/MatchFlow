@@ -12,7 +12,7 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $tabSelection.selectedTab) {
-            DashboardView()
+            InsightsView()
                 .tabItem {
                     Label("Insights", systemImage: "sparkle")
                 }

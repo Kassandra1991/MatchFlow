@@ -393,7 +393,7 @@ struct AIService: AIServiceProtocol {
     }
     
     func generateInsights(jobs: [Job]) async throws -> JobInsights {
-        guard !jobs.isEmpty else { return JobInsights(summary: "Add more jobs to get insights.") }
+        guard !jobs.isEmpty else { return JobInsights(summary: "Add more jobs to get insights.", topMatchesInsight: nil) }
         
         // Разделяем exploring и активные
         let exploringJobs = jobs.filter { $0.status == .exploring }
@@ -443,7 +443,8 @@ struct AIService: AIServiceProtocol {
 
         Return JSON only:
         {
-          "summary": "3-4 sentence analysis: what's working, patterns in matches and rejections, what to improve"
+          "summary": "Skill improvement advice for the hero UI: exactly 2 short sentences, maximum 145 characters total, must fit in 5 lines at 17pt font",
+          "topMatchesInsight": "1-2 short sentences (max 70 characters total) explaining how the user's CV/profile aligns with their current top matching jobs — role types, match tiers, relevant skills. Example tone: 'Your profile aligns better with positions requiring a higher match, especially those related to AI Engineering.'"
         }
         """
         
@@ -463,7 +464,7 @@ struct AIService: AIServiceProtocol {
         let response = try JSONDecoder().decode(CompletionResponse.self, from: data)
         let content = response.choices.first?.message.content ?? "{}"
         guard let jsonData = content.data(using: .utf8) else {
-            return JobInsights(summary: nil)
+            return JobInsights(summary: nil, topMatchesInsight: nil)
         }
         return try JSONDecoder().decode(JobInsights.self, from: jsonData)
     }
@@ -646,4 +647,29 @@ struct JobAnalysis: Codable {
 
 struct JobInsights: Codable {
     let summary: String?
+    let topMatchesInsight: String?
+
+    enum CodingKeys: String, CodingKey {
+        case summary
+        case topMatchesInsight
+        case topMatchesInsightSnake = "top_matches_insight"
+    }
+
+    init(summary: String?, topMatchesInsight: String?) {
+        self.summary = summary
+        self.topMatchesInsight = topMatchesInsight
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        summary = try container.decodeIfPresent(String.self, forKey: .summary)
+        topMatchesInsight = try container.decodeIfPresent(String.self, forKey: .topMatchesInsight)
+            ?? container.decodeIfPresent(String.self, forKey: .topMatchesInsightSnake)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(summary, forKey: .summary)
+        try container.encodeIfPresent(topMatchesInsight, forKey: .topMatchesInsightSnake)
+    }
 }

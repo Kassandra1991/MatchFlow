@@ -59,7 +59,7 @@ final class MockAIService: AIServiceProtocol {
     }
 
     func generateInsights(jobs: [Job]) async throws -> JobInsights {
-        JobInsights(summary: nil)
+        JobInsights(summary: nil, topMatchesInsight: nil)
     }
 
     func generateCoverLetter(resume: String, jobDescription: String, profile: UserProfile) async throws -> String {

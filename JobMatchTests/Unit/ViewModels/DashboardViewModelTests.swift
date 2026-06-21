@@ -73,4 +73,75 @@ struct DashboardViewModelTests {
         let top = await viewModel.topMatches
         #expect(top.count == 5)
     }
+
+    @Test("Is onboarding when no jobs")
+    func isOnboardingWhenEmpty() async {
+        let viewModel = await DashboardViewModel()
+        let onboarding = await viewModel.isOnboarding
+        #expect(onboarding == true)
+    }
+
+    @Test("Is not onboarding when jobs exist")
+    func isNotOnboardingWhenJobsExist() async {
+        let viewModel = await DashboardViewModel()
+        await MainActor.run {
+            viewModel.allJobs = [Job.mock()]
+        }
+        let onboarding = await viewModel.isOnboarding
+        #expect(onboarding == false)
+    }
+
+    @Test("Progress counts return correct values")
+    func progressCounts() async {
+        let viewModel = await DashboardViewModel()
+        await MainActor.run {
+            viewModel.allJobs = [
+                Job.mock(status: .exploring),
+                Job.mock(status: .exploring),
+                Job.mock(status: .applied),
+                Job.mock(status: .interview),
+                Job.mock(status: .rejected),
+                Job.mock(status: .offer)
+            ]
+        }
+        let explored = await viewModel.exploredCount
+        let applied = await viewModel.appliedCount
+        let interviews = await viewModel.interviewCount
+        let rejected = await viewModel.rejectedCount
+        let offer = await viewModel.offerCount
+        #expect(explored == 2)
+        #expect(applied == 1)
+        #expect(interviews == 1)
+        #expect(rejected == 1)
+        #expect(offer == 1)
+    }
+
+    @Test("JobInsights decodes top matches insight")
+    func jobInsightsDecoding() throws {
+        let json = """
+        {"summary": "Keep improving Python.", "top_matches_insight": "Your top roles align with AI engineering."}
+        """
+        let data = Data(json.utf8)
+        let insights = try JSONDecoder().decode(JobInsights.self, from: data)
+        #expect(insights.summary == "Keep improving Python.")
+        #expect(insights.topMatchesInsight == "Your top roles align with AI engineering.")
+    }
+
+    @Test("JobInsights decodes camelCase topMatchesInsight from AI response")
+    func jobInsightsCamelCaseDecoding() throws {
+        let json = """
+        {"summary": "Keep going.", "topMatchesInsight": "Your profile aligns with AI roles."}
+        """
+        let data = Data(json.utf8)
+        let insights = try JSONDecoder().decode(JobInsights.self, from: data)
+        #expect(insights.topMatchesInsight == "Your profile aligns with AI roles.")
+    }
+
+    @Test("Hero advice clamps to max characters")
+    func heroAdviceClamping() {
+        let long = String(repeating: "a", count: 200)
+        let clamped = InsightsHeroLayout.clampedAdvice(long)
+        #expect(clamped.count <= InsightsHeroLayout.adviceMaxCharacters)
+        #expect(InsightsHeroLayout.adviceMaxCharacters == 145)
+    }
 }

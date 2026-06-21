@@ -41,6 +41,14 @@ class DashboardViewModel: ObservableObject {
             .prefix(5)
             .map { $0 }
     }
+
+    var isOnboarding: Bool { allJobs.isEmpty }
+
+    var exploredCount: Int { jobs(for: .exploring).count }
+    var appliedCount: Int { jobs(for: .applied).count }
+    var interviewCount: Int { jobs(for: .interview).count }
+    var rejectedCount: Int { jobs(for: .rejected).count }
+    var offerCount: Int { jobs(for: .offer).count }
     
     func jobs(for status: JobStatus) -> [Job] {
         allJobs.filter { $0.status == status }
