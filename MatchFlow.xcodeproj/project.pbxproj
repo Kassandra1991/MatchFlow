@@ -28,21 +28,17 @@
 		03A4BA672FB08DBB00158FCC /* MatchFlowShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 03A4BA5D2FB08DBB00158FCC /* MatchFlowShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		03A4BA702FB0905400158FCC /* JobsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */; };
 		03A4BA722FB090A900158FCC /* JobsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA712FB090A900158FCC /* JobsView.swift */; };
-		03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */; };
-		03JDH0012FCA200100545ACD /* JobDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */; };
-		03JMC0012FCA200100545ACD /* JobMatchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JMC0022FCA200100545ACD /* JobMatchCardView.swift */; };
-		03JAB0012FCA200100545ACD /* JobAboutRoleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */; };
-		03JCL0012FCA200100545ACD /* JobCoverLetterCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */; };
 		03A4BA742FB0937500158FCC /* ResumeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA732FB0937500158FCC /* ResumeViewModel.swift */; };
 		03A4BA762FB093DD00158FCC /* ResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA752FB093DD00158FCC /* ResumeView.swift */; };
 		03A4BA782FB0951800158FCC /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA772FB0951800158FCC /* MainTabView.swift */; };
 		03A4BA7A2FB0AC6100158FCC /* JobDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */; };
 		03A4BA7C2FB0AC7C00158FCC /* JobDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */; };
-		03NEV0012FCA000100545ACD /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03NEV0022FCA000100545ACD /* NotesEditorView.swift */; };
-		03DKT0012FCA000100545ACD /* View+DismissKeyboardOnTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */; };
 		03A4BA8C2FB1013900158FCC /* TabSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */; };
 		03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */; };
 		03ABG0012FC7000100545ACD /* AuthBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */; };
+		03AEB0012FC8000100545ACD /* AuthErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */; };
+		03AFV0012FC8000100545ACD /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AFV0022FC8000100545ACD /* AuthFlowView.swift */; };
+		03AHV0012FC8000100545ACD /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AHV0022FC8000100545ACD /* AuthHeaderView.swift */; };
 		03AJV0012FC3000100545ACD /* AddJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AJV0022FC3000100545ACD /* AddJobView.swift */; };
 		03ARV0012FC3000100545ACD /* AddResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ARV0022FC3000100545ACD /* AddResumeView.swift */; };
 		03AUTH0012FC3000100545ACD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AUTH0022FC3000100545ACD /* AuthService.swift */; };
@@ -51,60 +47,63 @@
 		03BEA14C2FB9129F000D36C9 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1482FB9129F000D36C9 /* ShareViewController.swift */; };
 		03BEA1552FB912A9000D36C9 /* JobMatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */; };
 		03BEA1572FB9310C000D36C9 /* MockJobService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1562FB9310C000D36C9 /* MockJobService.swift */; };
-		03MAI0012FCA200100545ACD /* MockAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAI0022FCA200100545ACD /* MockAIService.swift */; };
-		03MRS0012FCA200100545ACD /* MockResumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MRS0022FCA200100545ACD /* MockResumeService.swift */; };
 		03BEA1592FB9319F000D36C9 /* Job+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA1582FB9319F000D36C9 /* Job+Mock.swift */; };
 		03BEA15B2FBA29DE000D36C9 /* DashboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */; };
 		03BEA15D2FBA2B31000D36C9 /* AIServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */; };
 		03BEA15F2FBA2C78000D36C9 /* JobsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */; };
 		03BEA1612FBEF695000D36C9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */; };
+		03CLG0012FCA300100545ACD /* CompanyLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLG0022FCA300100545ACD /* CompanyLogoView.swift */; };
+		03CLT0012FCA300100545ACD /* CompanyLogoURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */; };
+		03CLU0012FCA300100545ACD /* CompanyLogoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */; };
+		03DKT0012FCA000100545ACD /* View+DismissKeyboardOnTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */; };
+		03DSB0012FC9000100545ACD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSB0022FC9000100545ACD /* Button.swift */; };
+		03DSBT0012FC9000100545ACD /* DSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSBT0022FC9000100545ACD /* DSButton.swift */; };
 		03DSR0012FC4000100545ACD /* Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSR0022FC4000100545ACD /* Radius.swift */; };
 		03DSS0012FC4000100545ACD /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSS0022FC4000100545ACD /* Spacing.swift */; };
 		03DSST0012FC4000100545ACD /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSST0022FC4000100545ACD /* Stroke.swift */; };
 		03DST0012FC4000100545ACD /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DST0022FC4000100545ACD /* Typography.swift */; };
-		03DSB0012FC9000100545ACD /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSB0022FC9000100545ACD /* Button.swift */; };
-		03DSBT0012FC9000100545ACD /* DSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DSBT0022FC9000100545ACD /* DSButton.swift */; };
 		03FL0012FC3000100545ACD /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FL0022FC3000100545ACD /* FlowLayout.swift */; };
 		03FMS0012FC2000100545ACD /* MatchScoreStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */; };
+		03INA0012FCA400100545ACD /* InsightsAddJobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */; };
+		03INH0012FCA400100545ACD /* InsightsHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INH0022FCA400100545ACD /* InsightsHeroView.swift */; };
+		03INL0012FCA400100545ACD /* InsightsHeroLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */; };
+		03INM0012FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */; };
+		03INP0012FCA400100545ACD /* InsightsProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */; };
+		03INR0012FCA400100545ACD /* InsightsProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INR0022FCA400100545ACD /* InsightsProgressSection.swift */; };
+		03INS0012FCA400100545ACD /* InsightsMatchSkeletonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */; };
 		03INT0012FC6000100545ACD /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INT0022FC6000100545ACD /* IntroView.swift */; };
+		03INT0012FCA400100545ACD /* InsightsTopMatchesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */; };
+		03INV0012FCA400100545ACD /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INV0022FCA400100545ACD /* InsightsView.swift */; };
+		03JAB0012FCA200100545ACD /* JobAboutRoleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */; };
+		03JCL0012FCA200100545ACD /* JobCoverLetterCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */; };
+		03JDH0012FCA200100545ACD /* JobDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */; };
 		03JDV0012FC3000100545ACD /* JobDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */; };
-		03MST0012FCA200100545ACD /* MatchScoreStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */; };
-		03CLT0012FCA300100545ACD /* CompanyLogoURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */; };
-		03RVM0012FCA200100545ACD /* ResumeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */; };
+		03JES0012FCA100100545ACD /* JobsEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */; };
+		03JMC0012FCA200100545ACD /* JobMatchCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JMC0022FCA200100545ACD /* JobMatchCardView.swift */; };
 		03JRV0012FC3000100545ACD /* JobRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JRV0022FC3000100545ACD /* JobRowView.swift */; };
 		03JSS0012FC3000100545ACD /* JobStatusStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03JSS0022FC3000100545ACD /* JobStatusStyle.swift */; };
 		03LGV0012FC7000100545ACD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03LGV0022FC7000100545ACD /* LoginView.swift */; };
-		03SGV0012FC8000100545ACD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SGV0022FC8000100545ACD /* SignUpView.swift */; };
-		03AFV0012FC8000100545ACD /* AuthFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AFV0022FC8000100545ACD /* AuthFlowView.swift */; };
-		03AEB0012FC8000100545ACD /* AuthErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */; };
-		03AHV0012FC8000100545ACD /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AHV0022FC8000100545ACD /* AuthHeaderView.swift */; };
+		03MAI0012FCA200100545ACD /* MockAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAI0022FCA200100545ACD /* MockAIService.swift */; };
 		03MAS0012FC3000100545ACD /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MAS0022FC3000100545ACD /* MockAuthService.swift */; };
 		03MBD0012FC2000200545ACD /* MatchBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0022FC2000200545ACD /* MatchBreakdown.swift */; };
 		03MBD0032FC2000200545ACD /* MatchBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */; };
+		03MRS0012FCA200100545ACD /* MockResumeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MRS0022FCA200100545ACD /* MockResumeService.swift */; };
 		03MSB0012FC3000100545ACD /* MatchScoreBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */; };
+		03MST0012FCA200100545ACD /* MatchScoreStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */; };
+		03NEV0012FCA000100545ACD /* NotesEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03NEV0022FCA000100545ACD /* NotesEditorView.swift */; };
 		03PEV0012FCA100100545ACD /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PEV0022FCA100100545ACD /* ProfileEditView.swift */; };
-		03PUH0012FCA100100545ACD /* ProfileUIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */; };
 		03PHV0012FCA100100545ACD /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */; };
 		03PRC0012FCA100100545ACD /* ProfileResumeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */; };
 		03PRS0012FCA100100545ACD /* ProfileResumeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */; };
+		03PUH0012FCA100100545ACD /* ProfileUIHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */; };
 		03RPV0012FCA100100545ACD /* ResumePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RPV0022FCA100100545ACD /* ResumePreviewView.swift */; };
+		03RVM0012FCA200100545ACD /* ResumeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */; };
 		03SB0012FC3000100545ACD /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SB0022FC3000100545ACD /* StatusBadge.swift */; };
 		03SBG0012FC6000100545ACD /* SplashBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */; };
+		03SGV0012FC8000100545ACD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SGV0022FC8000100545ACD /* SignUpView.swift */; };
 		03SLG0012FCB000100545ACD /* SplashLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03SLG0022FCB000100545ACD /* SplashLogoView.swift */; };
-		03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */; };
 		03ST0012FC3000100545ACD /* SkillTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ST0022FC3000100545ACD /* SkillTag.swift */; };
-		03CLG0012FCA300100545ACD /* CompanyLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLG0022FCA300100545ACD /* CompanyLogoView.swift */; };
-		03CLU0012FCA300100545ACD /* CompanyLogoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */; };
-		03INV0012FCA400100545ACD /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INV0022FCA400100545ACD /* InsightsView.swift */; };
-		03INH0012FCA400100545ACD /* InsightsHeroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INH0022FCA400100545ACD /* InsightsHeroView.swift */; };
-		03INL0012FCA400100545ACD /* InsightsHeroLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */; };
-		03INA0012FCA400100545ACD /* InsightsAddJobCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */; };
-		03INS0012FCA400100545ACD /* InsightsMatchSkeletonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */; };
-		03INP0012FCA400100545ACD /* InsightsProgressBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */; };
-		03INR0012FCA400100545ACD /* InsightsProgressSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INR0022FCA400100545ACD /* InsightsProgressSection.swift */; };
-		03INT0012FCA400100545ACD /* InsightsTopMatchesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */; };
-		03INM0012FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */; };
-		03INB0012FCA400100545ACD /* InsightsHeroBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */; };
+		03UAC0012FCB000100545ACD /* UnauthenticatedContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,34 +159,17 @@
 		03A4BA6D2FB08E7500158FCC /* MatchFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MatchFlow.entitlements; sourceTree = "<group>"; };
 		03A4BA6F2FB0905400158FCC /* JobsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModel.swift; sourceTree = "<group>"; };
 		03A4BA712FB090A900158FCC /* JobsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsView.swift; sourceTree = "<group>"; };
-		03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsEmptyStateView.swift; sourceTree = "<group>"; };
-		03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailHeaderView.swift; sourceTree = "<group>"; };
-		03JMC0022FCA200100545ACD /* JobMatchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchCardView.swift; sourceTree = "<group>"; };
-		03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobAboutRoleCardView.swift; sourceTree = "<group>"; };
-		03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCoverLetterCardView.swift; sourceTree = "<group>"; };
 		03A4BA732FB0937500158FCC /* ResumeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModel.swift; sourceTree = "<group>"; };
 		03A4BA752FB093DD00158FCC /* ResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeView.swift; sourceTree = "<group>"; };
 		03A4BA772FB0951800158FCC /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		03A4BA792FB0AC6100158FCC /* JobDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModel.swift; sourceTree = "<group>"; };
 		03A4BA7B2FB0AC7C00158FCC /* JobDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailView.swift; sourceTree = "<group>"; };
-		03NEV0022FCA000100545ACD /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
-		03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DismissKeyboardOnTap.swift"; sourceTree = "<group>"; };
 		03A4BA8B2FB1013900158FCC /* TabSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionViewModel.swift; sourceTree = "<group>"; };
 		03A4BA8D2FB1016A00158FCC /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
-		03INV0022FCA400100545ACD /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
-		03INH0022FCA400100545ACD /* InsightsHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroView.swift; sourceTree = "<group>"; };
-		03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroLayout.swift; sourceTree = "<group>"; };
-		03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsAddJobCard.swift; sourceTree = "<group>"; };
-		03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsMatchSkeletonRow.swift; sourceTree = "<group>"; };
-		03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressBadge.swift; sourceTree = "<group>"; };
-		03INR0022FCA400100545ACD /* InsightsProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressSection.swift; sourceTree = "<group>"; };
-		03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesSection.swift; sourceTree = "<group>"; };
-		03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesInsightBanner.swift; sourceTree = "<group>"; };
-		03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroBackground.swift; sourceTree = "<group>"; };
 		03ABG0022FC7000100545ACD /* AuthBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBackgroundView.swift; sourceTree = "<group>"; };
 		03AEB0022FC8000100545ACD /* AuthErrorBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthErrorBanner.swift; sourceTree = "<group>"; };
-		03AHV0022FC8000100545ACD /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		03AFV0022FC8000100545ACD /* AuthFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowView.swift; sourceTree = "<group>"; };
+		03AHV0022FC8000100545ACD /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 		03AJV0022FC3000100545ACD /* AddJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddJobView.swift; sourceTree = "<group>"; };
 		03ARV0022FC3000100545ACD /* AddResumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddResumeView.swift; sourceTree = "<group>"; };
 		03AUTH0022FC3000100545ACD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -199,47 +181,63 @@
 		03BEA1482FB9129F000D36C9 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		03BEA1532FB912A9000D36C9 /* JobMatchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchTests.swift; sourceTree = "<group>"; };
 		03BEA1562FB9310C000D36C9 /* MockJobService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockJobService.swift; sourceTree = "<group>"; };
-		03MAI0022FCA200100545ACD /* MockAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAIService.swift; sourceTree = "<group>"; };
-		03MRS0022FCA200100545ACD /* MockResumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResumeService.swift; sourceTree = "<group>"; };
 		03BEA1582FB9319F000D36C9 /* Job+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Job+Mock.swift"; sourceTree = "<group>"; };
 		03BEA15A2FBA29D9000D36C9 /* DashboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA15C2FBA2B2F000D36C9 /* AIServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServiceTests.swift; sourceTree = "<group>"; };
 		03BEA15E2FBA2C74000D36C9 /* JobsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsViewModelTests.swift; sourceTree = "<group>"; };
 		03BEA1602FBEF694000D36C9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		03CLG0022FCA300100545ACD /* CompanyLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoView.swift; sourceTree = "<group>"; };
+		03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURLTests.swift; sourceTree = "<group>"; };
+		03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURL.swift; sourceTree = "<group>"; };
+		03DKT0022FCA000100545ACD /* View+DismissKeyboardOnTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+DismissKeyboardOnTap.swift"; sourceTree = "<group>"; };
+		03DSB0022FC9000100545ACD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		03DSBT0022FC9000100545ACD /* DSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSButton.swift; sourceTree = "<group>"; };
 		03DSR0022FC4000100545ACD /* Radius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radius.swift; sourceTree = "<group>"; };
 		03DSS0022FC4000100545ACD /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		03DSST0022FC4000100545ACD /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		03DST0022FC4000100545ACD /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
-		03DSB0022FC9000100545ACD /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		03DSBT0022FC9000100545ACD /* DSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSButton.swift; sourceTree = "<group>"; };
 		03FL0022FC3000100545ACD /* FlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		03FMS0022FC2000100545ACD /* MatchScoreStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyle.swift; sourceTree = "<group>"; };
+		03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsAddJobCard.swift; sourceTree = "<group>"; };
+		03INH0022FCA400100545ACD /* InsightsHeroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroView.swift; sourceTree = "<group>"; };
+		03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsHeroLayout.swift; sourceTree = "<group>"; };
+		03INM0022FCA400100545ACD /* InsightsTopMatchesInsightBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesInsightBanner.swift; sourceTree = "<group>"; };
+		03INP0022FCA400100545ACD /* InsightsProgressBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressBadge.swift; sourceTree = "<group>"; };
+		03INR0022FCA400100545ACD /* InsightsProgressSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsProgressSection.swift; sourceTree = "<group>"; };
+		03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsMatchSkeletonRow.swift; sourceTree = "<group>"; };
 		03INT0022FC6000100545ACD /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		03INT0022FCA400100545ACD /* InsightsTopMatchesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsTopMatchesSection.swift; sourceTree = "<group>"; };
+		03INV0022FCA400100545ACD /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		03JAB0022FCA200100545ACD /* JobAboutRoleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobAboutRoleCardView.swift; sourceTree = "<group>"; };
+		03JCL0022FCA200100545ACD /* JobCoverLetterCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCoverLetterCardView.swift; sourceTree = "<group>"; };
+		03JDH0022FCA200100545ACD /* JobDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailHeaderView.swift; sourceTree = "<group>"; };
 		03JDV0022FC3000100545ACD /* JobDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobDetailViewModelTests.swift; sourceTree = "<group>"; };
-		03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyleTests.swift; sourceTree = "<group>"; };
-		03CLT0022FCA300100545ACD /* CompanyLogoURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURLTests.swift; sourceTree = "<group>"; };
-		03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModelTests.swift; sourceTree = "<group>"; };
+		03JES0022FCA100100545ACD /* JobsEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobsEmptyStateView.swift; sourceTree = "<group>"; };
+		03JMC0022FCA200100545ACD /* JobMatchCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobMatchCardView.swift; sourceTree = "<group>"; };
 		03JRV0022FC3000100545ACD /* JobRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobRowView.swift; sourceTree = "<group>"; };
 		03JSS0022FC3000100545ACD /* JobStatusStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobStatusStyle.swift; sourceTree = "<group>"; };
 		03LGV0022FC7000100545ACD /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		03MAI0022FCA200100545ACD /* MockAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAIService.swift; sourceTree = "<group>"; };
 		03MAS0022FC3000100545ACD /* MockAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
 		03MBD0022FC2000200545ACD /* MatchBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdown.swift; sourceTree = "<group>"; };
 		03MBD0042FC2000200545ACD /* MatchBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchBreakdownView.swift; sourceTree = "<group>"; };
+		03MRS0022FCA200100545ACD /* MockResumeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockResumeService.swift; sourceTree = "<group>"; };
 		03MSB0022FC3000100545ACD /* MatchScoreBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreBadge.swift; sourceTree = "<group>"; };
+		03MST0022FCA200100545ACD /* MatchScoreStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchScoreStyleTests.swift; sourceTree = "<group>"; };
+		03NEV0022FCA000100545ACD /* NotesEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesEditorView.swift; sourceTree = "<group>"; };
 		03PEV0022FCA100100545ACD /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
-		03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIHelpers.swift; sourceTree = "<group>"; };
 		03PHV0022FCA100100545ACD /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		03PRC0022FCA100100545ACD /* ProfileResumeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeCardView.swift; sourceTree = "<group>"; };
 		03PRS0022FCA100100545ACD /* ProfileResumeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResumeSection.swift; sourceTree = "<group>"; };
+		03PUH0022FCA100100545ACD /* ProfileUIHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUIHelpers.swift; sourceTree = "<group>"; };
 		03RPV0022FCA100100545ACD /* ResumePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumePreviewView.swift; sourceTree = "<group>"; };
+		03RVM0022FCA200100545ACD /* ResumeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResumeViewModelTests.swift; sourceTree = "<group>"; };
 		03SB0022FC3000100545ACD /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		03SBG0022FC6000100545ACD /* SplashBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashBackgroundView.swift; sourceTree = "<group>"; };
 		03SGV0022FC8000100545ACD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		03SLG0022FCB000100545ACD /* SplashLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLogoView.swift; sourceTree = "<group>"; };
-		03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedContainer.swift; sourceTree = "<group>"; };
 		03ST0022FC3000100545ACD /* SkillTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTag.swift; sourceTree = "<group>"; };
-		03CLG0022FCA300100545ACD /* CompanyLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoView.swift; sourceTree = "<group>"; };
-		03CLU0022FCA300100545ACD /* CompanyLogoURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLogoURL.swift; sourceTree = "<group>"; };
+		03UAC0022FCB000100545ACD /* UnauthenticatedContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthenticatedContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -404,7 +402,6 @@
 			children = (
 				03INV0022FCA400100545ACD /* InsightsView.swift */,
 				03INH0022FCA400100545ACD /* InsightsHeroView.swift */,
-				03INB0022FCA400100545ACD /* InsightsHeroBackground.swift */,
 				03INL0022FCA400100545ACD /* InsightsHeroLayout.swift */,
 				03INA0022FCA400100545ACD /* InsightsAddJobCard.swift */,
 				03INS0022FCA400100545ACD /* InsightsMatchSkeletonRow.swift */,
@@ -735,7 +732,6 @@
 				03A4BA8E2FB1016A00158FCC /* DashboardViewModel.swift in Sources */,
 				03INV0012FCA400100545ACD /* InsightsView.swift in Sources */,
 				03INH0012FCA400100545ACD /* InsightsHeroView.swift in Sources */,
-				03INB0012FCA400100545ACD /* InsightsHeroBackground.swift in Sources */,
 				03INL0012FCA400100545ACD /* InsightsHeroLayout.swift in Sources */,
 				03INA0012FCA400100545ACD /* InsightsAddJobCard.swift in Sources */,
 				03INS0012FCA400100545ACD /* InsightsMatchSkeletonRow.swift in Sources */,
@@ -985,7 +981,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1022,7 +1018,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MatchFlow/MatchFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 2A73GS858T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

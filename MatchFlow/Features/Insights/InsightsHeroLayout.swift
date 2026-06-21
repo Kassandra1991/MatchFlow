@@ -8,8 +8,6 @@ import CoreGraphics
 enum InsightsHeroLayout {
     /// Emoji offset from physical screen top (Figma, exact).
     static let emojiTopFromScreen: CGFloat = 145.5
-    /// Figma reference only — 83.5 from safe area; use `emojiTopFromScreen` in layout.
-    static let emojiTopFromSafeArea: CGFloat = 83.5
     /// Fixed AI advice container height (Figma).
     static let adviceTextHeight: CGFloat = 125
     /// Spacing from advice container bottom to Add job card top (Figma).

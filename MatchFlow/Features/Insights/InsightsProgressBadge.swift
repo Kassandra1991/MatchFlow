@@ -12,13 +12,11 @@ enum InsightsProgressBadgeStyle {
     case rejected
     case offer
 
-    var assetName: String {
+    var assetName: String? {
         switch self {
-        case .explored: "ProgressExplored"
-        case .applied: "ProgressApplied"
-        case .interviews: "ProgressInterviews"
         case .rejected: "ProgressRejected"
         case .offer: "ProgressOffer"
+        default: nil
         }
     }
 
@@ -32,13 +30,6 @@ enum InsightsProgressBadgeStyle {
             AnyShape(RoundedHeptagonShape(cornerRadius: 12))
         case .rejected, .offer:
             AnyShape(Circle())
-        }
-    }
-
-    var usesAssetMask: Bool {
-        switch self {
-        case .rejected, .offer: true
-        default: false
         }
     }
 }
@@ -95,10 +86,10 @@ struct InsightsProgressBadge: View {
 
     @ViewBuilder
     private var badgeBackground: some View {
-        if style.usesAssetMask {
+        if let assetName = style.assetName {
             Color.backgroundSecondary
                 .mask {
-                    Image(style.assetName)
+                    Image(assetName)
                         .resizable()
                         .scaledToFit()
                 }

@@ -12,18 +12,6 @@ import Testing
 @Suite("DashboardViewModel")
 struct DashboardViewModelTests {
     
-    @Test("Jobs this week returns correct count")
-    func jobsThisWeekCount() async {
-        let viewModel = await DashboardViewModel()
-        let recentJob = Job.mock(createdAt: Date())
-        let oldJob = Job.mock(createdAt: Date().addingTimeInterval(-8 * 24 * 60 * 60))
-        await MainActor.run {
-            viewModel.allJobs = [recentJob, oldJob]
-        }
-        let count = await viewModel.jobsThisWeek
-        #expect(count == 1)
-    }
-    
     @Test("Top matches returns jobs sorted by score descending")
     func topMatchesSortedByScore() async {
         let viewModel = await DashboardViewModel()
@@ -53,13 +41,6 @@ struct DashboardViewModelTests {
         #expect(applied.count == 2)
         #expect(interview.count == 1)
         #expect(rejected.count == 0)
-    }
-    
-    @Test("Empty jobs returns zero this week")
-    func emptyJobsThisWeek() async {
-        let viewModel = await DashboardViewModel()
-        let count = await viewModel.jobsThisWeek
-        #expect(count == 0)
     }
     
     @Test("Top matches limited to 5")

@@ -11,26 +11,21 @@ struct InsightsHeroView: View {
     let isLoadingAdvice: Bool
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            InsightsHeroBackground()
-                .frame(height: heroHeight)
+        VStack(spacing: DSSpacing.s16) {
+            Text(isOnboarding ? "✨" : "😎")
+                .font(.system(size: 48))
 
-            VStack(spacing: DSSpacing.s16) {
-                Text(isOnboarding ? "✨" : "😎")
-                    .font(.system(size: 48))
-
-                if isOnboarding {
-                    onboardingContent
-                } else {
-                    activeContent
-                }
+            if isOnboarding {
+                onboardingContent
+            } else {
+                activeContent
             }
-            .padding(.horizontal, DSSpacing.s16)
-            .padding(.top, InsightsHeroLayout.emojiTopFromScreen)
-            .padding(.bottom, InsightsHeroLayout.addJobCardOverlap + DSSpacing.s24)
-            .frame(maxWidth: .infinity)
-            .frame(height: heroHeight, alignment: .top)
         }
+        .padding(.horizontal, DSSpacing.s16)
+        .padding(.top, InsightsHeroLayout.emojiTopFromScreen)
+        .padding(.bottom, InsightsHeroLayout.addJobCardOverlap + DSSpacing.s24)
+        .frame(maxWidth: .infinity)
+        .frame(height: heroHeight, alignment: .top)
     }
 
     private var heroHeight: CGFloat {

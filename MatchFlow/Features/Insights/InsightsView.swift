@@ -62,7 +62,7 @@ struct InsightsView: View {
                     JobDetailView(job: job)
                 }
             }
-            .sheet(isPresented: $showAddManually, onDismiss: reloadAfterAdd) {
+            .sheet(isPresented: $showAddManually, onDismiss: { Task { await reload() } }) {
                 AddJobView(viewModel: jobsViewModel, userId: auth.currentUserId)
             }
             .task {
@@ -106,14 +106,6 @@ struct InsightsView: View {
     private func reload() async {
         if let userId = auth.currentUserId {
             await viewModel.load(userId: userId)
-        }
-    }
-
-    private func reloadAfterAdd() {
-        Task {
-            if let userId = auth.currentUserId {
-                await viewModel.load(userId: userId)
-            }
         }
     }
 }

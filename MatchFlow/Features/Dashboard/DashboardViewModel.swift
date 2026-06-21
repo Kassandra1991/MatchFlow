@@ -11,10 +11,8 @@ import Combine
 @MainActor
 class DashboardViewModel: ObservableObject {
     @Published var allJobs: [Job] = []
-    @Published var isLoading = false
     @Published var isLoadingInsights = false
     @Published var insights: JobInsights? = nil
-    @Published var errorMessage = ""
 
     private let jobService: JobServiceProtocol
     private let aiService: AIServiceProtocol
@@ -26,14 +24,7 @@ class DashboardViewModel: ObservableObject {
         self.jobService = jobService
         self.aiService = aiService
     }
-    
-    var totalJobs: Int { allJobs.count }
-    
-    var jobsThisWeek: Int {
-        let weekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        return allJobs.filter { $0.createdAt > weekAgo }.count
-    }
-    
+
     var topMatches: [Job] {
         allJobs
             .filter { $0.matchScore != nil }
@@ -49,31 +40,27 @@ class DashboardViewModel: ObservableObject {
     var interviewCount: Int { jobs(for: .interview).count }
     var rejectedCount: Int { jobs(for: .rejected).count }
     var offerCount: Int { jobs(for: .offer).count }
-    
+
     func jobs(for status: JobStatus) -> [Job] {
         allJobs.filter { $0.status == status }
     }
-    
+
     func load(userId: UUID) async {
-        isLoading = true
         do {
             allJobs = try await jobService.fetchJobs(userId: userId)
         } catch {
-            errorMessage = error.localizedDescription
             print("❌ Dashboard load error: \(error)")
         }
-        isLoading = false
-        
+
         await generateInsights()
     }
-    
+
     func generateInsights() async {
         guard !allJobs.isEmpty else { return }
         isLoadingInsights = true
         do {
             insights = try await aiService.generateInsights(jobs: allJobs)
         } catch {
-            errorMessage = error.localizedDescription
             print("❌ Insights error: \(error)")
         }
         isLoadingInsights = false

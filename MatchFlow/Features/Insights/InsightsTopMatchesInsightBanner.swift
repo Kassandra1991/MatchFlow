@@ -8,21 +8,14 @@ import SwiftUI
 enum InsightsTopMatchesInsightLayout {
     /// Minimum AI insight banner height (Figma, ~3 lines).
     static let bannerMinHeight: CGFloat = 91
-    /// Approximate body2Regular line height for 4-line expansion.
-    static let textLineHeight: CGFloat = 20
     /// Max visible lines when insight is long.
     static let maxLines = 4
-    /// Reference vertical inset when icon is centered in 91pt block (Figma).
-    static let bannerVerticalPadding: CGFloat = 28.5
     /// Leading inset for sparkles icon (Figma).
     static let bannerLeadingPadding: CGFloat = 24
     /// Spacing between sparkles and text (Figma).
     static let iconToTextSpacing: CGFloat = 24
     /// Trailing inset for text (Figma).
     static let bannerTrailingPadding: CGFloat = 16
-    static var bannerMaxHeight: CGFloat {
-        bannerMinHeight + textLineHeight
-    }
 
     /// Max characters for insight (fits up to 4 lines body2Regular in banner).
     static let maxCharacters = 130
