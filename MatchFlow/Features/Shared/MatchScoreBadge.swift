@@ -27,3 +27,17 @@ struct MatchScoreBadge: View {
         .clipShape(Capsule())
     }
 }
+
+struct MatchPercentCapsule: View {
+    let percent: Int
+    let tier: MatchScoreTier
+
+    var body: some View {
+        Text(tier.listPercentLabel(percent: percent))
+            .textStyle(.captionSemibold)
+            .foregroundStyle(tier.foregroundColor)
+            .padding(.horizontal, DSSpacing.s8)
+            .padding(.vertical, DSSpacing.s4)
+            .background(tier.backgroundColor, in: Capsule())
+    }
+}

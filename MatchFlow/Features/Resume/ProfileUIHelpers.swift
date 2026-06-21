@@ -70,4 +70,8 @@ extension View {
         background(Color.backgroundSecondary)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.r16))
     }
+
+    func jobDetailCard() -> some View {
+        background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+    }
 }

@@ -8,6 +8,8 @@
 import Foundation
 
 struct Job: Identifiable, Codable, Equatable {
+    static let maxAnalysisSkills = 14
+
     let id: UUID
     var userId: UUID
     var url: String?

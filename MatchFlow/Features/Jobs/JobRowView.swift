@@ -26,7 +26,10 @@ struct JobRowView: View {
                     Spacer(minLength: DSSpacing.s8)
 
                     if let score = job.matchScore {
-                        compactMatchBadge(score: score)
+                        MatchPercentCapsule(
+                            percent: Int(score * 100),
+                            tier: MatchScoreTier(score: score)
+                        )
                     }
 
                     Image(systemName: "chevron.right")
@@ -48,17 +51,5 @@ struct JobRowView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, DSSpacing.s8)
-    }
-
-    private func compactMatchBadge(score: Double) -> some View {
-        let tier = MatchScoreTier(score: score)
-        let percent = Int(score * 100)
-        return Text(tier.listPercentLabel(percent: percent))
-            .textStyle(.captionSemibold)
-            .foregroundStyle(tier.foregroundColor)
-            .padding(.horizontal, DSSpacing.s8)
-            .padding(.vertical, DSSpacing.s4)
-            .background(tier.backgroundColor)
-            .clipShape(Capsule())
     }
 }

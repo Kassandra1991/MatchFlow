@@ -34,9 +34,6 @@ struct JobDetailView: View {
                                     improvementSuggestion: viewModel.improvementSuggestion,
                                     isLoadingImprovement: viewModel.isLoadingImprovement
                                 )
-                                #if DEBUG
-                                .background(JobDetailLayoutProbe(label: "matchCard", hypothesisId: "H-D1"))
-                                #endif
                             }
 
                             if job.status == .exploring {
@@ -54,9 +51,6 @@ struct JobDetailView: View {
                     .padding(.bottom, DSSpacing.s32)
                     .frame(minHeight: geometry.size.height, alignment: .top)
                 }
-                #if DEBUG
-                .background(JobDetailLayoutProbe(label: "scrollView", hypothesisId: "H-D2"))
-                #endif
                 .scrollBounceBehavior(.basedOnSize, axes: .vertical)
                 .scrollDismissesKeyboard(.interactively)
             }
@@ -127,7 +121,7 @@ struct JobDetailView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DSSpacing.s16)
-        .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+        .jobDetailCard()
     }
 
     private var analyzePromptCard: some View {
@@ -161,7 +155,7 @@ struct JobDetailView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(DSSpacing.s16)
-        .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+        .jobDetailCard()
     }
 
     @ViewBuilder
@@ -192,8 +186,7 @@ struct JobDetailView: View {
 
     private var notesCard: some View {
         NotesEditorView(text: $viewModel.notes, isFocused: $isNotesFocused)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+            .jobDetailCard()
     }
 }
 
@@ -218,71 +211,3 @@ struct JobDetailView: View {
         .environmentObject(AuthViewModel())
     }
 }
-
-#if DEBUG
-private enum JobDetailLayoutDebugLog {
-    static let logPath = "/Users/aleksandraasichka/Documents/Developer/match_flow/MatchFlow/.cursor/debug-54a378.log"
-    static let sessionId = "54a378"
-
-    static func write(hypothesisId: String, message: String, data: [String: Any], runId: String = "device-margin") {
-        let payload: [String: Any] = [
-            "sessionId": sessionId,
-            "hypothesisId": hypothesisId,
-            "location": "JobDetailView.swift",
-            "message": message,
-            "data": data,
-            "timestamp": Int(Date().timeIntervalSince1970 * 1000),
-            "runId": runId
-        ]
-
-        if let json = try? JSONSerialization.data(withJSONObject: payload),
-           var line = String(data: json, encoding: .utf8) {
-            line.append("\n")
-            NSLog("[JobDetailLayout] %@", line)
-            if let lineData = line.data(using: .utf8) {
-                if FileManager.default.fileExists(atPath: logPath),
-                   let handle = FileHandle(forWritingAtPath: logPath) {
-                    handle.seekToEndOfFile()
-                    handle.write(lineData)
-                    try? handle.close()
-                } else {
-                    FileManager.default.createFile(atPath: logPath, contents: lineData)
-                }
-            }
-        }
-    }
-}
-
-private struct JobDetailLayoutProbe: View {
-    let label: String
-    let hypothesisId: String
-
-    var body: some View {
-        GeometryReader { geo in
-            Color.clear
-                .onAppear { logFrame(geo) }
-                .onChange(of: geo.size) { _, _ in logFrame(geo) }
-        }
-    }
-
-    private func logFrame(_ geo: GeometryProxy) {
-        let global = geo.frame(in: .global)
-        let safe = geo.safeAreaInsets
-        let screenWidth = UIScreen.main.bounds.width
-        JobDetailLayoutDebugLog.write(
-            hypothesisId: hypothesisId,
-            message: label,
-            data: [
-                "width": geo.size.width,
-                "minX": global.minX,
-                "maxX": global.maxX,
-                "safeLeading": safe.leading,
-                "safeTrailing": safe.trailing,
-                "screenWidth": screenWidth,
-                "rightGap": screenWidth - global.maxX
-            ],
-            runId: "device-margin-v3"
-        )
-    }
-}
-#endif

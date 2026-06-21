@@ -6,14 +6,12 @@
 import SwiftUI
 
 struct JobAboutRoleCardView: View {
-    static let maxDisplayedSkills = 14
-
     let summary: String
     let skills: [String]
     let url: String?
 
     private var displayedSkills: [String] {
-        Array(skills.prefix(Self.maxDisplayedSkills))
+        Array(skills.prefix(Job.maxAnalysisSkills))
     }
 
     var body: some View {
@@ -54,7 +52,7 @@ struct JobAboutRoleCardView: View {
             }
             .padding(DSSpacing.s16)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+            .jobDetailCard()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

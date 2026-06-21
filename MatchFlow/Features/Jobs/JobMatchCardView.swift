@@ -29,7 +29,7 @@ struct JobMatchCardView: View {
         .padding(.horizontal, DSSpacing.s16)
         .padding(.vertical, DSSpacing.s16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+        .jobDetailCard()
     }
 
     private var headerRow: some View {
@@ -37,12 +37,7 @@ struct JobMatchCardView: View {
             Text(tier.detailTitle)
                 .textStyle(.header1)
                 .foregroundStyle(Color.foregroundPrimary)
-            Text(tier.listPercentLabel(percent: breakdown.overallPercent))
-                .textStyle(.captionSemibold)
-                .foregroundStyle(tier.foregroundColor)
-                .padding(.horizontal, DSSpacing.s8)
-                .padding(.vertical, DSSpacing.s4)
-                .background(tier.backgroundColor, in: Capsule())
+            MatchPercentCapsule(percent: breakdown.overallPercent, tier: tier)
             Spacer(minLength: 0)
         }
     }
@@ -65,18 +60,15 @@ struct JobMatchCardView: View {
     @ViewBuilder
     private var exploringImprovementBanner: some View {
         if isLoadingImprovement {
-            HStack(alignment: .center, spacing: DSSpacing.s24) {
+            improvementBanner {
                 ProgressView()
                 Text("Generating suggestions...")
                     .textStyle(.captionRegular)
                     .foregroundStyle(Color.foregroundPrimary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(DSSpacing.s24)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.backgroundAccent, in: RoundedRectangle(cornerRadius: DSRadius.r16))
         } else if let improvementSuggestion, !improvementSuggestion.isEmpty {
-            HStack(alignment: .center, spacing: DSSpacing.s24) {
+            improvementBanner {
                 Image(systemName: "sparkles")
                     .font(DSTextStyle.header1.font)
                     .foregroundStyle(Color.foregroundAccent)
@@ -85,9 +77,15 @@ struct JobMatchCardView: View {
                     .foregroundStyle(Color.foregroundPrimary)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(DSSpacing.s24)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.backgroundAccent, in: RoundedRectangle(cornerRadius: DSRadius.r16))
         }
+    }
+
+    private func improvementBanner<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        HStack(alignment: .center, spacing: DSSpacing.s24) {
+            content()
+        }
+        .padding(DSSpacing.s24)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.backgroundAccent, in: RoundedRectangle(cornerRadius: DSRadius.r16))
     }
 }

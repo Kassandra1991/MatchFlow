@@ -201,9 +201,6 @@ class JobDetailViewModel: ObservableObject {
             }
             try await jobService.updateCompanyLogoUrl(jobId: job.id, logoUrl: logo)
             updatedJob = try await jobService.fetchJob(jobId: job.id)
-            #if DEBUG
-            NSLog("[CompanyLogo] refreshed logo for job %@", job.id.uuidString)
-            #endif
         } catch {
             errorMessage = error.localizedDescription
         }

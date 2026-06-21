@@ -131,7 +131,7 @@ struct AIService: AIServiceProtocol {
         }
         
         Rules for skills:
-        - Maximum 14 skills
+        - Maximum \(Job.maxAnalysisSkills) skills
         - Include ALL technical skills explicitly mentioned in the job description
         - Do not drop niche tools or domain-specific requirements
         - Each skill max 3 words, prefer 1-2 words

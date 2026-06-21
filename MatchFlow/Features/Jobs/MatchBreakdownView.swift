@@ -86,6 +86,5 @@ private struct MatchFactorRow: View {
                         .scaleEffect(x: clampedValue, y: 1, anchor: .leading)
                 }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

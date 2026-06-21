@@ -42,7 +42,7 @@ struct JobCoverLetterCardView: View {
         }
         .padding(DSSpacing.s16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.backgroundSecondary, in: RoundedRectangle(cornerRadius: DSRadius.r24))
+        .jobDetailCard()
     }
 }
 
