@@ -47,6 +47,7 @@ struct JobsViewModelTests {
         await viewModel.addJobManually(
             userId: UUID(),
             url: "",
+            company: "Acme",
             rawText: "New job description"
         )
         

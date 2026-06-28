@@ -231,6 +231,57 @@ struct AIServiceTests {
         #expect(MatchScoreTier(score: 0.90) == .excellent)
     }
 
+    @Test("Hybrid score caps nonsense jobs without extracted skills at 35 percent")
+    func hybridScoreNoJobSkillsCap() {
+        let score = service.calculateHybridScore(
+            embeddingScore: 0.55,
+            skillOverlap: 0,
+            seniorityFit: 1.0,
+            hasJobSkills: false
+        )
+        #expect(score <= 0.35)
+    }
+
+    @Test("Match breakdown hides career level when skills do not overlap enough")
+    func breakdownLevelFitHiddenOnLowOverlap() {
+        let breakdown = service.buildMatchBreakdown(
+            embeddingScore: 0.50,
+            skillOverlap: 0.10,
+            seniorityFit: 1.0,
+            hasJobSkills: true,
+            matchedSkillsCount: 1,
+            totalJobSkillsCount: 10
+        )
+        #expect(breakdown.levelFit == 0)
+    }
+
+    @Test("Match breakdown shows career level when skills overlap enough")
+    func breakdownLevelFitShownOnGoodOverlap() {
+        let breakdown = service.buildMatchBreakdown(
+            embeddingScore: 0.50,
+            skillOverlap: 0.40,
+            seniorityFit: 1.0,
+            hasJobSkills: true,
+            matchedSkillsCount: 4,
+            totalJobSkillsCount: 10
+        )
+        #expect(breakdown.levelFit == 1.0)
+    }
+
+    @Test("Match breakdown hides career level when no job skills extracted")
+    func breakdownLevelFitHiddenWithoutJobSkills() {
+        let breakdown = service.buildMatchBreakdown(
+            embeddingScore: 0.50,
+            skillOverlap: 0,
+            seniorityFit: 1.0,
+            hasJobSkills: false,
+            matchedSkillsCount: 0,
+            totalJobSkillsCount: 0
+        )
+        #expect(breakdown.levelFit == 0)
+        #expect(breakdown.overallScore <= 0.35)
+    }
+
     @Test("Hybrid score never exceeds 0.95 cap")
     func hybridScoreCap() {
         let score = service.calculateHybridScore(

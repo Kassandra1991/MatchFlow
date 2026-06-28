@@ -50,15 +50,18 @@ class JobsViewModel: ObservableObject {
         isLoading = false
     }
     
-    func addJobManually(userId: UUID, url: String, rawText: String) async {
+    func addJobManually(userId: UUID, url: String, company: String, rawText: String) async {
+        guard AddJobLayout.isDescriptionSufficient(rawText) else { return }
+
         isLoading = true
+        errorMessage = ""
         do {
             let job = try await jobService.addJob(
                 userId: userId,
                 url: url.isEmpty ? nil : url,
                 rawText: rawText,
                 title: nil,
-                company: nil,
+                company: company.trimmingCharacters(in: .whitespacesAndNewlines),
                 companyLogoUrl: nil
             )
             jobs.insert(job, at: 0)

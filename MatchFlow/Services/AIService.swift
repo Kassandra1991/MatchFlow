@@ -138,10 +138,17 @@ struct AIService: AIServiceProtocol {
         - Use short forms: "iOS" not "iOS Development", "SwiftUI" not "SwiftUI Framework"
         - Technical skills only, no soft skills
         
+        Rules for validity:
+        - If the text is NOT a genuine job posting (jokes, stories, personal notes, random prose), return:
+          "skills": [], "difficulty": "", "title": "", "company": "", "summary": "Not a job description"
+        - Do not extract skills from casual mentions of tech words in non-job text
+        - Only populate title, company, skills, and difficulty for real job postings
+        
         Rules for difficulty:
         - Infer from job title AND requirements (years of experience, scope, leadership)
         - If title says "Senior" but only 2-3 years required, use "mid"
-        - Return exactly one of: "junior", "mid", "senior"
+        - Return exactly one of: "junior", "mid", "senior" when the text is a real job posting
+        - Return "" when the text is not a job posting or level cannot be determined
         
         Job description:
         \(description)
@@ -317,11 +324,14 @@ struct AIService: AIServiceProtocol {
             hasJobSkills: hasJobSkills
         )
         let experienceDisplay = max(0, min(1, embeddingScore))
+        let displayLevelFit = (hasJobSkills && skillOverlap >= Self.skillOverlapSeniorityThreshold)
+            ? seniorityFit
+            : 0
         return MatchBreakdown(
             overallScore: overall,
             experienceScore: experienceDisplay,
             skillsCoverage: skillOverlap,
-            levelFit: seniorityFit,
+            levelFit: displayLevelFit,
             matchedSkillsCount: matchedSkillsCount,
             totalJobSkillsCount: totalJobSkillsCount
         )
@@ -347,6 +357,7 @@ struct AIService: AIServiceProtocol {
     private static let skillOverlapSeniorityThreshold = 0.25
     private static let skillOverlapLowCapThreshold = 0.15
     private static let lowOverlapBaseCap = 0.32
+    private static let noJobSkillsScoreCap = 0.35
 
     func calculateHybridScore(
         embeddingScore: Double,
@@ -365,7 +376,7 @@ struct AIService: AIServiceProtocol {
             }
             base = 0.40 * embeddingScore + 0.45 * skillOverlap + effectiveSeniority
         } else {
-            base = 0.70 * embeddingScore + 0.10 * seniorityFit
+            base = 0.65 * embeddingScore
         }
 
         if hasJobSkills && skillOverlap < Self.skillOverlapSeniorityThreshold && embeddingScore < 0.55 {
@@ -377,7 +388,11 @@ struct AIService: AIServiceProtocol {
         }
 
         let lowSkillOverlap = hasJobSkills && skillOverlap < Self.skillOverlapSeniorityThreshold
-        return calibrate(base, lowSkillOverlap: lowSkillOverlap)
+        let calibrated = calibrate(base, lowSkillOverlap: lowSkillOverlap)
+        if !hasJobSkills {
+            return min(calibrated, Self.noJobSkillsScoreCap)
+        }
+        return calibrated
     }
 
     private func calibrate(_ base: Double, lowSkillOverlap: Bool) -> Double {

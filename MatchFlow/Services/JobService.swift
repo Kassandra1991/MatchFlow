@@ -83,6 +83,11 @@ struct JobService: JobServiceProtocol {
         let skillsJSON = (try? JSONEncoder().encode(analysis.skills))
             .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
 
+        let trimmedCompany = company?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let resolvedCompany = trimmedCompany.isEmpty
+            ? (analysis.company ?? "")
+            : trimmedCompany
+
         let job: Job = try await supabase
             .from("jobs")
             .insert([
@@ -90,7 +95,7 @@ struct JobService: JobServiceProtocol {
                 "url": url ?? "",
                 "raw_text": englishText,
                 "title": analysis.title ?? title ?? "",
-                "company": analysis.company ?? company ?? "",
+                "company": resolvedCompany,
                 "company_logo_url": companyLogoUrl ?? "",
                 "summary": analysis.summary ?? "",
                 "difficulty": analysis.difficulty ?? "",
