@@ -50,6 +50,8 @@ struct JobRowView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.vertical, DSSpacing.s8)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
 
     private var insightsCardRow: some View {
