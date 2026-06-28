@@ -20,9 +20,15 @@ enum AddJobImportLayout {
     static let inputTextLeadingInset = DSSpacing.s24
     static let pasteButtonHorizontalPadding = DSSpacing.s16
 
-    static func isValidJobURL(_ string: String) -> Bool {
+    static let invalidURLError = "Paste a valid job link"
+
+    static func normalizedJobURL(_ string: String) -> String? {
         let trimmed = string.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard trimmed.hasPrefix("http"), URL(string: trimmed) != nil else { return false }
-        return true
+        guard trimmed.hasPrefix("http"), URL(string: trimmed) != nil else { return nil }
+        return trimmed
+    }
+
+    static func isValidJobURL(_ string: String) -> Bool {
+        normalizedJobURL(string) != nil
     }
 }

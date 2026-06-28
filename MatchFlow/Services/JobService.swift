@@ -49,8 +49,7 @@ struct JobService: JobServiceProtocol {
     }
 
     func addJobFromURL(userId: UUID, url: String) async throws -> Job {
-        let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard trimmed.hasPrefix("http"), URL(string: trimmed) != nil else {
+        guard let trimmed = AddJobImportLayout.normalizedJobURL(url) else {
             throw URLError(.badURL)
         }
 

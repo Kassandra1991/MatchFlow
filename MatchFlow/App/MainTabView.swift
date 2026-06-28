@@ -8,24 +8,27 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @StateObject private var jobsViewModel = JobsViewModel()
     @EnvironmentObject private var tabSelection: TabSelectionViewModel
-    
+
     var body: some View {
         TabView(selection: $tabSelection.selectedTab) {
             InsightsView()
+                .environmentObject(jobsViewModel)
                 .tabItem {
                     Label("Insights", systemImage: "sparkle")
                 }
                 .tag(0)
                 .onAppear { AnalyticsService.log(.tabOpened(name: "insights")) }
-            
+
             JobsView()
+                .environmentObject(jobsViewModel)
                 .tabItem {
                     Label("Jobs", systemImage: "case.fill")
                 }
                 .tag(1)
                 .onAppear { AnalyticsService.log(.tabOpened(name: "jobs")) }
-            
+
             ResumeView()
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")

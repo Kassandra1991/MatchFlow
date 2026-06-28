@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct JobsView: View {
-    @StateObject private var viewModel = JobsViewModel()
+    @EnvironmentObject private var viewModel: JobsViewModel
     @EnvironmentObject private var auth: AuthViewModel
     @EnvironmentObject private var tabSelection: TabSelectionViewModel
-    @State private var showAddManually = false
+    @State private var showAddJobFlow = false
     @State private var selectedJobId: UUID?
 
     private var filteredJobs: [Job] {
@@ -29,14 +29,14 @@ struct JobsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        showAddManually = true
+                        showAddJobFlow = true
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(Color.foregroundPrimary)
                     }
                 }
             }
-            .sheet(isPresented: $showAddManually) {
+            .sheet(isPresented: $showAddJobFlow) {
                 AddJobFlowView(viewModel: viewModel, userId: auth.currentUserId)
                     .presentationDragIndicator(.visible)
             }
@@ -151,6 +151,7 @@ struct FilterChip: View {
 
 #Preview {
     JobsView()
+        .environmentObject(JobsViewModel())
         .environmentObject(AuthViewModel())
         .environmentObject(TabSelectionViewModel())
 }

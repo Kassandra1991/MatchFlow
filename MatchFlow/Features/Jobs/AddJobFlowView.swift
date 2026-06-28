@@ -17,11 +17,11 @@ struct AddJobFlowView: View {
             AddJobImportView(
                 viewModel: viewModel,
                 userId: userId,
-                onImportSuccess: handleAddSuccess,
+                onSuccess: handleAddSuccess,
                 onManualAdd: { showManualAdd = true }
             )
             .navigationDestination(isPresented: $showManualAdd) {
-                AddJobView(viewModel: viewModel, userId: userId, onAddSuccess: handleAddSuccess)
+                AddJobView(viewModel: viewModel, userId: userId, onSuccess: handleAddSuccess)
                     .toolbar(.hidden, for: .navigationBar)
             }
             .toolbar(.hidden, for: .navigationBar)

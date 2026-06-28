@@ -24,4 +24,15 @@ struct AddJobImportTests {
     func trimmedValidation() {
         #expect(AddJobImportLayout.isValidJobURL("  https://example.com/job  ") == true)
     }
+
+    @Test("normalizedJobURL returns trimmed URL")
+    func normalizedJobURLTrimsWhitespace() {
+        #expect(AddJobImportLayout.normalizedJobURL("  https://example.com/job  ") == "https://example.com/job")
+    }
+
+    @Test("normalizedJobURL returns nil for invalid input")
+    func normalizedJobURLRejectsInvalid() {
+        #expect(AddJobImportLayout.normalizedJobURL("not-a-url") == nil)
+        #expect(AddJobImportLayout.normalizedJobURL("") == nil)
+    }
 }

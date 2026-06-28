@@ -8,8 +8,6 @@ import Foundation
 import SwiftUI
 
 enum AddJobLayout {
-    /// Figma reference — title offset from physical screen top.
-    static let titleTopFromScreen: CGFloat = DSSpacing.s102
     /// Title offset below toolbar row (back + Add).
     static let titleTopFromToolbar = DSSpacing.s32
     static let titleToSubtitle = DSSpacing.s16

@@ -8,12 +8,11 @@ import SwiftUI
 struct AddJobImportView: View {
     @ObservedObject var viewModel: JobsViewModel
     let userId: UUID?
-    let onImportSuccess: () -> Void
+    let onSuccess: () -> Void
     let onManualAdd: () -> Void
 
     @Environment(\.dismiss) private var dismiss
     @State private var jobLink = ""
-    @FocusState private var isLinkFocused: Bool
 
     var body: some View {
         ScrollView {
@@ -77,24 +76,20 @@ struct AddJobImportView: View {
     private var linkInputRow: some View {
         HStack(spacing: DSSpacing.s0) {
             ZStack(alignment: .leading) {
-                TextField("", text: $jobLink)
-                    .focused($isLinkFocused)
-                    .textStyle(.body1Regular)
-                    .foregroundStyle(Color.foregroundPrimary)
-                    .keyboardType(.URL)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .padding(.leading, AddJobImportLayout.inputTextLeadingInset)
-
-                if jobLink.isEmpty && !isLinkFocused {
+                if jobLink.isEmpty {
                     Text("Paste job link")
                         .textStyle(.body1Regular)
                         .foregroundStyle(Color.foregroundMinor)
-                        .padding(.leading, AddJobImportLayout.inputTextLeadingInset)
-                        .allowsHitTesting(false)
+                } else {
+                    Text(jobLink)
+                        .textStyle(.body1Regular)
+                        .foregroundStyle(Color.foregroundPrimary)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.leading, AddJobImportLayout.inputTextLeadingInset)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
             pasteButton
                 .padding(.trailing, AddJobImportLayout.pasteButtonInset)
@@ -151,18 +146,13 @@ struct AddJobImportView: View {
             return
         }
 
-        guard AddJobImportLayout.isValidJobURL(clipboard) else {
-            viewModel.errorMessage = "Paste a valid job link"
-            return
-        }
-
         jobLink = clipboard
         guard let userId else { return }
 
         Task {
             let success = await viewModel.addJobFromPastedURL(userId: userId, url: clipboard)
             if success {
-                onImportSuccess()
+                onSuccess()
             }
         }
     }

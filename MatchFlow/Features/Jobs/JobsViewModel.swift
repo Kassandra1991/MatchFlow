@@ -13,14 +13,13 @@ class JobsViewModel: ObservableObject {
     @Published var jobs: [Job] = []
     @Published var isLoading = false
     @Published var errorMessage = ""
-    @Published var showAddJob = false
-    
+
     private let jobService: JobServiceProtocol
-    
+
     init(jobService: JobServiceProtocol = JobService()) {
         self.jobService = jobService
     }
-    
+
     func load(userId: UUID?) async {
         guard let userId else { return }
         await fetchJobs(userId: userId)
@@ -36,20 +35,19 @@ class JobsViewModel: ObservableObject {
         }
         isLoading = false
     }
-    
+
     func addJobFromShare(userId: UUID) async {
         isLoading = true
         do {
-            if let job = try await jobService.addJobFromShare(userId: userId) {
-                jobs.insert(job, at: 0)
-                await fetchJobs(userId: userId)
+            if try await jobService.addJobFromShare(userId: userId) != nil {
+                await reloadJobs(userId: userId)
             }
         } catch {
             errorMessage = error.localizedDescription
         }
         isLoading = false
     }
-    
+
     func addJobManually(userId: UUID, url: String, company: String, rawText: String) async {
         guard AddJobLayout.isDescriptionSufficient(rawText) else { return }
 
@@ -64,10 +62,9 @@ class JobsViewModel: ObservableObject {
                 company: company.trimmingCharacters(in: .whitespacesAndNewlines),
                 companyLogoUrl: nil
             )
-            jobs.insert(job, at: 0)
             AnalyticsService.log(.jobAdded(source: "manual"))
             try await jobService.calculateAndSaveMatchScore(job: job, userId: userId)
-            await fetchJobs(userId: userId)
+            await reloadJobs(userId: userId)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -76,19 +73,17 @@ class JobsViewModel: ObservableObject {
 
     @discardableResult
     func addJobFromPastedURL(userId: UUID, url: String) async -> Bool {
-        guard AddJobImportLayout.isValidJobURL(url) else {
-            errorMessage = "Paste a valid job link"
+        guard let normalizedURL = AddJobImportLayout.normalizedJobURL(url) else {
+            errorMessage = AddJobImportLayout.invalidURLError
             return false
         }
 
         isLoading = true
         errorMessage = ""
         do {
-            let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
-            let job = try await jobService.addJobFromURL(userId: userId, url: trimmed)
-            jobs.insert(job, at: 0)
+            _ = try await jobService.addJobFromURL(userId: userId, url: normalizedURL)
             AnalyticsService.log(.jobAdded(source: "url_paste"))
-            await fetchJobs(userId: userId)
+            await reloadJobs(userId: userId)
             isLoading = false
             return true
         } catch {
@@ -97,18 +92,7 @@ class JobsViewModel: ObservableObject {
             return false
         }
     }
-    
-    func updateStatus(job: Job, status: JobStatus) async {
-        do {
-            try await jobService.updateStatus(jobId: job.id, status: status)
-            if let index = jobs.firstIndex(where: { $0.id == job.id }) {
-                jobs[index].status = status
-            }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
-    
+
     func deleteJobs(at indexSet: IndexSet, from filteredJobs: [Job]) async {
         for index in indexSet {
             let job = filteredJobs[index]
@@ -120,5 +104,9 @@ class JobsViewModel: ObservableObject {
                 errorMessage = error.localizedDescription
             }
         }
+    }
+
+    private func reloadJobs(userId: UUID) async {
+        await fetchJobs(userId: userId)
     }
 }

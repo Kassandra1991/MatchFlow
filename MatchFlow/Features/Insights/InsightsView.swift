@@ -7,10 +7,10 @@ import SwiftUI
 
 struct InsightsView: View {
     @StateObject private var viewModel = DashboardViewModel()
-    @StateObject private var jobsViewModel = JobsViewModel()
+    @EnvironmentObject private var jobsViewModel: JobsViewModel
     @EnvironmentObject private var auth: AuthViewModel
     @EnvironmentObject private var tabSelection: TabSelectionViewModel
-    @State private var showAddManually = false
+    @State private var showAddJobFlow = false
     @State private var selectedJobId: UUID?
 
     var body: some View {
@@ -62,7 +62,7 @@ struct InsightsView: View {
                     JobDetailView(job: job)
                 }
             }
-            .sheet(isPresented: $showAddManually, onDismiss: { Task { await reload() } }) {
+            .sheet(isPresented: $showAddJobFlow, onDismiss: { Task { await reload() } }) {
                 AddJobFlowView(viewModel: jobsViewModel, userId: auth.currentUserId)
                     .presentationDragIndicator(.visible)
             }
@@ -87,7 +87,7 @@ struct InsightsView: View {
             )
 
             InsightsAddJobCard {
-                showAddManually = true
+                showAddJobFlow = true
             }
             .padding(.horizontal, DSSpacing.s16)
             .offset(y: InsightsHeroLayout.addJobCardOverlap)
@@ -123,6 +123,7 @@ private struct InsightsScrollBackground: View {
 
 #Preview {
     InsightsView()
+        .environmentObject(JobsViewModel())
         .environmentObject(AuthViewModel())
         .environmentObject(TabSelectionViewModel())
 }
