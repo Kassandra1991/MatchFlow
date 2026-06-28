@@ -78,14 +78,33 @@ struct AddJobView: View {
                 .padding(.bottom, DSSpacing.s32)
             }
             .scrollContentBackground(.hidden)
-            .scrollDismissesKeyboard(.interactively)
+            .scrollDismissesKeyboard(.immediately)
         }
         .background(Color.backgroundPrimary.ignoresSafeArea())
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    dismissKeyboard()
+                }
+            }
+        }
+    }
+
+    private func dismissKeyboard() {
+        focusedField = nil
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+        )
     }
 
     private var toolbarRow: some View {
         HStack {
             Button {
+                dismissKeyboard()
                 dismiss()
             } label: {
                 Image(systemName: "chevron.left")
@@ -105,6 +124,7 @@ struct AddJobView: View {
                 isEnabled: isAddEnabled,
                 isLoading: viewModel.isLoading
             ) {
+                dismissKeyboard()
                 Task {
                     guard let userId else { return }
                     viewModel.errorMessage = ""
