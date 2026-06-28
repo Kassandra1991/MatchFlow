@@ -58,8 +58,9 @@ struct AddJobView: View {
                         metadataCard
                         descriptionCard
 
-                        if showsDescriptionLengthHint {
-                            Text("Add a bit more detail about the role (at least 300 characters).")
+                        if showsDescriptionLengthHint,
+                           let message = AddJobLayout.charactersRemainingMessage(rawText) {
+                            Text(message)
                                 .textStyle(.captionRegular)
                                 .foregroundStyle(Color.foregroundSecondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,9 +76,10 @@ struct AddJobView: View {
                 .padding(.horizontal, DSSpacing.s16)
                 .padding(.bottom, DSSpacing.s32)
             }
+            .scrollContentBackground(.hidden)
             .scrollDismissesKeyboard(.interactively)
         }
-        .background(Color.backgroundPrimary)
+        .background(Color.backgroundPrimary.ignoresSafeArea())
     }
 
     private var toolbarRow: some View {

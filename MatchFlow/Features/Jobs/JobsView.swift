@@ -39,6 +39,7 @@ struct JobsView: View {
             .sheet(isPresented: $showAddManually) {
                 AddJobView(viewModel: viewModel, userId: auth.currentUserId)
                     .presentationDragIndicator(.visible)
+                    .presentationBackground(Color.backgroundPrimary)
             }
             .task {
                 await viewModel.load(userId: auth.currentUserId)
