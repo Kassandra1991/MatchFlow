@@ -8,6 +8,7 @@ import SwiftUI
 struct AddJobView: View {
     @ObservedObject var viewModel: JobsViewModel
     let userId: UUID?
+    let onAddSuccess: () -> Void
     @Environment(\.dismiss) private var dismiss
     @State private var company = ""
     @State private var url = ""
@@ -114,7 +115,7 @@ struct AddJobView: View {
                         rawText: rawText
                     )
                     if viewModel.errorMessage.isEmpty {
-                        dismiss()
+                        onAddSuccess()
                     }
                 }
             }

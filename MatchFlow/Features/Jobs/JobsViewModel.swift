@@ -73,6 +73,30 @@ class JobsViewModel: ObservableObject {
         }
         isLoading = false
     }
+
+    @discardableResult
+    func addJobFromPastedURL(userId: UUID, url: String) async -> Bool {
+        guard AddJobImportLayout.isValidJobURL(url) else {
+            errorMessage = "Paste a valid job link"
+            return false
+        }
+
+        isLoading = true
+        errorMessage = ""
+        do {
+            let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
+            let job = try await jobService.addJobFromURL(userId: userId, url: trimmed)
+            jobs.insert(job, at: 0)
+            AnalyticsService.log(.jobAdded(source: "url_paste"))
+            await fetchJobs(userId: userId)
+            isLoading = false
+            return true
+        } catch {
+            errorMessage = error.localizedDescription
+            isLoading = false
+            return false
+        }
+    }
     
     func updateStatus(job: Job, status: JobStatus) async {
         do {

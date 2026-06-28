@@ -16,6 +16,8 @@ class MockJobService: JobServiceProtocol {
     // Call tracking
     var fetchJobsCalled = false
     var addJobCalled = false
+    var addJobFromURLCalled = false
+    var lastImportedURL: String?
     var updateStatusCalled = false
     var lastStatus: JobStatus?
     var saveNotesCalled = false
@@ -91,6 +93,15 @@ class MockJobService: JobServiceProtocol {
     func checkPendingJob() -> (url: String?, text: String?) { (nil, nil) }
 
     func addJobFromShare(userId: UUID) async throws -> Job? { nil }
+
+    func addJobFromURL(userId: UUID, url: String) async throws -> Job {
+        addJobFromURLCalled = true
+        lastImportedURL = url
+        if shouldThrow { throw TestError.mock }
+        let job = Job.mock(rawText: "Imported job description", url: url)
+        jobs.append(job)
+        return job
+    }
 
     func deleteJob(jobId: UUID) async throws {
         if shouldThrow { throw TestError.mock }

@@ -37,9 +37,8 @@ struct JobsView: View {
                 }
             }
             .sheet(isPresented: $showAddManually) {
-                AddJobView(viewModel: viewModel, userId: auth.currentUserId)
+                AddJobFlowView(viewModel: viewModel, userId: auth.currentUserId)
                     .presentationDragIndicator(.visible)
-                    .presentationBackground(Color.backgroundPrimary)
             }
             .task {
                 await viewModel.load(userId: auth.currentUserId)
@@ -48,6 +47,10 @@ struct JobsView: View {
                 Task {
                     await viewModel.load(userId: auth.currentUserId)
                 }
+            }
+            .onChange(of: tabSelection.selectedTab) { _, newTab in
+                guard newTab == 1, let userId = auth.currentUserId else { return }
+                Task { await viewModel.fetchJobs(userId: userId) }
             }
         }
     }

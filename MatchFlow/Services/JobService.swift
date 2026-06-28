@@ -12,6 +12,7 @@ import Supabase
 protocol JobServiceProtocol {
     func addJob(userId: UUID, url: String?, rawText: String, title: String?, company: String?, companyLogoUrl: String?) async throws -> Job
     func addJobFromShare(userId: UUID) async throws -> Job?
+    func addJobFromURL(userId: UUID, url: String) async throws -> Job
     func fetchJobs(userId: UUID) async throws -> [Job]
     func fetchJob(jobId: UUID) async throws -> Job
     func updateStatus(jobId: UUID, status: JobStatus) async throws
@@ -44,25 +45,33 @@ struct JobService: JobServiceProtocol {
     func addJobFromShare(userId: UUID) async throws -> Job? {
         let pending = checkPendingJob()
         guard let url = pending.url ?? pending.text else { return nil }
+        return try await addJobFromURL(userId: userId, url: url)
+    }
 
-        var rawText = url
+    func addJobFromURL(userId: UUID, url: String) async throws -> Job {
+        let trimmed = url.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.hasPrefix("http"), URL(string: trimmed) != nil else {
+            throw URLError(.badURL)
+        }
+
+        var rawText = trimmed
         var title: String?
         var company: String?
         var companyLogoUrl: String?
 
-        if url.contains("linkedin.com/jobs/view") {
-            let jobData = try await aiService.fetchJobFromURL(url)
-            rawText = jobData.description ?? url
+        if trimmed.contains("linkedin.com/jobs/view") {
+            let jobData = try await aiService.fetchJobFromURL(trimmed)
+            rawText = jobData.description ?? trimmed
             title = jobData.title
             company = jobData.company
             companyLogoUrl = jobData.companyLogo
-        } else if url.hasPrefix("http") {
-            rawText = (try? await fetchJobText(from: url)) ?? url
+        } else {
+            rawText = (try? await fetchJobText(from: trimmed)) ?? trimmed
         }
 
         let job = try await addJob(
             userId: userId,
-            url: url.hasPrefix("http") ? url : nil,
+            url: trimmed,
             rawText: rawText,
             title: title,
             company: company,

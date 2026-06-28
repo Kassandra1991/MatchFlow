@@ -63,9 +63,8 @@ struct InsightsView: View {
                 }
             }
             .sheet(isPresented: $showAddManually, onDismiss: { Task { await reload() } }) {
-                AddJobView(viewModel: jobsViewModel, userId: auth.currentUserId)
+                AddJobFlowView(viewModel: jobsViewModel, userId: auth.currentUserId)
                     .presentationDragIndicator(.visible)
-                    .presentationBackground(Color.backgroundPrimary)
             }
             .task {
                 await reload()

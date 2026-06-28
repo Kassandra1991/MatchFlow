@@ -48,7 +48,7 @@ struct JobsViewModelTests {
             userId: UUID(),
             url: "",
             company: "Acme",
-            rawText: "New job description"
+            rawText: String(repeating: "a", count: 300)
         )
         
         let jobs = await viewModel.jobs
@@ -70,6 +70,32 @@ struct JobsViewModelTests {
         #expect(mockService.lastStatus == .interview)
     }
     
+    @Test("Add job from pasted URL calls service")
+    func addJobFromPastedURLCallsService() async {
+        let mockService = MockJobService()
+        let viewModel = await JobsViewModel(jobService: mockService)
+        let url = "https://www.linkedin.com/jobs/view/123456"
+
+        let success = await viewModel.addJobFromPastedURL(userId: UUID(), url: url)
+
+        #expect(success)
+        #expect(mockService.addJobFromURLCalled)
+        #expect(mockService.lastImportedURL == url)
+    }
+
+    @Test("Invalid pasted URL returns false without calling service")
+    func invalidPastedURLDoesNothing() async {
+        let mockService = MockJobService()
+        let viewModel = await JobsViewModel(jobService: mockService)
+
+        let success = await viewModel.addJobFromPastedURL(userId: UUID(), url: "not-a-url")
+
+        #expect(!success)
+        #expect(!mockService.addJobFromURLCalled)
+        let error = await viewModel.errorMessage
+        #expect(error == "Paste a valid job link")
+    }
+
     @Test("No pending job does nothing")
     func noPendingJobDoesNothing() async {
         let mockService = MockJobService()
