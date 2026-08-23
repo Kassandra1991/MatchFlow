@@ -36,6 +36,7 @@ struct MatchFlowApp: App {
                 }
             }
             .animation(.easeInOut(duration: 0.5), value: auth.showMainUI)
+            .preferredColorScheme(.light)
             .task {
                 await auth.checkSession()
             }
