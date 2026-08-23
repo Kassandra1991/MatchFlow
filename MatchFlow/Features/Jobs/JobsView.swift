@@ -120,7 +120,7 @@ private struct JobsFilterChromeModifier<Bar: View>: ViewModifier {
     let bar: Bar
 
     func body(content: Content) -> some View {
-        // TODO: Restore translucent chrome (list scrolling under material, App Store Connect style) without large-title overlap or pull-to-refresh jitter. Blocked by iOS 17.6 deployment target (`safeAreaBar` is iOS 26+).
+        // TODO: Translucent chrome (list under material, App Store Connect). Tried and rejected: safeAreaInset (title overlap + refresh jitter), overlay/contentMargins (broken scroll), iOS 26 safeAreaBar (large title gone, filters hide in glass stacks on pull).
         VStack(spacing: 0) {
             bar.background(.bar)
             content
