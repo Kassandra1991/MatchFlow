@@ -22,9 +22,6 @@ struct JobsView: View {
     var body: some View {
         NavigationStack {
             jobsContent
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    statusFilterBar
-                }
                 .navigationTitle("Jobs")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -60,8 +57,10 @@ struct JobsView: View {
         if viewModel.isLoading {
             ProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .jobsFilterChrome(bar: statusFilterBar)
         } else if filteredJobs.isEmpty {
             JobsEmptyStateView(filter: tabSelection.jobsFilter)
+                .jobsFilterChrome(bar: statusFilterBar)
         } else {
             List {
                 ForEach(filteredJobs) { job in
@@ -79,6 +78,7 @@ struct JobsView: View {
                 }
             }
             .listStyle(.insetGrouped)
+            .jobsFilterChrome(bar: statusFilterBar)
             .navigationDestination(item: $selectedJobId) { jobId in
                 if let job = viewModel.jobs.first(where: { $0.id == jobId }) {
                     JobDetailView(job: job)
@@ -107,8 +107,24 @@ struct JobsView: View {
             .padding(.horizontal, DSSpacing.s16)
             .padding(.vertical, DSSpacing.s8)
         }
-        .scrollClipDisabled()
-        .background(Color.clear)
+    }
+}
+
+private extension View {
+    func jobsFilterChrome(bar: some View) -> some View {
+        modifier(JobsFilterChromeModifier(bar: bar))
+    }
+}
+
+private struct JobsFilterChromeModifier<Bar: View>: ViewModifier {
+    let bar: Bar
+
+    func body(content: Content) -> some View {
+        // TODO: Restore translucent chrome (list scrolling under material, App Store Connect style) without large-title overlap or pull-to-refresh jitter. Blocked by iOS 17.6 deployment target (`safeAreaBar` is iOS 26+).
+        VStack(spacing: 0) {
+            bar.background(.bar)
+            content
+        }
     }
 }
 
